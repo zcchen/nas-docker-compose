@@ -28,7 +28,7 @@ docker-compose通过`-f <docker-compose.yml>`的方式，支持由多个`docker-
 + MySQL Service
 + Others
 
-### <service-name>/
+### `<service-name>/`
 相关服务的设定目录。
 
 + `<service-name>/docker-compose.yml`
