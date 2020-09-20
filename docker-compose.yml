@@ -1,0 +1,88 @@
+version: "3.5"
+
+services:
+
+  mysql-db:
+    image: mariadb
+    container_name: mysql-mariadb
+    hostname: mysqldb
+    restart: on-failure
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      #MYSQL_ROOT_HOST: "172.63.0.0/255.192.0.0"
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_admin_password
+    secrets:
+      - mysql_root_password
+      - mysql_admin_password
+    volumes:
+      - db_mysql_persist:/var/lib/mysql:consistent
+    networks:
+      back_end:
+        aliases:
+          - mysql-db
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginx
+    restart: on-failure
+    ports:
+      - 8080:80
+    volumes:
+      - files_persist:/usr/share/nginx/html:consistent
+    networks:
+      - mid_layout
+      - front_end
+
+
+networks:
+  front_end:
+    name: net_front-end
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.1.0.0/16
+          #gateway: 172.1.0.1
+  mid_layout:
+    name: net_mid-layout
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.8.0.0/16
+          #gateway: 172.8.0.1
+  back_end:
+    internal: true
+    name: net_back-end
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+          #gateway: 172.18.0.1
+
+volumes:
+  files_persist:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/data/mount-point-test
+  db_mysql_persist:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/data/mysql
+      # The target path is '/var/lib/mysql'
+  db_postgresql_persist:
+    driver: local
+    # The target path is '/var/lib/postgresql/data'
+
+secrets:
+  mysql_root_password:
+    file: ./mysql/secrets/root-password.txt
+  mysql_admin_password:
+    file: ./mysql/secrets/admin-password.txt
