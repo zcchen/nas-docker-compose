@@ -1,7 +1,8 @@
 YML_FILES  = docker-compose.yml
-YML_FILES += $(filter-out $(wildcard docker-compose.*test.yml), $(wildcard docker-compose.*.yml))
+YML_FILES += $(filter-out $(wildcard */docker-compose.test.yml), $(wildcard */docker-compose.yml))
 
-YML_TESTS  = $(wildcard docker-compose.*test.yml)
+YML_TESTS  = docker-compose.test.yml
+YML_TESTS += $(wildcard */docker-compose.test.yml)
 
 DOCKER_ARGS  =
 DOCKER_ARGS += $(foreach yml,$(YML_FILES),-f $(yml))
@@ -19,5 +20,6 @@ test: clean $(YML_FILES) $(YML_TESTS)
 clean: $(YML_FILES) $(YML_TESTS)
 	-docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) down -v
 
-purge:
-	-sudo rm data/mysql/* -rf
+PERSIST_DATA = data/mysql/* data/ldap/etc/* data/ldap/var/*
+purge: $(PERSIST_DATA)
+	-sudo rm $^ -rf

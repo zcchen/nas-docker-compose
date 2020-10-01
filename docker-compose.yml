@@ -1,14 +1,13 @@
 version: "3.5"
 
 services:
-
   mysql-db:
     image: mariadb
     container_name: mysql-mariadb
     hostname: mysqldb
     restart: on-failure
-    ports:
-      - 3306:3306
+    #ports:
+      #- 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
       #MYSQL_ROOT_HOST: "172.63.0.0/255.192.0.0"
