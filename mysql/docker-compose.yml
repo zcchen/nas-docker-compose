@@ -1,0 +1,39 @@
+version: "3.5"
+
+services:
+  mysql-db:
+    image: mariadb
+    container_name: mysql-mariadb
+    hostname: mysqldb
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      #MYSQL_ROOT_HOST: "172.63.0.0/255.192.0.0"
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_admin_password
+    secrets:
+      - mysql_root_password
+      - mysql_admin_password
+    volumes:
+      - db_mysql_persist:/var/lib/mysql:consistent
+    networks:
+      back_end:
+        aliases:
+          - mysql-db
+
+volumes:
+  db_mysql_persist:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/data/mysql
+      # The target path is '/var/lib/mysql'
+
+secrets:
+  mysql_root_password:
+    file: ${PWD}/mysql/secrets/root-password.txt
+  mysql_admin_password:
+    file: ${PWD}/mysql/secrets/admin-password.txt
