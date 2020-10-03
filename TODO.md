@@ -5,13 +5,12 @@ Features for NAS machine
 -----------------------------
 - [ ] Unified Entrance (Heimall)
 - [x] Unified Certification (openldap)
-- [ ] SAML
+- [ ] SAML SSO
 - [x] MySQL (MariaDB)
 - [x] docker monitoring (Docker Compose Solution)
 - [ ] https support (letsencrypt)
 - [ ] ddns
 - [ ] frp local
-- [ ] frp server
 - [ ] nextcloud
 - [ ] onlyoffice
 - [ ] gitlab
@@ -24,6 +23,7 @@ Features for another machines
 -----------------------------
 - [ ] CI (Jerkins)
 - [ ] media center (commercial: emby server / opensource: jellyfin)
+- [ ] frp server
 
 Optimizings
 -----------------------------
