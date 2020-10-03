@@ -1,48 +1,51 @@
 version: '3.5'
 
 volumes:
-  ldap_persist-var:
+  ldap_persist_var:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ${PWD}/data/ldap/var
-  ldap_persist-etc:
+      device: ${PWD}/data/ldap/var/
+  ldap_persist_etc:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ${PWD}/data/ldap/etc
+      device: ${PWD}/data/ldap/etc/
 
 secrets:
   ldap_admin_password:
-    name: LDAP_ADMIN_PASSWORD
-    file: openldap/secrets/admin_password.txt
+    file: ${PWD}/openldap/secrets/admin_password.txt
   ldap_config_password:
-    name: LDAP_config_PASSWORD
-    file: openldap/secrets/config_password.txt
+    file: ${PWD}/openldap/secrets/config_password.txt
 
 services:
   openldap:
-    image: osixia/openldap:1.4.0
+    image: osixia/openldap:latest
     container_name: openldap
     restart: on-failure
-    domainname: "zcchen.me"
     networks:
-      - back_end
+      back_end:
+        aliases:
+          - "ldap-server"
     secrets:
       - ldap_admin_password
       - ldap_config_password
+    env_file:
+      - ${PWD}/openldap/config/openldap.env
     environment:
       LDAP_LOG_LEVEL: "256"
-      LDAP_ORGANISATION: "CHEN Family"
-      LDAP_DOMAIN: "zcchen.me"
       LDAP_BASE_DN: ""
+      LDAP_ADMIN_PASSWORD_FILE: /run/secrets/ldap_admin_password
+      LDAP_CONFIG_PASSWORD_FILE: /run/secrets/ldap_config_password
       LDAP_READONLY_USER: "false"
       #LDAP_READONLY_USER_USERNAME: "readonly"
       #LDAP_READONLY_USER_PASSWORD: "readonly"
       LDAP_RFC2307BIS_SCHEMA: "false"
       LDAP_BACKEND: "mdb"
+      KEEP_EXISTING_CONFIG: "true"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
       LDAP_TLS: "false"
       #LDAP_TLS_CRT_FILENAME: "ldap.crt"
       #LDAP_TLS_KEY_FILENAME: "ldap.key"
@@ -55,18 +58,11 @@ services:
       #LDAP_REPLICATION_CONFIG_SYNCPROV: "binddn="cn=admin,cn=config" bindmethod=simple credentials=$$LDAP_CONFIG_PASSWORD searchbase="cn=config" type=refreshAndPersist retry="60 +" timeout=1 starttls=critical"
       #LDAP_REPLICATION_DB_SYNCPROV: "binddn="cn=admin,$$LDAP_BASE_DN" bindmethod=simple credentials=$$LDAP_ADMIN_PASSWORD searchbase="$$LDAP_BASE_DN" type=refreshAndPersist interval=00:00:00:10 retry="60 +" timeout=1 starttls=critical"
       #LDAP_REPLICATION_HOSTS: "#PYTHON2BASH:['ldap://ldap.example.org','ldap://ldap2.example.org']"
-      KEEP_EXISTING_CONFIG: "false"
-      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
-      LDAP_SSL_HELPER_PREFIX: "ldap"
-    tty: true
-    stdin_open: true
+      #LDAP_SSL_HELPER_PREFIX: "ldap"
     volumes:
-      - ldap_persist-var:/var/lib/ldap
-      - ldap_persist-etc:/etc/ldap/slapd.d
+      - ldap_persist_var:/var/lib/ldap:rw
+      - ldap_persist_etc:/etc/ldap/slapd.d:rw
       #- /container/service/slapd/assets/certs/
-    expose:
-      - 389
-      - 636
 
   phpldapadmin:
     image: osixia/phpldapadmin:latest
