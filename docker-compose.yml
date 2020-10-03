@@ -23,6 +23,7 @@ networks:
         - subnet: 172.1.0.0/16
           #gateway: 172.1.0.1
   mid_layout:
+    #internal: true
     name: net_mid-layout
     ipam:
       driver: default
