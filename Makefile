@@ -11,13 +11,20 @@ DOCKER_ARGS_TEST = $(foreach yml,$(YML_TESTS),-f $(yml))
 
 .PHONY: all test clean purge
 
-all: $(YML_FILES)
+all: up
+
+clean: down
+
+up: $(YML_FILES)
 	docker-compose $(DOCKER_ARGS) up
 
-test: clean $(YML_FILES) $(YML_TESTS)
+config: $(YML_FILES)
+	docker-compose $(DOCKER_ARGS) config
+
+test: $(YML_FILES) $(YML_TESTS)
 	docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) up
 
-clean: $(YML_FILES) $(YML_TESTS)
+down: $(YML_FILES) $(YML_TESTS)
 	-docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) down -v
 
 PERSIST_DATA = data/mysql/* data/ldap/etc/* data/ldap/var/*
