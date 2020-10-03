@@ -1,3 +1,14 @@
+PERSIST_DATA_ROOT = $(CURDIR)/data
+
+PERSIST_DATA_DIRS  =
+## for nginx testing
+#PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mount-point-test
+# for mysql
+PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mysql
+# for ldap
+PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/ldap $(PERSIST_DATA_ROOT)/ldap/etc $(PERSIST_DATA_ROOT)/ldap/var
+
+
 YML_FILES  = docker-compose.yml
 YML_FILES += $(filter-out $(wildcard */docker-compose.test.yml), $(wildcard */docker-compose.yml))
 
@@ -15,7 +26,7 @@ all: up
 
 clean: down
 
-up: $(YML_FILES)
+up: prepare $(YML_FILES)
 	docker-compose $(DOCKER_ARGS) up
 
 config: $(YML_FILES)
@@ -27,6 +38,8 @@ test: $(YML_FILES) $(YML_TESTS)
 down: $(YML_FILES) $(YML_TESTS)
 	-docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) down -v
 
-PERSIST_DATA = data/mysql/* data/ldap/etc/* data/ldap/var/*
-purge: $(PERSIST_DATA)
-	-sudo rm $^ -rf
+purge: $(PERSIST_DATA_DIRS)
+	-sudo rm $^ -rif
+
+prepare:
+	mkdir -p  $(PERSIST_DATA_DIRS)
