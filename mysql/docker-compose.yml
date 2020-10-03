@@ -4,7 +4,6 @@ services:
   mysql-db:
     image: mariadb
     container_name: mysql-mariadb
-    hostname: mysqldb
     restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
@@ -19,9 +18,7 @@ services:
     volumes:
       - db_mysql_persist:/var/lib/mysql:consistent
     networks:
-      back_end:
-        aliases:
-          - mysql-db
+      - back_end
 
 volumes:
   db_mysql_persist:
