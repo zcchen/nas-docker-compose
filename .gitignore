@@ -1,5 +1,5 @@
-local/compose.env
-server/compose.env
+data/*/
+tmp/
 
 */*.service
 
