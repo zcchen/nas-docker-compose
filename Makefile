@@ -32,7 +32,7 @@ up: prepare $(YML_FILES)
 config: $(YML_FILES)
 	docker-compose $(DOCKER_ARGS) config
 
-test: $(YML_FILES) $(YML_TESTS)
+test: prepare $(YML_FILES) $(YML_TESTS)
 	docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) up
 
 down: $(YML_FILES) $(YML_TESTS)
