@@ -22,7 +22,7 @@ secrets:
 
 services:
   openldap:
-    image: osixia/openldap:latest
+    image: osixia/openldap
     container_name: openldap
     restart: on-failure
     networks:
@@ -33,7 +33,7 @@ services:
       - ldap_admin_password
       - ldap_config_password
     env_file:
-      - ${PWD}/openldap/config/openldap.env
+      - ./openldap/config/openldap.env
     environment:
       LDAP_LOG_LEVEL: "256"
       LDAP_BASE_DN: ""
@@ -44,7 +44,7 @@ services:
       #LDAP_READONLY_USER_PASSWORD: "readonly"
       LDAP_RFC2307BIS_SCHEMA: "false"
       LDAP_BACKEND: "mdb"
-      KEEP_EXISTING_CONFIG: "true"
+      #KEEP_EXISTING_CONFIG: "true"
       LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
       LDAP_TLS: "false"
       #LDAP_TLS_CRT_FILENAME: "ldap.crt"
