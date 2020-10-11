@@ -8,6 +8,8 @@ PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mysql
 # for ldap
 PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/ldap $(PERSIST_DATA_ROOT)/ldap/etc $(PERSIST_DATA_ROOT)/ldap/var
 
+TMP_DIRS = tmp
+
 
 YML_FILES  = docker-compose.yml
 YML_FILES += $(filter-out $(wildcard */docker-compose.test.yml), $(wildcard */docker-compose.yml))
@@ -38,8 +40,10 @@ test: prepare $(YML_FILES) $(YML_TESTS)
 down: $(YML_FILES) $(YML_TESTS)
 	-docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) down -v
 
-purge: $(PERSIST_DATA_DIRS)
-	-sudo rm $^ -rif
+purge:
+	-sudo rm $(PERSIST_DATA_DIRS) -rvf
+	-sudo rm $(TMP_DIRS) -rvf
 
 prepare:
 	mkdir -p  $(PERSIST_DATA_DIRS)
+	mkdir -p  $(TMP_DIRS)
