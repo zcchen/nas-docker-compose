@@ -1,0 +1,32 @@
+version: "3.5"
+
+services:
+
+  nextcloud-dockergen:
+    image: dockergen-fileenv
+    container_name: nextcloud-dockergen
+    #entrypoint: ['/bin/sh']
+    command: -notify-sighup mysql-mariadb -watch /etc/docker-gen/templates/nextcloud-db.tmpl /docker-entrypoint-initdb.d/nextcloud-db.sql
+    networks: # TODO: disable it
+      - back_end
+    restart: always
+    #stdin_open: true # docker run -i
+    #tty: true        # docker run -t
+    environment:
+      DOCKERGEN_MYSQL_USER: nextcloud0
+      DOCKERGEN_MYSQL_DATABASE: nextcloud0
+      DOCKERGEN_MYSQL_PASSWORD_FILE: /run/secrets/mysql_nextcloud_password
+    secrets:
+      - mysql_nextcloud_password
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nextcloud/config/sql:/etc/docker-gen/templates
+      - ./tmp/:/docker-entrypoint-initdb.d:cached
+
+  mysql-db:
+    volumes:
+      - ./tmp/:/docker-entrypoint-initdb.d:cached
+
+secrets:
+  mysql_nextcloud_password:
+    file: ./nextcloud/secrets/nextcloud-passwd.txt
