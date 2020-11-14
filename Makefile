@@ -4,7 +4,7 @@ PERSIST_DATA_DIRS  =
 ## for nginx testing
 #PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mount-point-test
 # for mysql
-PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mysql
+PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mysql $(PERSIST_DATA_ROOT)/mysql/mysql $(PERSIST_DATA_ROOT)/mysql/nextcloud
 # for ldap
 PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/ldap $(PERSIST_DATA_ROOT)/ldap/etc $(PERSIST_DATA_ROOT)/ldap/var
 
