@@ -2,30 +2,31 @@ version: "3.5"
 
 services:
 
-  nextcloud-dockergen:
-    image: dockergen-fileenv
-    container_name: nextcloud-dockergen
-    #entrypoint: ['/bin/sh']
-    command: -notify-sighup mysql-mariadb -watch /etc/docker-gen/templates/nextcloud-db.tmpl /docker-entrypoint-initdb.d/nextcloud-db.sql
-    networks: # TODO: disable it
-      - back_end
-    restart: always
-    #stdin_open: true # docker run -i
-    #tty: true        # docker run -t
+  nextcloud-db:
+    image: mariadb
+    container_name: nextcloud-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: on-failure
     environment:
-      DOCKERGEN_MYSQL_USER: nextcloud0
-      DOCKERGEN_MYSQL_DATABASE: nextcloud0
-      DOCKERGEN_MYSQL_PASSWORD_FILE: /run/secrets/mysql_nextcloud_password
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_nextcloud_password
+    env_file:
+      - ./nextcloud/db.env
     secrets:
       - mysql_nextcloud_password
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./nextcloud/config/sql:/etc/docker-gen/templates
-      - ./tmp/:/docker-entrypoint-initdb.d:cached
+      - nextcloud-db-persist:/var/lib/mysql:consistent
+    networks:
+      - back_end
 
-  mysql-db:
-    volumes:
-      - ./tmp/:/docker-entrypoint-initdb.d:cached
+volumes:
+  nextcloud-db-persist:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${PWD}/data/mysql/nextcloud"
+      # The target path is '/var/lib/mysql'
 
 secrets:
   mysql_nextcloud_password:

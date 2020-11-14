@@ -2,15 +2,15 @@ version: "3.5"
 
 services:
 
-  mysql-db-test-nextcloud:
+  nextcloud-db-test:
     image: mariadb
-    container_name: mysql-db-test-nextcloud
+    container_name: nextcloud-db-test
     restart: on-failure
     secrets:
       - mysql_nextcloud_password
     networks:
       - back_end
     depends_on:
-      - mysql-db
-    command: /bin/bash -c "mysql -v -unextcloud -p`cat /run/secrets/mysql_nextcloud_password` --protocol=tcp --host=mysql-db --execute='show databases;'"
+      - nextcloud-db
+    command: /bin/bash -c "mysql -v -unextcloud -p`cat /run/secrets/mysql_nextcloud_password` --protocol=tcp --host=nextcloud-db --execute='show databases;'"
     #command: /bin/bash -c "mysql -v -unextcloud --protocol=tcp --host=mysql-db --execute='show databases;'"
