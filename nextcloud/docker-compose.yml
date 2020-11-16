@@ -15,17 +15,58 @@ services:
     secrets:
       - mysql_nextcloud_password
     volumes:
-      - nextcloud-db-persist:/var/lib/mysql:consistent
+      - nextcloud-db-mariadb:/var/lib/mysql:consistent
     networks:
       - back_end
 
+  nextcloud-app:
+    image: nextcloud:fpm-alpine
+    container_name: nextcloud-app
+    restart: always
+    volumes:
+      - nextcloud-wrapper:/var/www/html
+      - nextcloud-data:/var/www/html/data
+    environment:
+      - MYSQL_HOST=nextcloud-db
+    env_file:
+      - ./nextcloud/db.env
+    depends_on:
+      - nextcloud-db
+    networks:
+      - mid_layout
+      - back_end
+
+  nextcloud-web:
+    build: ./nextcloud/web
+    container_name: nextcloud-web
+    restart: always
+    volumes:
+      - nextcloud-wrapper:/var/www/html:ro
+    environment:
+      - VIRTUAL_HOST=
+      - LETSENCRYPT_HOST=
+      - LETSENCRYPT_EMAIL=
+    depends_on:
+      - nextcloud-app
+    networks:
+      - mid_layout
+      - back_end
+
 volumes:
-  nextcloud-db-persist:
+  nextcloud-db-mariadb:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: "${PWD}/data/mysql/nextcloud"
+      # The target path is '/var/lib/mysql'
+  nextcloud-wrapper:
+  nextcloud-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${PWD}/data/nextcloud/data"
       # The target path is '/var/lib/mysql'
 
 secrets:
