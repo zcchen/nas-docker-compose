@@ -3,6 +3,8 @@ PERSIST_DATA_ROOT = $(CURDIR)/data
 PERSIST_DATA_DIRS  =
 ## for nginx testing
 #PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mount-point-test
+# for nexycloud
+PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/nextcloud/data
 # for mysql
 PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mysql $(PERSIST_DATA_ROOT)/mysql/mysql $(PERSIST_DATA_ROOT)/mysql/nextcloud
 # for ldap
