@@ -7,10 +7,10 @@ services:
     container_name: nextcloud-db-test
     restart: on-failure
     secrets:
-      - mysql_nextcloud_password
+      - nextcloud_mysql_password
     networks:
       - back_end
     depends_on:
       - nextcloud-db
-    command: /bin/bash -c "mysql -v -unextcloud -p`cat /run/secrets/mysql_nextcloud_password` --protocol=tcp --host=nextcloud-db --execute='show databases;'"
+    command: /bin/bash -c "mysql -v -unextcloud -p`cat /run/secrets/nextcloud_mysql_password` --protocol=tcp --host=nextcloud-db --execute='show databases;'"
     #command: /bin/bash -c "mysql -v -unextcloud --protocol=tcp --host=mysql-db --execute='show databases;'"
