@@ -9,11 +9,12 @@ services:
     restart: on-failure
     environment:
       MYSQL_ROOT_HOST: '%'
-      MYSQL_PASSWORD_FILE: /run/secrets/mysql_nextcloud_password
+      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mysql_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/nextcloud_mysql_password
     env_file:
-      - ./nextcloud/db.env
+      - ./nextcloud/admin.env
     secrets:
-      - mysql_nextcloud_password
+      - nextcloud_mysql_password
     volumes:
       - nextcloud-db-mariadb:/var/lib/mysql:consistent
     networks:
@@ -24,12 +25,15 @@ services:
     container_name: nextcloud-app
     restart: always
     volumes:
-      - nextcloud-wrapper:/var/www/html
+      - nextcloud-html:/var/www/html
       - nextcloud-data:/var/www/html/data
     environment:
-      - MYSQL_HOST=nextcloud-db
+      MYSQL_HOST: nextcloud-db
+      NEXTCLOUD_ADMIN_PASSWORD_FILE: /run/secrets/nextcloud_admin_password
+    secrets:
+      - nextcloud_admin_password
     env_file:
-      - ./nextcloud/db.env
+      - ./nextcloud/admin.env
     depends_on:
       - nextcloud-db
     networks:
@@ -41,7 +45,7 @@ services:
     container_name: nextcloud-web
     restart: always
     volumes:
-      - nextcloud-wrapper:/var/www/html:ro
+      - nextcloud-data:/var/www/html:ro
     environment:
       - VIRTUAL_HOST=
       - LETSENCRYPT_HOST=
@@ -60,15 +64,21 @@ volumes:
       o: bind
       device: "${PWD}/data/mysql/nextcloud"
       # The target path is '/var/lib/mysql'
-  nextcloud-wrapper:
   nextcloud-data:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: "${PWD}/data/nextcloud/data"
-      # The target path is '/var/lib/mysql'
+  nextcloud-html:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${PWD}/data/nextcloud/html"
 
 secrets:
-  mysql_nextcloud_password:
-    file: ./nextcloud/secrets/nextcloud-passwd.txt
+  nextcloud_mysql_password:
+    file: ./nextcloud/secrets/nextcloud-db-passwd.txt
+  nextcloud_admin_password:
+    file: ./nextcloud/secrets/nextcloud-admin-passwd.txt
