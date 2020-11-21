@@ -20,24 +20,24 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.1.0.0/16
-          #gateway: 172.1.0.1
+        - subnet: 172.16.0.0/16
+          #gateway: 172.16.0.1
   mid_layout:
     #internal: true
     name: net_mid-layout
     ipam:
       driver: default
       config:
-        - subnet: 172.8.0.0/16
-          #gateway: 172.8.0.1
+        - subnet: 172.32.0.0/16
+          #gateway: 172.32.0.1
   back_end:
     internal: true
     name: net_back-end
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/16
-          #gateway: 172.18.0.1
+        - subnet: 172.64.0.0/16
+          #gateway: 172.64.0.1
 
 volumes:
   files_persist:
