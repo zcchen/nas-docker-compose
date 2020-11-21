@@ -9,16 +9,37 @@ services:
     restart: on-failure
     environment:
       MYSQL_ROOT_HOST: '%'
-      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mysql_password
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/nextcloud_mysql_password
-    env_file:
-      - ./nextcloud/admin.env
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mysql_password
     secrets:
       - nextcloud_mysql_password
     volumes:
       - nextcloud-db-mariadb:/var/lib/mysql:consistent
     networks:
       - back_end
+
+  nextcloud-config:
+    image: alpine
+    container_name: nextcloud-config
+    restart: on-failure
+    depends_on:
+      - nextcloud-app
+    volumes:
+      - nextcloud-html:/var/www/html
+      - ./nextcloud/config/:/mnt:ro
+    command: sh -c "
+                    cp /mnt/*.config.php /var/www/html/config/ &&
+                    chown 82:root /var/www/html/config/*.config.php
+                  "
+
+  #nextcloud-redis:
+    #image: redis:latest
+    #container_name: nextcloud-redis
+    #restart: on-failure
+    #networks:
+      #- back_end
 
   nextcloud-app:
     image: nextcloud:fpm-alpine
@@ -28,12 +49,17 @@ services:
       - nextcloud-html:/var/www/html
       - nextcloud-data:/var/www/html/data
     environment:
+      #REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD_FILE: /run/secrets/nextcloud_mysql_password
+      NEXTCLOUD_ADMIN_USER: admin
       NEXTCLOUD_ADMIN_PASSWORD_FILE: /run/secrets/nextcloud_admin_password
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud-web
     secrets:
       - nextcloud_admin_password
-    env_file:
-      - ./nextcloud/admin.env
+      - nextcloud_mysql_password
     depends_on:
       - nextcloud-db
     networks:
@@ -45,7 +71,7 @@ services:
     container_name: nextcloud-web
     restart: always
     volumes:
-      - nextcloud-data:/var/www/html:ro
+      - nextcloud-html:/var/www/html:ro
     environment:
       - VIRTUAL_HOST=
       - LETSENCRYPT_HOST=
