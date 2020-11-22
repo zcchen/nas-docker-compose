@@ -1,19 +1,5 @@
 version: "3.5"
 
-services:
-  webserver:
-    image: nginx:alpine
-    container_name: nginx
-    restart: on-failure
-    ports:
-      - 8080:80
-    volumes:
-      - files_persist:/usr/share/nginx/html:consistent
-    networks:
-      - mid_layout
-      - front_end
-
-
 networks:
   front_end:
     name: net_front-end
