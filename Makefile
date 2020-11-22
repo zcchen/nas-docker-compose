@@ -1,16 +1,14 @@
 PERSIST_DATA_ROOT = $(CURDIR)/data
 
 PERSIST_DATA_DIRS  =
-## for nginx testing
-#PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mount-point-test
+# for reversed-proxy
+PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/reversed-proxy/html
 # for nexycloud
-PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/nextcloud/data $(PERSIST_DATA_ROOT)/nextcloud/html
-# for mysql
-PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/mysql $(PERSIST_DATA_ROOT)/mysql/mysql $(PERSIST_DATA_ROOT)/mysql/nextcloud
+PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/nextcloud/data $(PERSIST_DATA_ROOT)/nextcloud/html $(PERSIST_DATA_ROOT)/nextcloud/mysql
 # for ldap
 PERSIST_DATA_DIRS += $(PERSIST_DATA_ROOT)/ldap $(PERSIST_DATA_ROOT)/ldap/etc $(PERSIST_DATA_ROOT)/ldap/var
 
-TMP_DIRS = tmp
+#TMP_DIRS = tmp
 
 
 YML_FILES  = docker-compose.yml
@@ -44,8 +42,8 @@ down: $(YML_FILES) $(YML_TESTS)
 
 purge:
 	-sudo rm $(PERSIST_DATA_DIRS) -rvf
-	-sudo rm $(TMP_DIRS) -rvf
+	#-sudo rm $(TMP_DIRS) -rvf
 
 prepare:
 	mkdir -p  $(PERSIST_DATA_DIRS)
-	mkdir -p  $(TMP_DIRS)
+	#mkdir -p  $(TMP_DIRS)

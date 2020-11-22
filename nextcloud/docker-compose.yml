@@ -88,7 +88,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/data/mysql/nextcloud"
+      device: "${PWD}/data/nextcloud/mysql"
       # The target path is '/var/lib/mysql'
   nextcloud-data:
     driver: local
