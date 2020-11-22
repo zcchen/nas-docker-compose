@@ -3,15 +3,23 @@ TODO
 
 Features for NAS machine
 -----------------------------
-- [ ] Unified Entrance (Heimall)
+- [ ] nginx reversed proxy
+  + [ ] find a reversed proxy docker solution.
+    + [-] NOT good. "jwilder/nginx-proxy:alpine" solution
+    + [ ] another solutions like pure nginx solution.
+- [ ] https support (letsencrypt)
 - [x] Unified Certification (openldap)
 - [ ] SAML SSO
 - [x] MySQL (MariaDB)
+  + nested by multiple sub docker services.
 - [x] docker monitoring (Docker Compose Solution)
-- [ ] https support (letsencrypt)
-- [ ] ddns
+- [x] nextcloud
+  + [x] basic setup
+  + [ ] integrade with LDAP
+  + [ ] integrade with SAML SSO
+- [?] ddns
+- [ ] Unified Entrance (Heimall)
 - [ ] frp local
-- [ ] nextcloud
 - [ ] onlyoffice
 - [ ] gitlab
 - [ ] artifactory (JFrog)
