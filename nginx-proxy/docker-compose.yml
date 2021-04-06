@@ -8,20 +8,20 @@ services:
       - 80:80
       - 433:433
     volumes:
-      - nginx:/etc/nginx/conf.d
+      - nginx-gencfg:/etc/nginx/conf.d
       #- nginx:/etc/nginx/certs
     networks:
       - front_end
       - mid_layout
 
-  dockergen:
+  nginx-dockergen:
     image: jwilder/docker-gen
-    container_name: dockergen
+    container_name: nginx-dockergen
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - dockergen:/etc/docker-gen/templates
-      - nginx:/etc/nginx/conf.d/
+      - ${PWD}/nginx-proxy/dockergen-templates/:/etc/docker-gen/templates:ro
+      - nginx-gencfg:/etc/nginx/conf.d/
     network_mode: "none"
     command: |
       -notify-sighup nginx
@@ -31,18 +31,10 @@ services:
 
 volumes:
 
-  nginx:
+  nginx-gencfg:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ${DATA_FOLDER}/nginx-proxy/
-
-  dockergen:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${PWD}/nginx-proxy/templates/
-
+      device: ${TMP_FOLDER}/nginx-proxy/nginx-conf.d
 
