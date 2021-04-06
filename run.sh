@@ -97,16 +97,19 @@ done
 
 cmd=""
 
-if [[ ${ACTION} == up ]]; then
-    for c in ${MODULES[@]} ; do
-        cmd+="mkdir -p ${DATA_FOLDER}/${c} && "
-    done
-    cmd+="${COMPOSE_BIN} ${COMPOSE_ARGS} ${ACTION}"
-elif [[ ${ACTION} == purge ]]; then
+mkdir -p ${DATA_FOLDER}
+mkdir -p ${TMP_FOLDER}
+
+for c in ${MODULES[@]} ; do
+    _volHandler="${CURDIR}/${c}/volumes-handler.sh"
+    if [[ -f ${_volHandler} ]]; then
+        source ${_volHandler}
+        volumes_prepare
+    fi
+done
+
+if [[ ${ACTION} == purge ]]; then
     cmd+="${COMPOSE_BIN} ${COMPOSE_ARGS} down && "
-    for c in ${MODULES[@]} ; do
-        cmd+="sudo rm -rvf ${DATA_FOLDER}/${c}/* && "
-    done
     cmd+="docker volume prune"
 else
     cmd+="${COMPOSE_BIN} ${COMPOSE_ARGS} ${ACTION}"
@@ -114,3 +117,13 @@ fi
 
 echo "$cmd"
 $(readlink /proc/$$/exe) -c "$cmd"
+
+if [[ ${ACTION} == purge ]]; then
+    for c in ${MODULES[@]} ; do
+        _volHandler="${CURDIR}/${c}/volumes-handler.sh"
+        if [[ -f ${_volHandler} ]]; then
+            source ${_volHandler}
+            volumes_purge
+        fi
+    done
+fi
