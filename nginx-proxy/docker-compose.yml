@@ -4,6 +4,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: nginx
+    restart: on-failure
     ports:
       - 80:80
       - 433:433
