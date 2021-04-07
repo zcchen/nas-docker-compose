@@ -19,9 +19,9 @@ server {
 		root   /usr/share/nginx/html;
 	}
 
-{{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
-	location /{{ trim $host }} {
-		proxy_pass http://;		# HOST_IP
+{{ range $key, $value := . }}
+	location /{{ trim $value.Name }} {
+		proxy_pass http://{{ $value.IP }};		# HOST_IP
 		proxy_set_header Host $http_host;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
