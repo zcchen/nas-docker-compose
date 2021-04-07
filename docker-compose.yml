@@ -1,5 +1,21 @@
 version: "3.5"
 
+services:
+  nginx-index:
+    image: nginx:alpine
+    container_name: nginx-index
+    restart: on-failure
+    ports:
+      - 80:80
+      - 433:433
+    volumes:
+      - ${PWD}/index/nginx-conf.d:/etc/nginx/conf.d
+      #- nginx:/etc/nginx/certs
+    networks:
+      - front_end
+      - mid_layout
+
+
 networks:
   front_end:
     name: net_front-end
@@ -7,6 +23,7 @@ networks:
       driver: default
       config:
         - subnet: 172.32.0.0/16
+
   mid_layout:
     internal: true
     name: net_mid-layout
@@ -14,6 +31,7 @@ networks:
       driver: default
       config:
         - subnet: 172.64.0.0/16
+
   back_end:
     internal: true
     name: net_back-end
