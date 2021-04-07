@@ -57,7 +57,7 @@ while [[ $# -gt 0 ]]
     esac
 done
 
-if [[ ${#POSITIONAL[@]} -ne 1 ]]; then
+if [[ ${#POSITIONAL[@]} -lt 1 ]]; then
     echo_usage
     exit 2
 fi
@@ -69,7 +69,7 @@ if [[ ${POSITIONAL[0]} != up &&
     echo_usage
     exit 3
 fi
-ACTION=${POSITIONAL[0]}
+ACTION=${POSITIONAL[@]}
 
 if [[ ${#MODULES[@]} -eq 0 ]]; then
     MODULES+=$(find ./ -maxdepth 1 -type d -iname '[a-zA-Z]*' -exec realpath --relative-to=${CURDIR} "{}" +)
