@@ -3,13 +3,11 @@ version: "3.5"
 services:
   web2:
     image: nginx:alpine
+    restart: on-failure
     container_name: web2
     ports:
       - 80:80
       - 433:433
-    #volumes:
-      #- nginx-gencfg:/etc/nginx/conf.d
-      ##- nginx:/etc/nginx/certs
     networks:
       - mid_layout
 
