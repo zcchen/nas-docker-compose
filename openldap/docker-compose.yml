@@ -6,13 +6,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ${PWD}/data/ldap/var/
+      device: ${DATA_FOLDER}/openldap/var/
   ldap_persist_etc:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ${PWD}/data/ldap/etc/
+      device: ${DATA_FOLDER}/openldap/etc/
 
 secrets:
   ldap_admin_password:
@@ -26,9 +26,9 @@ services:
     container_name: openldap
     restart: on-failure
     networks:
-      back_end:
-        aliases:
-          - "ldap-server"
+      - back_end
+        #aliases:
+          #- "ldap-server"
     secrets:
       - ldap_admin_password
       - ldap_config_password

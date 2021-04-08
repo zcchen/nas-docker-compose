@@ -9,7 +9,7 @@ services:
       - 80:80
       - 433:433
     volumes:
-      - ${PWD}/index/nginx-conf.d:/etc/nginx/conf.d
+      - ./index/nginx-conf.d:/etc/nginx/conf.d
       #- nginx:/etc/nginx/certs
     networks:
       - front_end
