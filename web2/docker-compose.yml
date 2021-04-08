@@ -11,3 +11,13 @@ services:
     networks:
       - mid_layout
 
+  web-another:
+    image: nginx:alpine
+    restart: on-failure
+    container_name: web-another
+    ports:
+      - 80:80
+      - 433:433
+    networks:
+      - mid_layout
+
