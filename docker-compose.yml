@@ -1,38 +1,42 @@
 version: "3.5"
 
+services:
+  nginx-index:
+    image: nginx:alpine
+    container_name: nginx-index
+    restart: on-failure
+    ports:
+      - 80:80
+      - 433:433
+    volumes:
+      - ${PWD}/index/nginx-conf.d:/etc/nginx/conf.d
+      #- nginx:/etc/nginx/certs
+    networks:
+      - front_end
+      - mid_layout
+
+
 networks:
   front_end:
     name: net_front-end
     ipam:
       driver: default
       config:
-        - subnet: 172.16.0.0/16
-          #gateway: 172.16.0.1
+        - subnet: 172.32.0.0/16
+
   mid_layout:
-    #internal: true
+    internal: true
     name: net_mid-layout
     ipam:
       driver: default
       config:
-        - subnet: 172.32.0.0/16
-          #gateway: 172.32.0.1
+        - subnet: 172.64.0.0/16
+
   back_end:
     internal: true
     name: net_back-end
     ipam:
       driver: default
       config:
-        - subnet: 172.64.0.0/16
-          #gateway: 172.64.0.1
-
-volumes:
-  files_persist:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${PWD}/data/mount-point-test
-  db_postgresql_persist:
-    driver: local
-    # The target path is '/var/lib/postgresql/data'
+        - subnet: 172.128.0.0/16
 

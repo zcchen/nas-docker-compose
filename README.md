@@ -23,11 +23,6 @@ docker-compose通过`-f <docker-compose.yml>`的方式，支持由多个`docker-
 + 基本数据目录volumes，尤其是针对基本服务所需的volumes
 + 基本服务所需的secrets
 
-### docker-compose.test.yml
-用于测试`docker-compose.yml`中定义的基本服务services，尤其是相关的后台基础服务：
-+ MySQL Service
-+ Others
-
 ### `<service-name>/`
 相关服务的设定目录。
 
