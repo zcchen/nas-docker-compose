@@ -100,30 +100,25 @@ cmd=""
 mkdir -p ${DATA_FOLDER}
 mkdir -p ${TMP_FOLDER}
 
-for c in ${MODULES[@]} ; do
-    _volHandler="${CURDIR}/${c}/volumes-handler.sh"
-    if [[ -f ${_volHandler} ]]; then
-        source ${_volHandler}
-        volumes_prepare
-    fi
-done
-
 if [[ ${ACTION} == purge ]]; then
     cmd+="${COMPOSE_BIN} ${COMPOSE_ARGS} down && "
-    cmd+="docker volume prune"
+    cmd+="docker volume prune &&"
+    for c in ${MODULES[@]} ; do
+        _makefile=""
+        if [[ -f "${CURDIR}/${c}/Makefile" ]]; then
+            cmd+="make -C ${c} purge &&"
+        fi
+    done
+    cmd+="echo ''"
 else
+    for c in ${MODULES[@]} ; do
+        _makefile=""
+        if [[ -f "${CURDIR}/${c}/Makefile" ]]; then
+            cmd+="make -C ${c} &&"
+        fi
+    done
     cmd+="${COMPOSE_BIN} ${COMPOSE_ARGS} ${ACTION}"
 fi
 
 echo "$cmd"
 $(readlink /proc/$$/exe) -c "$cmd"
-
-if [[ ${ACTION} == purge ]]; then
-    for c in ${MODULES[@]} ; do
-        _volHandler="${CURDIR}/${c}/volumes-handler.sh"
-        if [[ -f ${_volHandler} ]]; then
-            source ${_volHandler}
-            volumes_purge
-        fi
-    done
-fi
