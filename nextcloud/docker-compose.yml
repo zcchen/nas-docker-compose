@@ -30,9 +30,9 @@ services:
       - nextcloud-html:/var/www/html
       - ./nextcloud/config/:/mnt:ro
     command: sh -c "
-                    cp /mnt/*.config.php /var/www/html/config/ &&
-                    chown 82:root /var/www/html/config/*.config.php
-                  "
+      cp /mnt/*.config.php /var/www/html/config/ &&
+      chown 82:root /var/www/html/config/*.config.php
+      "
 
   #nextcloud-redis:
     #image: redis:latest
@@ -72,10 +72,10 @@ services:
     restart: always
     volumes:
       - nextcloud-html:/var/www/html:ro
-    environment:
-      - VIRTUAL_HOST=
-      - LETSENCRYPT_HOST=
-      - LETSENCRYPT_EMAIL=
+    #environment:
+      #- VIRTUAL_HOST=
+      #- LETSENCRYPT_HOST=
+      #- LETSENCRYPT_EMAIL=
     depends_on:
       - nextcloud-app
     networks:
@@ -88,20 +88,20 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/data/nextcloud/mysql"
+      device: "${DATA_FOLDER}/nextcloud/mysql"
       # The target path is '/var/lib/mysql'
   nextcloud-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/data/nextcloud/data"
+      device: "${DATA_FOLDER}/nextcloud/data"
   nextcloud-html:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/data/nextcloud/html"
+      device: "${DATA_FOLDER}/nextcloud/html"
 
 secrets:
   nextcloud_mysql_password:
