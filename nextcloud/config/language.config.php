@@ -26,4 +26,22 @@ $CONFIG = [
  * Defaults to ``en``
  */
 'default_locale' => 'zh_CN',
+
+/**
+ * Which domains to request to determine the availability of an Internet
+ * connection. If none of these hosts are reachable, the administration panel
+ * will show a warning. Set to an empty list to not do any such checks (warning
+ * will still be shown).
+ *
+ * Defaults to the following domains:
+ *
+ *  - www.nextcloud.com
+ *  - www.startpage.com
+ *  - www.eff.org
+ *  - www.edri.org
+ */
+'connectivity_check_domains' => [
+	'www.nextcloud.com',
+	'www.baidu.com',
+],
 ];
