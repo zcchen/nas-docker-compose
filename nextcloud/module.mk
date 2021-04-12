@@ -1,4 +1,4 @@
-__DATA_SUBFOLDERS := mysql data html
+__DATA_SUBFOLDERS := mysql data html apps
 __TMP_SUBFOLDERS :=
 
 
