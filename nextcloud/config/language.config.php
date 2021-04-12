@@ -13,7 +13,8 @@ $CONFIG = [
  *
  * Defaults to ``en``
  */
-'default_language' => 'zh',
+'default_language' => 'zh_CN',
+'force_language' => 'zh_CN',
 
 /**
  * This sets the default locale on your Nextcloud server, using ISO_639
@@ -25,7 +26,7 @@ $CONFIG = [
  *
  * Defaults to ``en``
  */
-'default_locale' => 'zh_CN',
+'default_locale' => 'zh',
 
 /**
  * Which domains to request to determine the availability of an Internet
