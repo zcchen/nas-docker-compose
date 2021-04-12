@@ -3,23 +3,20 @@ TODO
 
 Features for NAS machine
 -----------------------------
-- [ ] nginx reversed proxy
-  + [ ] find a reversed proxy docker solution.
-    + [-] NOT good. "jwilder/nginx-proxy:alpine" solution
-    + [ ] another solutions like pure nginx solution.
-- [ ] https support (letsencrypt)
-- [x] Unified Certification (openldap)
-- [ ] SAML SSO
+- [x] nginx reversed proxy
+  + [x] find a reversed proxy docker solution.
 - [x] MySQL (MariaDB)
   + nested by multiple sub docker services.
 - [x] docker monitoring (Docker Compose Solution)
 - [x] nextcloud
   + [x] basic setup
-  + [ ] integrade with LDAP
-  + [ ] integrade with SAML SSO
+  + [ ] Redis cache
+  + [ ] nextcloud-app internet connection
+    * expecting to expose the white-list ONLY website
 - [?] ddns
-- [ ] Unified Entrance (Heimall)
+- [?] Unified Entrance (Heimall)
 - [ ] frp local
+- [ ] https support (letsencrypt)
 - [ ] onlyoffice
 - [ ] gitlab
 - [ ] artifactory (JFrog)
@@ -33,6 +30,3 @@ Features for another machines
 - [ ] media center (commercial: emby server / opensource: jellyfin)
 - [ ] frp server
 
-Optimizings
------------------------------
-- [x] reselect the docker image for openldap, because current one can only support `admin` user with `admin` password
