@@ -24,8 +24,6 @@ services:
     image: alpine
     container_name: nextcloud-config
     restart: on-failure
-    #depends_on:
-      #- nextcloud-app
     volumes:
       - nextcloud-html:/var/www/html
       - ./nextcloud/config/:/mnt:ro
@@ -63,7 +61,7 @@ services:
     depends_on:
       - nextcloud-db
     networks:
-      - mid_layout
+      #- mid_layout
       - back_end
 
   nextcloud-web:
@@ -72,15 +70,12 @@ services:
     restart: always
     volumes:
       - nextcloud-html:/var/www/html:ro
-    #environment:
-      #- VIRTUAL_HOST=
-      #- LETSENCRYPT_HOST=
-      #- LETSENCRYPT_EMAIL=
     depends_on:
       - nextcloud-app
     networks:
       - mid_layout
       - back_end
+
 
 volumes:
   nextcloud-db-mariadb:
