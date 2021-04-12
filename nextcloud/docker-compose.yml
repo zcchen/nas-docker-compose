@@ -24,8 +24,8 @@ services:
     image: alpine
     container_name: nextcloud-config
     restart: on-failure
-    depends_on:
-      - nextcloud-app
+    #depends_on:
+      #- nextcloud-app
     volumes:
       - nextcloud-html:/var/www/html
       - ./nextcloud/config/:/mnt:ro
