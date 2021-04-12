@@ -46,8 +46,10 @@ services:
     volumes:
       - nextcloud-html:/var/www/html
       - nextcloud-data:/var/www/html/data
+      - nextcloud-apps:/var/www/html/custom_apps
     environment:
       #REDIS_HOST: nextcloud-redis
+      #REDIS_HOST_PASSWORD: ""
       MYSQL_HOST: nextcloud-db
       MYSQL_DATABASE: nextcloud
       MYSQL_USER: nextcloud
@@ -97,6 +99,12 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/html"
+  nextcloud-apps:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/apps"
 
 secrets:
   nextcloud_mysql_password:
