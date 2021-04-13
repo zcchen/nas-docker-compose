@@ -10,9 +10,12 @@ Features for NAS machine
 - [x] docker monitoring (Docker Compose Solution)
 - [x] nextcloud
   + [x] basic setup
+  + [x] cond service
   + [ ] Redis cache
+    * Failed to login if enabled
   + [ ] nextcloud-app internet connection
-    * expecting to expose the white-list ONLY website
+    * [x] expecting to expose the white-list ONLY website
+    * [ ] need proxy for nextcloud to access api.nextcloud.com
 - [?] ddns
 - [?] Unified Entrance (Heimall)
 - [ ] frp local
