@@ -42,5 +42,5 @@ $CONFIG = [
  */
 'overwrite.cli.url' => '/nextcloud',
 
-'trusted_proxies' => ['172.32.0.0/16', '172.64.0.0/16'],
+'trusted_proxies' => ['172.16.1.0/24', '172.16.10.0/24'],
 ];

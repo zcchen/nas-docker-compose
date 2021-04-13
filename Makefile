@@ -26,10 +26,10 @@ up: prepare $(YML_FILES)
 config: $(YML_FILES)
 	docker-compose $(DOCKER_ARGS) config
 
-down: $(YML_FILES) $(YML_TESTS)
+down: $(YML_FILES)
 	-docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) down -v
 
-purge: $(MODULES)
+purge: $(MODULES) clean
 	-sudo rm -rvf $(foreach m,$<,$(DATA_FOLDER)/$(m))
 	-sudo rm -rvf $(foreach m,$<,$(TMP_FOLDER)/$(m))
 
@@ -41,3 +41,5 @@ $(DATA_SUBFOLDERS): $(DATA_FOLDER)
 $(TMP_SUBFOLDERS): $(TMP_FOLDER)
 	mkdir -p $(foreach d,$@,$</$(d))
 
+$(DATA_FOLDER) $(TMP_FOLDER):
+	mkdir -p $@

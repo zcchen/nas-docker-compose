@@ -22,7 +22,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.32.0.0/16
+        - subnet: 172.16.1.0/24
 
   mid_layout:
     internal: true
@@ -30,7 +30,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.64.0.0/16
+        - subnet: 172.16.10.0/24
 
   back_end:
     internal: true
@@ -38,5 +38,12 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.128.0.0/16
+        - subnet: 172.16.20.0/24
+
+  fort:
+    name: net_fort
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.250.0/24
 
