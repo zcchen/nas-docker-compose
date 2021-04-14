@@ -3,15 +3,24 @@ TODO
 
 Features for NAS machine
 -----------------------------
-- [ ] Unified Entrance (Heimall)
-- [x] Unified Certification (openldap)
-- [ ] SAML SSO
+- [x] nginx reversed proxy
+  + [x] find a reversed proxy docker solution.
+- [ ] `traefik` might be better reversed proxy
 - [x] MySQL (MariaDB)
+  + nested by multiple sub docker services.
 - [x] docker monitoring (Docker Compose Solution)
-- [ ] https support (letsencrypt)
-- [ ] ddns
+- [x] nextcloud
+  + [x] basic setup
+  + [x] cond service
+  + [x] Redis cache
+  + [ ] nextcloud-app internet connection
+    * [x] expecting to expose the white-list ONLY website
+    * [ ] need proxy for nextcloud to access api.nextcloud.com
+  + [ ] nextcloud upload issue, related to `nginx` setup
+- [?] ddns
+- [?] Unified Entrance (Heimall)
 - [ ] frp local
-- [ ] nextcloud
+- [ ] https support (letsencrypt)
 - [ ] onlyoffice
 - [ ] gitlab
 - [ ] artifactory (JFrog)
@@ -25,6 +34,3 @@ Features for another machines
 - [ ] media center (commercial: emby server / opensource: jellyfin)
 - [ ] frp server
 
-Optimizings
------------------------------
-- [x] reselect the docker image for openldap, because current one can only support `admin` user with `admin` password
