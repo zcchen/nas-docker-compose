@@ -1,0 +1,118 @@
+version: "3.5"
+
+services:
+
+  nextcloud-config:
+    image: alpine
+    container_name: nextcloud-config
+    restart: on-failure
+    volumes:
+      - nextcloud-html:/var/www/html/
+      - ./nextcloud/config/:/mnt:ro
+    command: sh -c "
+      cp /mnt/*.config.php /var/www/html/config/ &&
+      chown -R 82:root /var/www/html/config/*.config.php
+      "
+
+  nextcloud-db:
+    image: mariadb
+    container_name: nextcloud-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: on-failure
+    env_file:
+      - ${PWD}/nextcloud/config.env
+    secrets:
+      - nextcloud_db_password
+    volumes:
+      - nextcloud-db-mariadb:/var/lib/mysql:consistent
+    networks:
+      - back_end
+
+  nextcloud-redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: on-failure
+    networks:
+      - back_end
+
+  nextcloud-app:
+    image: nextcloud:latest
+    container_name: nextcloud-app
+    restart: always
+    volumes:
+      - nextcloud-html:/var/www/html/
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-apps:/var/www/html/custom_apps
+    env_file:
+      - ${PWD}/nextcloud/config.env
+    environment:
+      REDIS_HOST: nextcloud-redis
+      #REDIS_HOST_PASSWORD: ""
+      MYSQL_HOST: nextcloud-db
+      NEXTCLOUD_TRUSTED_DOMAINS: nginx-index
+    secrets:
+      - nextcloud_admin_password
+      - nextcloud_db_password
+    depends_on:
+      - nextcloud-db
+      - nextcloud-redis
+    networks:
+      - fort
+      - back_end
+
+  nextcloud-cron:
+    image: nextcloud:latest
+    container_name: nextcloud-cron
+    restart: on-failure
+    volumes:
+      - nextcloud-html:/var/www/html/
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-apps:/var/www/html/custom_apps
+    entrypoint: /cron.sh
+    env_file:
+      - ${PWD}/nextcloud/config.env
+    environment:
+      REDIS_HOST: nextcloud-redis
+      #REDIS_HOST_PASSWORD: ""
+      MYSQL_HOST: nextcloud-db
+    secrets:
+      - nextcloud_admin_password
+      - nextcloud_db_password
+    depends_on:
+      - nextcloud-app
+      - nextcloud-db
+      - nextcloud-redis
+    networks: []
+
+
+volumes:
+  nextcloud-db-mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/mysql"  # The target path is '/var/lib/mysql'
+  nextcloud-html:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/html"   # /var/www/html, predefined setup
+  nextcloud-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/data"
+  nextcloud-apps:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/apps"
+
+secrets:
+  nextcloud_db_password:
+    file: ./nextcloud/secrets/nextcloud-db-passwd.txt
+  nextcloud_admin_password:
+    file: ./nextcloud/secrets/nextcloud-admin-passwd.txt
