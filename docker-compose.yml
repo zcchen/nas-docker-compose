@@ -1,20 +1,33 @@
 version: "3.5"
 
 services:
-  nginx-index:
-    image: nginx:alpine
-    container_name: nginx-index
-    restart: on-failure
+  traefik:
+    image: traefik:latest
+    container_name: traefik
     ports:
       - 80:80
       - 433:433
     volumes:
-      - ./index/nginx-conf.d:/etc/nginx/conf.d
-      #- nginx:/etc/nginx/certs
+      - ./traefik:/etc/traefik/
     networks:
       - front_end
       - mid_layout
       - fort
+
+  #nginx-index:
+    #image: nginx:alpine
+    #container_name: nginx-index
+    #restart: on-failure
+    #ports:
+      #- 80:80
+      #- 433:433
+    #volumes:
+      #- ./index/nginx-conf.d:/etc/nginx/conf.d
+      ##- nginx:/etc/nginx/certs
+    #networks:
+      #- front_end
+      #- mid_layout
+      #- fort
 
 # ------ network framework -------------------
 #        +--------------------+
