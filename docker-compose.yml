@@ -14,9 +14,26 @@ services:
     networks:
       - front_end
       - mid_layout
+      - fort
 
-
+# ------ network framework -------------------
+#        +--------------------+
+#        |        LAN         |
+#        +--------------------+
+#                  |
+#        +--------------------+
+#        |     front_end      |
+#        +--------------------+
+#           |              |
+#   +-------------+  +-------------+
+#   |  mid_layout |  |     fort    |
+#   +-------------+  +-------------+
+#           |              |
+#        +--------------------+
+#        |      back_end      |
+#        +--------------------+
 networks:
+
   front_end:
     name: net_front-end
     ipam:
@@ -32,6 +49,13 @@ networks:
       config:
         - subnet: 172.16.10.0/24
 
+  fort:
+    name: net_fort
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.250.0/24
+
   back_end:
     internal: true
     name: net_back-end
@@ -39,11 +63,4 @@ networks:
       driver: default
       config:
         - subnet: 172.16.20.0/24
-
-  fort:
-    name: net_fort
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.250.0/24
 

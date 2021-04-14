@@ -5,17 +5,18 @@ Features for NAS machine
 -----------------------------
 - [x] nginx reversed proxy
   + [x] find a reversed proxy docker solution.
+- [ ] `traefik` might be better reversed proxy
 - [x] MySQL (MariaDB)
   + nested by multiple sub docker services.
 - [x] docker monitoring (Docker Compose Solution)
 - [x] nextcloud
   + [x] basic setup
   + [x] cond service
-  + [ ] Redis cache
-    * Failed to login if enabled
+  + [x] Redis cache
   + [ ] nextcloud-app internet connection
     * [x] expecting to expose the white-list ONLY website
     * [ ] need proxy for nextcloud to access api.nextcloud.com
+  + [ ] nextcloud upload issue, related to `nginx` setup
 - [?] ddns
 - [?] Unified Entrance (Heimall)
 - [ ] frp local
