@@ -31,7 +31,7 @@ services:
   nextcloud-redis:
     image: redis:alpine
     container_name: nextcloud-redis
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - back_end
 
