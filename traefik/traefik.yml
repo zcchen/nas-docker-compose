@@ -16,17 +16,48 @@ global:
 ################################################################
 # EntryPoints configuration
 ################################################################
-
-# EntryPoints definition
-#
-# Optional
-#
 entryPoints:
   web:
     address: :80
-
   websecure:
     address: :443
+  #mysql:
+    #address: :3306
+
+################################################################
+# Routers configuration
+################################################################
+#http:
+  #routers:
+    #whoami:
+      #rule: "Host(`localhost`) && Path(`/whoami`))"
+      #entryPoints:
+        #- "web"
+        #- "websecure"
+      #service: whoami
+
+################################################################
+# API and dashboard configuration
+################################################################
+
+# Enable API and dashboard
+#
+# Optional
+#
+api:
+  # Enable the API in insecure mode
+  #
+  # Optional
+  # Default: false
+  #
+  insecure: true
+
+  # Enabled Dashboard
+  #
+  # Optional
+  # Default: true
+  #
+  dashboard: true
 
 ################################################################
 # Traefik logs configuration
@@ -85,29 +116,6 @@ entryPoints:
   # Default: "common"
   #
 #  format: json
-
-################################################################
-# API and dashboard configuration
-################################################################
-
-# Enable API and dashboard
-#
-# Optional
-#
-api:
-  # Enable the API in insecure mode
-  #
-  # Optional
-  # Default: false
-  #
-  insecure: true
-
-  # Enabled Dashboard
-  #
-  # Optional
-  # Default: true
-  #
-  dashboard: true
 
 ################################################################
 # Ping configuration
