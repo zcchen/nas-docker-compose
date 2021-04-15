@@ -3,16 +3,31 @@ version: "3.5"
 services:
   traefik:
     image: traefik:latest
-    container_name: traefik
+    #container_name: traefik
+    command: --api.insecure=true --providers.docker
     ports:
       - 80:80
       - 433:433
+      - 8080:8080   # API
     volumes:
       - ./traefik:/etc/traefik/
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - front_end
       - mid_layout
       - fort
+
+  whoami:
+    image: containous/whoami:latest
+    #container_name: whoami
+    networks:
+      - mid_layout
+    labels:
+      - traefik.http.routers.whoami.rule=Host(`localhost`) && Path(`/whoami`)
+      - traefik.http.routers.whoami.entrypoints=web,websecure
+      - traefik.http.routers.whoami.service=whoami
+      - traefik.http.services.whoami.loadbanlancer.server.port=80
+      - traefik.docker.network=mid_layout
 
   #nginx-index:
     #image: nginx:alpine
