@@ -14,9 +14,12 @@ Features for NAS machine
   + [x] cond service
   + [x] Redis cache
   + [ ] nextcloud-app internet connection
-    * [x] expecting to expose the white-list ONLY website
     * [ ] need proxy for nextcloud to access api.nextcloud.com
   + [ ] nextcloud upload issue, related to `nginx` setup
+  + [ ] Plugins for nextcloud
+    * [ ] calenda
+    * [ ] others
+  + [ ] set the default app to be `file`
 - [?] ddns
 - [?] Unified Entrance (Heimall)
 - [ ] frp local

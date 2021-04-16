@@ -57,7 +57,7 @@ services:
       - nextcloud-db
       - nextcloud-redis
     networks:
-      - fort
+      - mid_layout
       - back_end
 
   nextcloud-cron:
