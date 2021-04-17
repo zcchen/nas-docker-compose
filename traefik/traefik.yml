@@ -19,6 +19,14 @@ global:
 entryPoints:
   http:
     address: :80
+    forwardedHeaders:
+      insecure: false
+    #http:    # redirect to HTTPS, not yet to enable
+      #redirections:
+        #entryPoint:
+          #to: websecure
+          #scheme: https
+
   https:
     address: :443
   #mysql:
@@ -50,7 +58,8 @@ log:
   # Sets the filepath for the traefik log. If not specified, stdout will be used.
   # Intermediate directories are created if necessary. (Optional)
   # Default: os.Stdout
-  filePath: os.Stdout
+  #filePath: os.Stdout
+  filePath: /var/logs/traefik/traefik.log
 
   # Format is either "json" or "common". (Optional)
   # Default: "common"
@@ -67,7 +76,8 @@ accessLog:
   # Sets the file path for the access log. If not specified, stdout will be used.
   # Intermediate directories are created if necessary. (Optional
   # Default: os.Stdout
-  filePath: os.Stdout
+  #filePath: os.Stdout
+  filePath: /var/logs/traefik/access.log
 
   # Format is either "json" or "common". (Optional)
   # Default: "common"
@@ -99,11 +109,25 @@ providers:
 
     # Default host rule. (Optional)
     # Default: "Host(`{{ normalize .Name }}`)"
-    defaultRule: "Host(`localhost`) && Path(`/{{ normalize .Name }}`)"
+    defaultRule: "Host(`{{ normalize .Name }}`)"
 
     # Expose containers by default in traefik (Optional)
     # Default: true
     exposedByDefault: false
 
-    watch: true
-    #network: mid_layout
+    #watch: true
+
+################################################################
+# Router configurations
+################################################################
+http:
+  routers:
+    nas:
+      entryPoints:
+        - web
+        - websecure
+    admin:
+      rule: "PathPrefix(`/admin`)"
+      entryPoints:
+        - web
+        - websecure
