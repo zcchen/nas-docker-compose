@@ -7,7 +7,7 @@ services:
     container_name: nextcloud-config
     restart: on-failure
     volumes:
-      - nextcloud-html:/var/www/html/
+      - nextcloud-config:/var/www/html/config
       - ./nextcloud/config/:/mnt:ro
     command: sh -c "
       cp /mnt/*.config.php /var/www/html/config/ &&
@@ -40,7 +40,7 @@ services:
     container_name: nextcloud-app
     restart: always
     volumes:
-      - nextcloud-html:/var/www/html/
+      - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
     env_file:
@@ -65,7 +65,7 @@ services:
     container_name: nextcloud-cron
     restart: on-failure
     volumes:
-      - nextcloud-html:/var/www/html/
+      - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
     entrypoint: /cron.sh
@@ -92,12 +92,12 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/mysql"  # The target path is '/var/lib/mysql'
-  nextcloud-html:
+  nextcloud-config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: "${DATA_FOLDER}/nextcloud/html"   # /var/www/html, predefined setup
+      device: "${DATA_FOLDER}/nextcloud/config"   # /var/www/html/config, predefined setup
   nextcloud-data:
     driver: local
     driver_opts:
