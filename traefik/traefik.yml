@@ -17,46 +17,24 @@ global:
 # EntryPoints configuration
 ################################################################
 entryPoints:
-  web:
+  http:
     address: :80
-  websecure:
+  https:
     address: :443
   #mysql:
     #address: :3306
 
 ################################################################
-# Routers configuration
-################################################################
-#http:
-  #routers:
-    #whoami:
-      #rule: "Host(`localhost`) && Path(`/whoami`))"
-      #entryPoints:
-        #- "web"
-        #- "websecure"
-      #service: whoami
-
-################################################################
 # API and dashboard configuration
 ################################################################
 
-# Enable API and dashboard
-#
-# Optional
-#
 api:
-  # Enable the API in insecure mode
-  #
-  # Optional
+  # Enable the API in insecure mode (Optional)
   # Default: false
-  #
   insecure: true
 
-  # Enabled Dashboard
-  #
-  # Optional
+  # Enabled Dashboard (Optional)
   # Default: true
-  #
   dashboard: true
 
 ################################################################
@@ -64,32 +42,19 @@ api:
 ################################################################
 
 # Traefik logs
-# Enabled by default and log to stdout
-#
-# Optional
-#
-#log:
-  # Log level
-  #
-  # Optional
+log:
+  # Log level (Optional)
   # Default: "ERROR"
-  #
-#  level: DEBUG
+  level: ERROR
 
   # Sets the filepath for the traefik log. If not specified, stdout will be used.
-  # Intermediate directories are created if necessary.
-  #
-  # Optional
+  # Intermediate directories are created if necessary. (Optional)
   # Default: os.Stdout
-  #
-#  filePath: log/traefik.log
+  filePath: os.Stdout
 
-  # Format is either "json" or "common".
-  #
-  # Optional
+  # Format is either "json" or "common". (Optional)
   # Default: "common"
-  #
-#  format: json
+  format: common
 
 ################################################################
 # Access logs configuration
@@ -97,25 +62,16 @@ api:
 
 # Enable access logs
 # By default it will write to stdout and produce logs in the textual
-# Common Log Format (CLF), extended with additional fields.
-#
-# Optional
-#
-#accessLog:
+# Common Log Format (CLF), extended with additional fields. (Optional)
+accessLog:
   # Sets the file path for the access log. If not specified, stdout will be used.
-  # Intermediate directories are created if necessary.
-  #
-  # Optional
+  # Intermediate directories are created if necessary. (Optional
   # Default: os.Stdout
-  #
-#  filePath: /path/to/log/log.txt
+  filePath: os.Stdout
 
-  # Format is either "json" or "common".
-  #
-  # Optional
+  # Format is either "json" or "common". (Optional)
   # Default: "common"
-  #
-#  format: json
+  format: common
 
 ################################################################
 # Ping configuration
@@ -134,26 +90,20 @@ api:
 # Docker configuration backend
 ################################################################
 
-#providers:
+providers:
   # Enable Docker configuration backend
-#  docker:
-    # Docker server endpoint. Can be a tcp or a unix socket endpoint.
-    #
-    # Required
+  docker:
+    # Docker server endpoint. Can be a tcp or a unix socket endpoint. (Required)
     # Default: "unix:///var/run/docker.sock"
-    #
-#    endpoint: tcp://10.10.10.10:2375
+    endpoint: unix:///var/run/docker.sock
 
-    # Default host rule.
-    #
-    # Optional
+    # Default host rule. (Optional)
     # Default: "Host(`{{ normalize .Name }}`)"
-    #
-#    defaultRule: Host(`{{ normalize .Name }}.docker.localhost`)
+    defaultRule: "Host(`localhost`) && Path(`/{{ normalize .Name }}`)"
 
-    # Expose containers by default in traefik
-    #
-    # Optional
+    # Expose containers by default in traefik (Optional)
     # Default: true
-    #
-#    exposedByDefault: false
+    exposedByDefault: false
+
+    watch: true
+    #network: mid_layout

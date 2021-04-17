@@ -4,35 +4,23 @@ services:
   traefik:
     image: traefik:latest
     #container_name: traefik
-    command:
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
-      - --api.debug=true
-      - --log.level=DEBUG
-      - --accesslog=true
-      - --log.filePath=/tmp/traefik-logs/traefik-log.log
-      - --accesslog.filepath=/tmp/traefik-logs/traefik-access.log
     ports:
       - 80:80
       - 433:433
       - 8080:8080   # API
     volumes:
-      #- ./traefik:/etc/traefik/
+      - ./traefik:/etc/traefik/
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /tmp/traefik-logs/:/tmp/traefik-logs/
     networks:
       - front_end
       - mid_layout
       #- fort
     labels:
-      - traefik.enable=true
-      - traefik.docker.network=mid_layout
-      - traefik.http.routers.traefik.rule=Host(`localhost`)
-      - traefik.http.routers.traefik.service=api@internal
-      - traefik.http.routers.traefik.entrypoints=http
+      traefik.enable: true
+      traefik.docker.network: mid_layout
+      traefik.http.routers.traefik.rule: Host(`localhost`)
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.entrypoints: http, https
 
   whoami:
     image: containous/whoami:latest
@@ -41,10 +29,9 @@ services:
       - mid_layout
     labels:
       traefik.enable: true
-      traefik.docker.network: mid_layout
       traefik.http.routers.whoami.rule: "Host(`localhost`) && Path(`/whoami/`)"
       traefik.http.routers.whoami.service: whoami
-      traefik.http.routers.whoami.entrypoints: http
+      traefik.http.routers.whoami.entrypoints: "http, https"
       traefik.http.services.whoami.loadbalancer.server.port: 80
 
   #nginx-index:
