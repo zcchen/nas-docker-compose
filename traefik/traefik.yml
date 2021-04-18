@@ -1,12 +1,4 @@
 ################################################################
-#
-# Configuration sample for Traefik v2.
-#
-# For Traefik v1: https://github.com/traefik/traefik/blob/v1.7/traefik.sample.toml
-#
-################################################################
-
-################################################################
 # Global configuration
 ################################################################
 global:
@@ -19,8 +11,6 @@ global:
 entryPoints:
   http:
     address: :80
-    forwardedHeaders:
-      insecure: false
     #http:    # redirect to HTTPS, not yet to enable
       #redirections:
         #entryPoint:
@@ -39,11 +29,13 @@ entryPoints:
 api:
   # Enable the API in insecure mode (Optional)
   # Default: false
-  insecure: true
+  #insecure: true
 
   # Enabled Dashboard (Optional)
   # Default: true
   dashboard: true
+
+  debug: true
 
 ################################################################
 # Traefik logs configuration
@@ -53,7 +45,7 @@ api:
 log:
   # Log level (Optional)
   # Default: "ERROR"
-  level: ERROR
+  level: DEBUG
 
   # Sets the filepath for the traefik log. If not specified, stdout will be used.
   # Intermediate directories are created if necessary. (Optional)
@@ -101,6 +93,10 @@ accessLog:
 ################################################################
 
 providers:
+  file:
+    directory: /etc/traefik/rules.d
+    watch: true
+
   # Enable Docker configuration backend
   docker:
     # Docker server endpoint. Can be a tcp or a unix socket endpoint. (Required)
@@ -109,7 +105,7 @@ providers:
 
     # Default host rule. (Optional)
     # Default: "Host(`{{ normalize .Name }}`)"
-    defaultRule: "Host(`{{ normalize .Name }}`)"
+    defaultRule: "PathPrefix(`/{{ normalize .Name }}`)"
 
     # Expose containers by default in traefik (Optional)
     # Default: true
@@ -120,14 +116,3 @@ providers:
 ################################################################
 # Router configurations
 ################################################################
-http:
-  routers:
-    nas:
-      entryPoints:
-        - web
-        - websecure
-    admin:
-      rule: "PathPrefix(`/admin`)"
-      entryPoints:
-        - web
-        - websecure

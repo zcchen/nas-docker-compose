@@ -14,23 +14,27 @@ services:
     networks:
       - front_end
       - mid_layout
-      #- fort
-    labels:
-      traefik.enable: true
-      traefik.http.routers.admin.rule: "PathPrefix(`/admin/traefik`)"
-      traefik.http.routers.admin.service: api@internal
-      #traefik.http.routers.admin.service: traefik
-      #traefik.http.services.traefik.loadbalancer.server.port: 8080
 
-  whoami:
+  nas-whoami:
     image: containous/whoami:latest
     networks:
       - mid_layout
     labels:
       traefik.enable: true
-      traefik.http.routers.nas.rule: "PathPrefix(`/whoami`)"
-      traefik.http.routers.nas.service: whoami
-      traefik.http.services.whoami.loadbalancer.server.port: 80
+      traefik.http.routers.nas-whoami.rule: "pathprefix(`/whoami`)"
+      traefik.http.routers.nas-whoami.service: nas-whoami
+      traefik.http.services.nas-whoami.loadbalancer.server.port: 80
+
+  admin-whoami:
+    image: containous/whoami:latest
+    networks:
+      - mid_layout
+    labels:
+      traefik.enable: true
+      traefik.http.routers.admin-whoami.rule: "pathprefix(`/admin/whoami`)"
+      traefik.http.routers.admin-whoami.service: admin-whoami
+      traefik.http.routers.admin-whoami.middlewares: admin-auth@file
+      traefik.http.services.admin-whoami.loadbalancer.server.port: 80
 
   #nginx-index:
     #image: nginx:alpine
