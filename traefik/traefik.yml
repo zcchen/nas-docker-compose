@@ -35,7 +35,7 @@ api:
   # Default: true
   dashboard: true
 
-  debug: true
+  #debug: true
 
 ################################################################
 # Traefik logs configuration
@@ -45,7 +45,7 @@ api:
 log:
   # Log level (Optional)
   # Default: "ERROR"
-  level: DEBUG
+  level: ERROR
 
   # Sets the filepath for the traefik log. If not specified, stdout will be used.
   # Intermediate directories are created if necessary. (Optional)
@@ -111,8 +111,7 @@ providers:
     # Default: true
     exposedByDefault: false
 
+    # Since using the same docker-compose commands to start the dockers, no needs to watch.
+    # Default: false
     #watch: true
 
-################################################################
-# Router configurations
-################################################################

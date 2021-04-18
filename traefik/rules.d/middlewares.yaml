@@ -5,12 +5,4 @@ http:
       basicAuth:
         users:
           - "admin:$apr1$5draFjdn$m0uImDzEpopi5y3FMwfvl/"
-            # admin:admin
-
-    redirect2dashboard:
-      redirectRegex:
-        # TODO: update the hostname regex better
-        regex: "^(http|https)://(localhost)/admin/traefik(.*)$"
-        replacement: "${1}://${2}/dashboard/"
-        permanent: true
 
