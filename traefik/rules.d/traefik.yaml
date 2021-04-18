@@ -1,0 +1,17 @@
+http:
+  routers:
+
+    admin-traefik:
+      rule: "PathPrefix(`/admin/traefik`)"
+      service: api@internal
+      middlewares:
+        - redirect2dashboard
+        #- admin-auth
+
+    traefik-dashboard:
+      rule: "PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+      service: api@internal
+      middlewares:
+        - admin-auth
+
+
