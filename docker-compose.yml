@@ -3,6 +3,8 @@ version: "3.5"
 services:
   traefik:
     image: traefik:latest
+    #command: --providers.docker.network=nas-docker-compose_mid-layout
+    restart: always
     ports:
       - 80:80
       - 433:433
@@ -12,13 +14,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${TMP_FOLDER}/traefik/logs:/var/logs/traefik/
     networks:
-      - front_end
-      - mid_layout
+      - front-end
+      - mid-layout
 
   nas-whoami:
     image: containous/whoami:latest
     networks:
-      - mid_layout
+      - mid-layout
+      - back-end
     labels:
       traefik.enable: true
       traefik.http.routers.nas-whoami.rule: "pathprefix(`/whoami`)"
@@ -28,7 +31,7 @@ services:
   admin-whoami:
     image: containous/whoami:latest
     networks:
-      - mid_layout
+      - mid-layout
     labels:
       traefik.enable: true
       traefik.http.routers.admin-whoami.rule: "pathprefix(`/admin/whoami`)"
@@ -39,8 +42,7 @@ services:
   #nginx-index:
     #image: nginx:alpine
     #container_name: nginx-index
-    #restart: on-failure
-    #ports:
+    #restart: on-failure #ports:
       #- 80:80
       #- 433:433
     #volumes:
@@ -57,11 +59,11 @@ services:
 #        +--------------------+
 #                  |
 #        +--------------------+
-#        |     front_end      |
+#        |     front-end      |
 #        +--------------------+
 #           |              |
 #   +-------------+  +-------------+
-#   |  mid_layout |  |     fort    |
+#   |  mid-layout |  |     fort    |
 #   +-------------+  +-------------+
 #           |              |
 #        +--------------------+
@@ -69,31 +71,27 @@ services:
 #        +--------------------+
 networks:
 
-  front_end:
-    name: net_front-end
+  front-end:
     ipam:
       driver: default
       config:
         - subnet: 172.16.1.0/24
 
-  mid_layout:
+  mid-layout:
     internal: true
-    name: net_mid-layout
     ipam:
       driver: default
       config:
         - subnet: 172.16.10.0/24
 
   fort:
-    name: net_fort
     ipam:
       driver: default
       config:
         - subnet: 172.16.250.0/24
 
-  back_end:
+  back-end:
     internal: true
-    name: net_back-end
     ipam:
       driver: default
       config:

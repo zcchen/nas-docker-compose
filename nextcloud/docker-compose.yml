@@ -2,42 +2,9 @@ version: "3.5"
 
 services:
 
-  nextcloud-config:
-    image: alpine
-    container_name: nextcloud-config
-    restart: on-failure
-    volumes:
-      - nextcloud-config:/var/www/html/config
-      - ./nextcloud/config/:/mnt:ro
-    command: sh -c "
-      cp /mnt/*.config.php /var/www/html/config/ &&
-      chown -R 82:root /var/www/html/config/*.config.php
-      "
-
-  nextcloud-db:
-    image: mariadb
-    container_name: nextcloud-db
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    restart: on-failure
-    env_file:
-      - ${PWD}/nextcloud/config.env
-    secrets:
-      - nextcloud_db_password
-    volumes:
-      - nextcloud-db-mariadb:/var/lib/mysql:consistent
-    networks:
-      - back_end
-
-  nextcloud-redis:
-    image: redis:alpine
-    container_name: nextcloud-redis
-    restart: unless-stopped
-    networks:
-      - back_end
-
   nextcloud-app:
     image: nextcloud:latest
-    container_name: nextcloud-app
+    #container_name: nextcloud-app
     restart: always
     volumes:
       - nextcloud-config:/var/www/html/config
@@ -49,7 +16,7 @@ services:
       REDIS_HOST: nextcloud-redis
       #REDIS_HOST_PASSWORD: ""
       MYSQL_HOST: nextcloud-db
-      NEXTCLOUD_TRUSTED_DOMAINS: nginx-index
+      NEXTCLOUD_TRUSTED_DOMAINS: traefik
     secrets:
       - nextcloud_admin_password
       - nextcloud_db_password
@@ -57,12 +24,52 @@ services:
       - nextcloud-db
       - nextcloud-redis
     networks:
-      - mid_layout
-      - back_end
+      - mid-layout
+      - back-end
+    labels:
+      traefik.enable: true
+      traefik.http.routers.nas-nextcloud.rule: "PathPrefix(`/nextcloud`)"
+      traefik.http.routers.nas-nextcloud.service: nas-nextcloud
+      traefik.http.routers.nas-nextcloud.middlewares: nas-nextcloud@file
+      traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
+
+  nextcloud-config:
+    image: nextcloud:latest
+    #container_name: nextcloud-config
+    restart: on-failure
+    volumes:
+      - nextcloud-config:/var/www/html/config
+      - ./nextcloud/config/:/mnt:ro
+    networks: []
+    command: sh -c "
+      cp /mnt/*.config.php /var/www/html/config/ &&
+      chown -R www-data:root /var/www/html/config/
+      "
+
+  nextcloud-db:
+    image: mariadb
+    #container_name: nextcloud-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: on-failure
+    env_file:
+      - ${PWD}/nextcloud/config.env
+    secrets:
+      - nextcloud_db_password
+    volumes:
+      - nextcloud-db-mariadb:/var/lib/mysql:consistent
+    networks:
+      - back-end
+
+  nextcloud-redis:
+    image: redis:alpine
+    #container_name: nextcloud-redis
+    restart: unless-stopped
+    networks:
+      - back-end
 
   nextcloud-cron:
     image: nextcloud:latest
-    container_name: nextcloud-cron
+    #container_name: nextcloud-cron
     restart: on-failure
     volumes:
       - nextcloud-config:/var/www/html/config
