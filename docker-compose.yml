@@ -1,64 +1,82 @@
 version: "3.5"
 
 services:
-  nginx-index:
-    image: nginx:alpine
-    container_name: nginx-index
-    restart: on-failure
+  traefik:
+    image: traefik:latest
+    restart: always
     ports:
       - 80:80
       - 433:433
+      - 8080:8080
     volumes:
-      - ./index/nginx-conf.d:/etc/nginx/conf.d
-      #- nginx:/etc/nginx/certs
+      - ./traefik/config/:/etc/traefik/:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${TMP_FOLDER}/traefik/logs:/var/logs/traefik/
     networks:
-      - front_end
-      - mid_layout
-      - fort
+      - front-end
+      - mid-layout
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.middlewares: admin-auth@file
 
-# ------ network framework -------------------
-#        +--------------------+
-#        |        LAN         |
-#        +--------------------+
-#                  |
-#        +--------------------+
-#        |     front_end      |
-#        +--------------------+
-#           |              |
-#   +-------------+  +-------------+
-#   |  mid_layout |  |     fort    |
-#   +-------------+  +-------------+
-#           |              |
-#        +--------------------+
-#        |      back_end      |
-#        +--------------------+
+  nas-whoami:
+    image: containous/whoami:latest
+    networks:
+      - mid-layout
+      - back-end
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.nas-whoami.rule: "Host(`whoami.${DOMAIN_NAME}`)"
+      traefik.http.routers.nas-whoami.service: nas-whoami
+      traefik.http.services.nas-whoami.loadbalancer.server.port: 80
+
+  admin-whoami:
+    image: containous/whoami:latest
+    networks:
+      - mid-layout
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.admin-whoami.rule: "Host(`whoami.admin.${DOMAIN_NAME}`)"
+      traefik.http.routers.admin-whoami.service: admin-whoami
+      traefik.http.routers.admin-whoami.middlewares: admin-auth@file
+      traefik.http.services.admin-whoami.loadbalancer.server.port: 80
+
+  #nginx-index:
+    #image: nginx:alpine
+    #container_name: nginx-index
+    #restart: on-failure #ports:
+      #- 80:80
+      #- 433:433
+    #volumes:
+      #- ./index/nginx-conf.d:/etc/nginx/conf.d
+      ##- nginx:/etc/nginx/certs
+    #networks:
+      #- front_end
+      #- mid_layout
+      #- fort
+
 networks:
 
-  front_end:
-    name: net_front-end
+  front-end:
     ipam:
       driver: default
       config:
         - subnet: 172.16.1.0/24
 
-  mid_layout:
+  mid-layout:
     internal: true
-    name: net_mid-layout
     ipam:
       driver: default
       config:
         - subnet: 172.16.10.0/24
 
-  fort:
-    name: net_fort
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.250.0/24
-
-  back_end:
+  back-end:
     internal: true
-    name: net_back-end
     ipam:
       driver: default
       config:
