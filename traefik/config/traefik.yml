@@ -105,7 +105,7 @@ providers:
 
     # Default host rule. (Optional)
     # Default: "Host(`{{ normalize .Name }}`)"
-    defaultRule: "PathPrefix(`/{{ normalize .Name }}`)"
+    defaultRule: "Host(`{{ normalize .Name }}`)"
 
     # Expose containers by default in traefik (Optional)
     # Default: true
@@ -115,4 +115,4 @@ providers:
     # Default: false
     #watch: true
 
-    network: nas-docker-compose_mid-layout
+    #network: nas-docker-compose_mid-layout
