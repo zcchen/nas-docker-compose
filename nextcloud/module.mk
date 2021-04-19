@@ -1,4 +1,4 @@
-__DATA_SUBFOLDERS := mysql data config apps
+__DATA_SUBFOLDERS := mysql config data apps
 __TMP_SUBFOLDERS := ./
 
 

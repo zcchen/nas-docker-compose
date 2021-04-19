@@ -3,19 +3,23 @@ version: "3.5"
 services:
   traefik:
     image: traefik:latest
-    #command: --providers.docker.network=nas-docker-compose_mid-layout
     restart: always
     ports:
       - 80:80
       - 433:433
       - 8080:8080
     volumes:
-      - ./traefik:/etc/traefik/
+      - ./traefik/config/:/etc/traefik/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${TMP_FOLDER}/traefik/logs:/var/logs/traefik/
     networks:
       - front-end
       - mid-layout
+    labels:
+      traefik.enable: true
+      traefik.http.routers.traefik.rule: "Host(`traefik.${DOMAIN_NAME}`)"
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.middlewares: admin-auth@file
 
   nas-whoami:
     image: containous/whoami:latest
@@ -24,7 +28,7 @@ services:
       - back-end
     labels:
       traefik.enable: true
-      traefik.http.routers.nas-whoami.rule: "pathprefix(`/whoami`)"
+      traefik.http.routers.nas-whoami.rule: "Host(`whoami.${DOMAIN_NAME}`)"
       traefik.http.routers.nas-whoami.service: nas-whoami
       traefik.http.services.nas-whoami.loadbalancer.server.port: 80
 
@@ -34,7 +38,7 @@ services:
       - mid-layout
     labels:
       traefik.enable: true
-      traefik.http.routers.admin-whoami.rule: "pathprefix(`/admin/whoami`)"
+      traefik.http.routers.admin-whoami.rule: "Host(`whoami.admin.${DOMAIN_NAME}`)"
       traefik.http.routers.admin-whoami.service: admin-whoami
       traefik.http.routers.admin-whoami.middlewares: admin-auth@file
       traefik.http.services.admin-whoami.loadbalancer.server.port: 80
@@ -53,22 +57,6 @@ services:
       #- mid_layout
       #- fort
 
-# ------ network framework -------------------
-#        +--------------------+
-#        |        LAN         |
-#        +--------------------+
-#                  |
-#        +--------------------+
-#        |     front-end      |
-#        +--------------------+
-#           |              |
-#   +-------------+  +-------------+
-#   |  mid-layout |  |     fort    |
-#   +-------------+  +-------------+
-#           |              |
-#        +--------------------+
-#        |      back_end      |
-#        +--------------------+
 networks:
 
   front-end:
@@ -83,12 +71,6 @@ networks:
       driver: default
       config:
         - subnet: 172.16.10.0/24
-
-  fort:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.16.250.0/24
 
   back-end:
     internal: true
