@@ -35,10 +35,10 @@ purge: $(MODULES) clean
 
 prepare: $(DATA_SUBFOLDERS) $(TMP_SUBFOLDERS)
 
-$(DATA_SUBFOLDERS): $(DATA_FOLDER)
+$(DATA_SUBFOLDERS): $(DATA_FOLDER) $(MODULES)
 	mkdir -p $(foreach d,$@,$</$(d))
 
-$(TMP_SUBFOLDERS): $(TMP_FOLDER)
+$(TMP_SUBFOLDERS): $(TMP_FOLDER) $(MODULES)
 	mkdir -p $(foreach d,$@,$</$(d))
 
 $(DATA_FOLDER) $(TMP_FOLDER):
