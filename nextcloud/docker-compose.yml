@@ -2,16 +2,45 @@ version: "3.5"
 
 services:
 
+  nextcloud-app:
+    image: nextcloud:latest
+    restart: always
+    volumes:
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-apps:/var/www/html/custom_apps
+    env_file:
+      - ${PWD}/nextcloud/config.env
+    environment:
+      REDIS_HOST: nextcloud-redis
+      MYSQL_HOST: nextcloud-db
+      NEXTCLOUD_TRUSTED_DOMAINS: traefik
+    secrets:
+      - nextcloud_admin_password
+      - nextcloud_db_password
+    depends_on:
+      - nextcloud-db
+      - nextcloud-redis
+    networks:
+      - mid-layout
+      - back-end
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${DOMAIN_NAME}`)"
+      traefik.http.routers.nas-nextcloud.service: nas-nextcloud
+      traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
+
   nextcloud-config:
-    image: alpine
-    container_name: nextcloud-config
+    image: nextcloud:latest
     restart: on-failure
     volumes:
-      - nextcloud-html:/var/www/html/
+      - nextcloud-config:/var/www/html/config
       - ./nextcloud/config/:/mnt:ro
-    command: sh -c "
-      cp /mnt/*.config.php /var/www/html/config/ &&
-      chown -R 82:root /var/www/html/config/*.config.php
+    networks: []
+    command: bash -c "
+      for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{DOMAIN_NAME}}/${DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
+      chown -R www-data:root /var/www/html/config/
       "
 
   nextcloud-db:
@@ -26,46 +55,20 @@ services:
     volumes:
       - nextcloud-db-mariadb:/var/lib/mysql:consistent
     networks:
-      - back_end
+      - back-end
 
   nextcloud-redis:
     image: redis:alpine
     container_name: nextcloud-redis
-    restart: on-failure
+    restart: unless-stopped
     networks:
-      - back_end
-
-  nextcloud-app:
-    image: nextcloud:latest
-    container_name: nextcloud-app
-    restart: always
-    volumes:
-      - nextcloud-html:/var/www/html/
-      - nextcloud-data:/var/www/html/data
-      - nextcloud-apps:/var/www/html/custom_apps
-    env_file:
-      - ${PWD}/nextcloud/config.env
-    environment:
-      REDIS_HOST: nextcloud-redis
-      #REDIS_HOST_PASSWORD: ""
-      MYSQL_HOST: nextcloud-db
-      NEXTCLOUD_TRUSTED_DOMAINS: nginx-index
-    secrets:
-      - nextcloud_admin_password
-      - nextcloud_db_password
-    depends_on:
-      - nextcloud-db
-      - nextcloud-redis
-    networks:
-      - fort
-      - back_end
+      - back-end
 
   nextcloud-cron:
     image: nextcloud:latest
-    container_name: nextcloud-cron
     restart: on-failure
     volumes:
-      - nextcloud-html:/var/www/html/
+      - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
     entrypoint: /cron.sh
@@ -73,7 +76,6 @@ services:
       - ${PWD}/nextcloud/config.env
     environment:
       REDIS_HOST: nextcloud-redis
-      #REDIS_HOST_PASSWORD: ""
       MYSQL_HOST: nextcloud-db
     secrets:
       - nextcloud_admin_password
@@ -92,12 +94,12 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/mysql"  # The target path is '/var/lib/mysql'
-  nextcloud-html:
+  nextcloud-config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: "${DATA_FOLDER}/nextcloud/html"   # /var/www/html, predefined setup
+      device: "${DATA_FOLDER}/nextcloud/config"   # /var/www/html/config, predefined setup
   nextcloud-data:
     driver: local
     driver_opts:
