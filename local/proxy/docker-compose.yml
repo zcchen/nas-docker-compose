@@ -1,41 +1,17 @@
 version: "3.5"
 
 services:
-
   shadowsocks:
     image: mritd/shadowsocks
     restart: always
-    depends_on:
-      - dnsmasq
     ports:
       - 7070:7070
     networks:
       - front-end
-      - mid-layout
-    secrets:
-      - proxy-shadowsocks-config
-    entrypoint: |
-      ss-local -c /run/secrets/proxy-shadowsocks-config -l 7070 \
-               -s ${SERVER_DOMAIN_NAME} -p 8080 \
-               --plugin v2ray-plugin
+      #- mid-layout
     environment:
-      SERVER_DOMAIN_NAME:
-
-  privoxy:
-    image: zcchen/privoxy
-    restart: always
-    depends_on:
-      - shadowsocks
-    ports:
-      - 8118:8118
-    networks:
-      - front-end
-      - mid-layout
-    environment:
-      LISTEN_ADDRESS_IPV4: 0.0.0.0
-      SOCKS_PROXY: shadowsocks:7070
-      SOCKS_METHOD: socks5
-
-secrets:
-  proxy-shadowsocks-config:
-    file: ../configs/secrets/proxy/shadowsocks-config.json
+      SS_MODULE: "ss-local"
+      SS_CONFIG: "-s <Server_1> [-s Server_2] -b 0.0.0.0 -p <Remote_Port> -l 7070 -k <Password> -m aes-256-gcm --fast-open --reuse-port -v"
+      #KCP_FLAG: "false"
+      #KCP_MODULE:
+      #KCP_CONFIG:

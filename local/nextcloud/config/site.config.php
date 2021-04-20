@@ -19,9 +19,10 @@ $CONFIG = [
 'trusted_domains' =>
    [
     '127.0.0.1',
-    '{{LOCAL_DOMAIN_NAME}}',
-    'nextcloud-nginx',
-    'nextcloud-apache',
+    '192.168.1.0/24',
+    'localhost',
+    '*.localhost',
+    'nextcloud.{{DOMAIN_NAME}}',
    ],
 
 /**
@@ -31,40 +32,7 @@ $CONFIG = [
  * it may be difficult for Nextcloud to detect this parameter, resulting in
  * invalid URLs.
  */
-'overwritewebroot' => '/nextcloud',
+'overwritewebroot' => '/',
 
 'trusted_proxies' => ['172.16.1.0/24', '172.16.10.0/24'],
-
-/**
- * The URL of your proxy server, for example ``proxy.example.com:8081``.
- *
- * Note: Guzzle (the http library used by Nextcloud) is reading the environment
- * variables HTTP_PROXY (only for cli request), HTTPS_PROXY, and NO_PROXY by default.
- *
- * If you configure proxy with Nextcloud any default configuration by Guzzle
- * is overwritten. Make sure to set ``proxyexclude`` accordingly if necessary.
- *
- * Defaults to ``''`` (empty string)
- */
-'proxy' => 'http://privoxy:8118',
-
-/**
- * The optional authentication for the proxy to use to connect to the internet.
- * The format is: ``username:password``.
- *
- * Defaults to ``''`` (empty string)
- */
-'proxyuserpwd' => '',
-
-/**
- * List of host names that should not be proxied to.
- * For example: ``['.mit.edu', 'foo.com']``.
- *
- * Hint: Use something like ``explode(',', getenv('NO_PROXY'))`` to sync this
- * value with the global NO_PROXY option.
- *
- * Defaults to empty array.
- */
-'proxyexclude' => [],
-
 ];

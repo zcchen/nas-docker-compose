@@ -2,66 +2,56 @@ version: "3.5"
 
 services:
 
-  nextcloud-nginx:
-    image: nginx
-    restart: always
-    depends_on:
-      - nextcloud-app
-    volumes:
-      - ./nextcloud/web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - nextcloud-html:/var/www/html/:ro
-    networks:
-      - mid-layout
-    #command: [nginx-debug, '-g', 'daemon off;']
-
   nextcloud-app:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
+    image: nextcloud:latest
     restart: always
     volumes:
-      - nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
-      - ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
-      - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
     env_file:
-      - ./nextcloud/nextcloud.env
+      - ${PWD}/nextcloud/config.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
+      NEXTCLOUD_TRUSTED_DOMAINS: traefik
     secrets:
-      - nextcloud-admin-password
-      - nextcloud-db-password
+      - nextcloud_admin_password
+      - nextcloud_db_password
     depends_on:
       - nextcloud-db
       - nextcloud-redis
     networks:
       - mid-layout
       - back-end
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${DOMAIN_NAME}`)"
+      traefik.http.routers.nas-nextcloud.service: nas-nextcloud
+      traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
 
   nextcloud-config:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
+    image: nextcloud:latest
     restart: on-failure
     volumes:
-      - nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - ./nextcloud/config/:/mnt:ro
-    networks: []    #disable the network
-    command: sh -c "
-      for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
+    networks: []
+    command: bash -c "
+      for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{DOMAIN_NAME}}/${DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
       chown -R www-data:root /var/www/html/config/
       "
 
   nextcloud-db:
     image: mariadb
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb_read_only_compressed=OFF
+    container_name: nextcloud-db
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: on-failure
     env_file:
-      - ./nextcloud/nextcloud.env
+      - ${PWD}/nextcloud/config.env
     secrets:
-      - nextcloud-db-password
+      - nextcloud_db_password
     volumes:
       - nextcloud-db-mariadb:/var/lib/mysql:consistent
     networks:
@@ -69,62 +59,32 @@ services:
 
   nextcloud-redis:
     image: redis:alpine
-    restart: always
+    container_name: nextcloud-redis
+    restart: unless-stopped
     networks:
       - back-end
 
   nextcloud-cron:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
-    restart: unless-stopped
+    image: nextcloud:latest
+    restart: on-failure
     volumes:
-      - nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
     entrypoint: /cron.sh
     env_file:
-      - ./nextcloud/nextcloud.env
+      - ${PWD}/nextcloud/config.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
     secrets:
-      - nextcloud-admin-password
-      - nextcloud-db-password
+      - nextcloud_admin_password
+      - nextcloud_db_password
     depends_on:
       - nextcloud-app
       - nextcloud-db
       - nextcloud-redis
-    networks: []    # disable the network
-
-  nextcloud-occ-command:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
-    restart: on-failure
-    volumes:
-      - nextcloud-html:/var/www/html/
-      - nextcloud-config:/var/www/html/config
-      - nextcloud-data:/var/www/html/data
-      - nextcloud-apps:/var/www/html/custom_apps
-      - ./nextcloud/occ-command/:/occ-command/:ro
-    env_file:
-      - ./nextcloud/nextcloud.env
-    environment:
-      REDIS_HOST: nextcloud-redis
-      MYSQL_HOST: nextcloud-db
-    secrets:
-      - nextcloud-public-password
-    depends_on:
-      - nextcloud-nginx
-      - nextcloud-app
-      - nextcloud-db
-      - nextcloud-redis
-    networks:
-      - mid-layout
-      - back-end
-    user: www-data
-    working_dir: /occ-command/
-    command: sh /occ-command/occ-commands.sh
+    networks: []
 
 
 volumes:
@@ -152,12 +112,9 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/apps"
-  nextcloud-html:
 
 secrets:
-  nextcloud-db-password:
-    file: ../configs/secrets/nextcloud/nextcloud-db-passwd.txt
-  nextcloud-admin-password:
-    file: ../configs/secrets/nextcloud/nextcloud-admin-passwd.txt
-  nextcloud-public-password:
-    file: ../configs/secrets/nextcloud/nextcloud-public-passwd.txt
+  nextcloud_db_password:
+    file: ./nextcloud/secrets/nextcloud-db-passwd.txt
+  nextcloud_admin_password:
+    file: ./nextcloud/secrets/nextcloud-admin-passwd.txt
