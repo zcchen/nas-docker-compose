@@ -12,12 +12,12 @@ services:
     env_file:
       - ${PWD}/nextcloud/config.env
     environment:
-      REDIS_HOST: nextcloud-redis
-      MYSQL_HOST: nextcloud-db
+      REDIS_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-redis_1
+      MYSQL_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-db_1
       NEXTCLOUD_TRUSTED_DOMAINS: traefik
     secrets:
-      - nextcloud_admin_password
-      - nextcloud_db_password
+      - nextcloud-admin-password
+      - nextcloud-db-password
     depends_on:
       - nextcloud-db
       - nextcloud-redis
@@ -45,7 +45,7 @@ services:
 
   nextcloud-db:
     image: mariadb
-    container_name: nextcloud-db
+    #container_name: nextcloud-db
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: on-failure
     env_file:
@@ -59,8 +59,7 @@ services:
 
   nextcloud-redis:
     image: redis:alpine
-    container_name: nextcloud-redis
-    restart: unless-stopped
+    restart: always
     networks:
       - back-end
 
@@ -75,11 +74,11 @@ services:
     env_file:
       - ${PWD}/nextcloud/config.env
     environment:
-      REDIS_HOST: nextcloud-redis
-      MYSQL_HOST: nextcloud-db
+      REDIS_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-redis_1
+      MYSQL_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-db_1
     secrets:
-      - nextcloud_admin_password
-      - nextcloud_db_password
+      - nextcloud-admin-password
+      - nextcloud-db-password
     depends_on:
       - nextcloud-app
       - nextcloud-db
@@ -114,7 +113,7 @@ volumes:
       device: "${DATA_FOLDER}/nextcloud/apps"
 
 secrets:
-  nextcloud_db_password:
-    file: ./nextcloud/secrets/nextcloud-db-passwd.txt
-  nextcloud_admin_password:
-    file: ./nextcloud/secrets/nextcloud-admin-passwd.txt
+  nextcloud-db-password:
+    file: ../secrets/nextcloud/nextcloud-db-passwd.txt
+  nextcloud-admin-password:
+    file: ../secrets/nextcloud/nextcloud-admin-passwd.txt

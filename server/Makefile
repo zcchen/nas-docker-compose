@@ -1,9 +1,10 @@
-include $(CURDIR)/.env
+ENV_FILE = project.env
+include $(CURDIR)/$(ENV_FILE)
 
 YML_FILES  = docker-compose.yml
 YML_FILES += $(wildcard */docker-compose.yml)
 
-DOCKER_ARGS  =
+DOCKER_ARGS  = --env-file $(ENV_FILE)
 DOCKER_ARGS += $(foreach yml,$(YML_FILES),-f $(yml))
 
 

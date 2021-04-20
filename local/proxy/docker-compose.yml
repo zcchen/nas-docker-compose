@@ -8,10 +8,16 @@ services:
       - 7070:7070
     networks:
       - front-end
-      #- mid-layout
+      - mid-layout
+    secrets:
+      - proxy-shadowsocks-config
     environment:
       SS_MODULE: "ss-local"
-      SS_CONFIG: "-s <Server_1> [-s Server_2] -b 0.0.0.0 -p <Remote_Port> -l 7070 -k <Password> -m aes-256-gcm --fast-open --reuse-port -v"
+      SS_CONFIG: "-s <Server_1> -l 7070 -c /run/secrets/proxy-shadowsocks-config"
       #KCP_FLAG: "false"
       #KCP_MODULE:
       #KCP_CONFIG:
+
+secrets:
+  proxy-shadowsocks-config:
+    file: ../secrets/proxy/shadowsocks-config.json
