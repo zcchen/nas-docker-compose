@@ -2,15 +2,16 @@ version: "3.5"
 
 services:
   shadowsocks:
-    image: mritd/shadowsocks:latest
-      # this version contains shadowsocks + obfs
+    image: mritd/shadowsocks
     restart: always
-    command: |
-      -m "ss-local"
-      -s "--server 127.0.0.1 -p 12345 -l 7070 -m <Encrypt-method> -k <password>"
     ports:
       - 7070:7070
     networks:
       - front-end
-      - mid-layout
-
+      #- mid-layout
+    environment:
+      SS_MODULE: "ss-local"
+      SS_CONFIG: "-s <Server_1> [-s Server_2] -b 0.0.0.0 -p <Remote_Port> -l 7070 -k <Password> -m aes-256-gcm --fast-open --reuse-port -v"
+      #KCP_FLAG: "false"
+      #KCP_MODULE:
+      #KCP_CONFIG:
