@@ -1,0 +1,16 @@
+version: "3.5"
+
+services:
+  shadowsocks:
+    image: mritd/shadowsocks:latest
+      # this version contains shadowsocks + obfs
+    restart: always
+    command: |
+      -m "ss-local"
+      -s "--server 127.0.0.1 -p 12345 -l 7070 -m <Encrypt-method> -k <password>"
+    ports:
+      - 7070:7070
+    networks:
+      - front-end
+      - mid-layout
+
