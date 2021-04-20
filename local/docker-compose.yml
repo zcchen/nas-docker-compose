@@ -46,19 +46,6 @@ services:
       traefik.http.routers.admin-whoami.middlewares: admin-auth@file
       traefik.http.services.admin-whoami.loadbalancer.server.port: 80
 
-  #nginx-index:
-    #image: nginx:alpine
-    #container_name: nginx-index
-    #restart: on-failure #ports:
-      #- 80:80
-      #- 433:433
-    #volumes:
-      #- ./index/nginx-conf.d:/etc/nginx/conf.d
-      ##- nginx:/etc/nginx/certs
-    #networks:
-      #- front_end
-      #- mid_layout
-      #- fort
 
 networks:
 
