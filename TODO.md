@@ -22,10 +22,10 @@ Features for NAS machine
     * [ ] others
   + [x] set the default app to be `file`
   + [ ] setup the tunings, like `redis` +  ...
-- [ ] local proxy (ss + r2ray)
+- [ ] local proxy (ss + obfs), privoxy, trustable DNS solution
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
-- [ ] separate this project into `remote` & `local`
-  + [ ] Update the default `docker-compose` project name
+- [x] separate this project into `server` & `local`
+  + [x] Update the default `docker-compose` project name
 - [?] ddns
 - [?] Unified Entrance (Heimall)
 - [ ] frp local
