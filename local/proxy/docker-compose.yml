@@ -5,7 +5,7 @@ services:
     image: mritd/shadowsocks
     restart: always
     ports:
-      - 7070:7070
+      - 27070:7070
     networks:
       - front-end
       #- mid-layout
