@@ -1,4 +1,4 @@
-ENV_SRC  = project.env $(CURDIR)/../domain.env
+ENV_SRC  = project.env $(CURDIR)/../domain.env $(CURDIR)/../local.env
 ENV_FILE = compose.env
 
 YML_FILES  = docker-compose.yml
