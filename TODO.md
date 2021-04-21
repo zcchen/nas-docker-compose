@@ -22,12 +22,12 @@ Features for NAS machine
     * [ ] others
   + [x] set the default app to be `file`
   + [ ] setup the tunings, like `redis` +  ...
+- [ ] local DNS provider, `unbound`
 - [ ] local proxy (ss + obfs), privoxy, trustable DNS solution
+- [ ] server proxy provider (ss + obfs)
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
-- [?] ddns
-- [?] Unified Entrance (Heimall)
 - [ ] frp local
 - [ ] https support (letsencrypt)
 - [ ] onlyoffice

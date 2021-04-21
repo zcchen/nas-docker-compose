@@ -1,40 +1,38 @@
-ENV_FILE = project.env
-include $(CURDIR)/$(ENV_FILE)
+# Setup the env files
+ENV_SRC  = project.env ../configs/domain.env ../configs/local.env
+ENV_FILE = compose.env
+include $(ENV_FILE)
 
-YML_FILES  = docker-compose.yml
-YML_FILES += $(wildcard */docker-compose.yml)
+# setup the docker compose parameters
+COMPOSE_BIN  = docker-compose
+COMPOSE_ARGS = --env-file $(ENV_FILE)
 
-DOCKER_ARGS  = --env-file $(ENV_FILE)
-DOCKER_ARGS += $(foreach yml,$(YML_FILES),-f $(yml))
-
-
+# include the module setup
 DATA_SUBFOLDERS :=
 TMP_SUBFOLDERS :=
 MODULE_FILES = $(wildcard */module.mk)
 include $(MODULE_FILES)
 MODULES      = $(foreach mf,$(MODULE_FILES),$(basename $(dir $(mf))))
 
-.PHONY: all clean purge
-.PHONY: up config down prepare
+# include the template
+include ../mk-mods/template.mk
 
-all: up
+# updates the template interfaces
+prepare: $(ENV_FILE) $(eval include $(ENV_FILE)) prepare_FOLDERS
+purge: purge_ENV_FILE
 
-clean: down
 
-up: prepare $(YML_FILES)
-	docker-compose $(DOCKER_ARGS) up
+# env file handler
+.PHONY: purge_ENV_FILE
+purge_ENV_FILE:
+	-rm $(ENV_FILE)
 
-config: $(YML_FILES)
-	docker-compose $(DOCKER_ARGS) config
+$(ENV_FILE): $(ENV_SRC)
+	cat $^ > $@
 
-down: $(YML_FILES)
-	-docker-compose $(DOCKER_ARGS) $(DOCKER_ARGS_TEST) down -v
-
-purge: $(MODULES) clean
-	-sudo rm -rvf $(foreach m,$<,$(DATA_FOLDER)/$(m))
-	-sudo rm -rvf $(foreach m,$<,$(TMP_FOLDER)/$(m))
-
-prepare: $(DATA_SUBFOLDERS) $(TMP_SUBFOLDERS)
+# sub module dirs handler
+.PHONY: prepare_FOLDERS
+prepare_FOLDERS: $(DATA_SUBFOLDERS) $(TMP_SUBFOLDERS)
 
 $(DATA_SUBFOLDERS): $(DATA_FOLDER) $(MODULES)
 	mkdir -p $(foreach d,$@,$</$(d))

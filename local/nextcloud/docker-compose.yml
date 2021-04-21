@@ -27,7 +27,7 @@ services:
     labels:
       traefik.enable: true
       traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
-      traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${DOMAIN_NAME}`)"
+      traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${LOCAL_DOMAIN_NAME}`)"
       traefik.http.routers.nas-nextcloud.service: nas-nextcloud
       traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
 
@@ -39,7 +39,7 @@ services:
       - ./nextcloud/config/:/mnt:ro
     networks: []
     command: bash -c "
-      for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{DOMAIN_NAME}}/${DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
+      for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
       chown -R www-data:root /var/www/html/config/
       "
 
@@ -51,7 +51,7 @@ services:
     env_file:
       - ${PWD}/nextcloud/config.env
     secrets:
-      - nextcloud_db_password
+      - nextcloud-db-password
     volumes:
       - nextcloud-db-mariadb:/var/lib/mysql:consistent
     networks:
@@ -114,6 +114,6 @@ volumes:
 
 secrets:
   nextcloud-db-password:
-    file: ../secrets/nextcloud/nextcloud-db-passwd.txt
+    file: ../configs/secrets/nextcloud/nextcloud-db-passwd.txt
   nextcloud-admin-password:
-    file: ../secrets/nextcloud/nextcloud-admin-passwd.txt
+    file: ../configs/secrets/nextcloud/nextcloud-admin-passwd.txt
