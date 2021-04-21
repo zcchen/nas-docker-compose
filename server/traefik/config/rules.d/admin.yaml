@@ -1,0 +1,7 @@
+http:
+  middlewares:
+
+    admin-auth:
+      basicAuth:
+        usersFile:
+          - "/run/secrets/traefik-admin-auth"
