@@ -3,20 +3,16 @@ version: "3.5"
 services:
   shadowsocks:
     image: mritd/shadowsocks
-    restart: on-failure
+    restart: always
     ports:
-      - 8080:8080
+      - 12345:12345
     networks:
       - front-end
     secrets:
       - proxy-shadowsocks-config
-    entrypoint: |
-      ss-server -c /run/secrets/proxy-shadowsocks-config \
-                -p 8080 --plugin v2ray-plugin \
-                --plugin-opts 'server' -v
-    #environment:
-      #SS_MODULE: ss-server
-      #SS_CONFIG:" "-c /run/secrets/proxy-shadowsocks-config -s 0.0.0.0"
+    environment:
+      SS_MODULE: "ss-server"
+      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s 0.0.0.0 -p 12345 -v"
 
 secrets:
   proxy-shadowsocks-config:
