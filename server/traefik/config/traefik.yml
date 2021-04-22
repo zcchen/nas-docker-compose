@@ -29,7 +29,7 @@ entryPoints:
 api:
   # Enable the API in insecure mode (Optional)
   # Default: false
-  insecure: true
+  #insecure: true
 
   # Enabled Dashboard (Optional)
   # Default: true
