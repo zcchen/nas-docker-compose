@@ -23,7 +23,7 @@ config: version $(YML_FILES)
 	$(COMPOSE_BIN) $(COMPOSE_ARGS) config
 
 down: version $(YML_FILES)
-	-$(COMPOSE_BIN) $(COMPOSE_ARGS) down -v
+	-$(COMPOSE_BIN) $(COMPOSE_ARGS) down --volumes
 
 purge: clean
 	-sudo rm -rvf $(DATA_FOLDER)
