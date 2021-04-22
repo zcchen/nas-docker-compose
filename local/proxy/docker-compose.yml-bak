@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+  shadowsocks:
+    image: mritd/shadowsocks
+    restart: always
+    ports:
+      - 27070:7070
+    networks:
+      - front-end
+      - mid-layout
+    secrets:
+      - proxy-shadowsocks-config
+    environment:
+      SS_MODULE: "ss-local"
+      SS_CONFIG: "-s ${SERVER_DOMAIN_NAME} -l 7070 -c /run/secrets/proxy-shadowsocks-config"
+      #KCP_FLAG: "false"
+      #KCP_MODULE:
+      #KCP_CONFIG:
+
+secrets:
+  proxy-shadowsocks-config:
+    file: ../configs/secrets/proxy/shadowsocks-config.json

@@ -1,0 +1,77 @@
+version: "3.5"
+
+services:
+  traefik:
+    image: traefik:latest
+    restart: always
+    ports:
+      - 80:80
+      - 433:433
+    volumes:
+      - ./traefik/config/:/etc/traefik/:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${TMP_FOLDER}/traefik/logs:/var/logs/traefik/
+    networks:
+      - front-end
+      - mid-layout
+    secrets:
+      - traefik-admin-auth
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.traefik.rule: "Host(`traefik.${SERVER_DOMAIN_NAME}`)"
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.middlewares: admin-auth@file
+
+  nas-whoami:
+    image: containous/whoami:latest
+    networks:
+      - mid-layout
+      - back-end
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.nas-whoami.rule: "Host(`whoami.${SERVER_DOMAIN_NAME}`)"
+      traefik.http.routers.nas-whoami.service: nas-whoami
+      traefik.http.services.nas-whoami.loadbalancer.server.port: 80
+
+  admin-whoami:
+    image: containous/whoami:latest
+    networks:
+      - mid-layout
+    labels:
+      traefik.enable: true
+      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
+      traefik.http.routers.admin-whoami.rule: "Host(`whoami.admin.${SERVER_DOMAIN_NAME}`)"
+      traefik.http.routers.admin-whoami.service: admin-whoami
+      traefik.http.routers.admin-whoami.middlewares: admin-auth@file
+      traefik.http.services.admin-whoami.loadbalancer.server.port: 80
+
+
+networks:
+
+  front-end:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.2.0/24
+
+  mid-layout:
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.12.0/24
+
+  back-end:
+    internal: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.22.0/24
+
+
+secrets:
+  traefik-admin-auth:
+    file: ../configs/secrets/traefik/admin.http.auth
+

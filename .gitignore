@@ -1,5 +1,3 @@
-data/*/
-tmp/
+local/compose.env
+server/compose.env
 
-!data/*/.gitkeep
-!data/.gitkeep

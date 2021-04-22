@@ -1,7 +1,7 @@
 TODO
 =============================
 
-Features for NAS machine
+main
 -----------------------------
 - [x] nginx reversed proxy
   + [x] find a reversed proxy docker solution.
@@ -22,13 +22,16 @@ Features for NAS machine
     * [ ] others
   + [x] set the default app to be `file`
   + [ ] setup the tunings, like `redis` +  ...
-- [ ] local proxy (ss + r2ray)
+- [ ] proxy setup
+  + [ ] local proxy (ss + obfs), privoxy, trustable DNS solution
+  + [ ] server proxy provider (ss + obfs)
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
-- [ ] separate this project into `remote` & `local`
-  + [ ] Update the default `docker-compose` project name
-- [?] ddns
-- [?] Unified Entrance (Heimall)
-- [ ] frp local
+- [x] separate this project into `server` & `local`
+  + [x] Update the default `docker-compose` project name
+- [ ] local DNS provider, `unbound`
+- [ ] frp
+  + [ ] local
+  + [ ] server
 - [ ] https support (letsencrypt)
 - [ ] onlyoffice
 - [ ] gitlab
@@ -36,9 +39,7 @@ Features for NAS machine
 - [ ] auto download (aria2, aria2-ng)
 - [ ] server monitoring (cockpit)
 
-Features for another machines
+others
 -----------------------------
-- [ ] CI (Jerkins)
 - [ ] media center (commercial: emby server / opensource: jellyfin)
-- [ ] frp server
 

@@ -1,0 +1,44 @@
+# Setup the env files
+ENV_SRC  = project.env ../configs/domain.env ../configs/local.env
+ENV_FILE = compose.env
+include $(ENV_FILE)
+
+# setup the docker compose parameters
+COMPOSE_BIN  = docker-compose
+COMPOSE_ARGS = --env-file $(ENV_FILE)
+
+# include the module setup
+DATA_SUBFOLDERS :=
+TMP_SUBFOLDERS :=
+MODULE_FILES = $(wildcard */module.mk)
+include $(MODULE_FILES)
+MODULES      = $(foreach mf,$(MODULE_FILES),$(basename $(dir $(mf))))
+
+# include the template
+include ../mk-mods/template.mk
+
+# updates the template interfaces
+prepare: $(ENV_FILE) $(eval include $(ENV_FILE)) prepare_FOLDERS
+purge: purge_ENV_FILE
+
+
+# env file handler
+.PHONY: purge_ENV_FILE
+purge_ENV_FILE:
+	-rm $(ENV_FILE)
+
+$(ENV_FILE): $(ENV_SRC)
+	cat $^ > $@
+
+# sub module dirs handler
+.PHONY: prepare_FOLDERS
+prepare_FOLDERS: $(DATA_SUBFOLDERS) $(TMP_SUBFOLDERS)
+
+$(DATA_SUBFOLDERS): $(DATA_FOLDER) $(MODULES)
+	mkdir -p $(foreach d,$@,$</$(d))
+
+$(TMP_SUBFOLDERS): $(TMP_FOLDER) $(MODULES)
+	mkdir -p $(foreach d,$@,$</$(d))
+
+$(DATA_FOLDER) $(TMP_FOLDER):
+	mkdir -p $@

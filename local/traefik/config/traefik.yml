@@ -115,4 +115,3 @@ providers:
     # Default: false
     #watch: true
 
-    #network: nas-docker-compose_mid-layout

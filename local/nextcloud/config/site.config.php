@@ -22,7 +22,7 @@ $CONFIG = [
     '192.168.1.0/24',
     'localhost',
     '*.localhost',
-    'nextcloud.{{DOMAIN_NAME}}',
+    'nextcloud.{{LOCAL_DOMAIN_NAME}}',
    ],
 
 /**
