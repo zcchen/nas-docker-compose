@@ -20,4 +20,4 @@ services:
 
 secrets:
   proxy-shadowsocks-config:
-    file: ../secrets/proxy/shadowsocks-config.json
+    file: ../configs/secrets/proxy/shadowsocks-config.json

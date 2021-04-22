@@ -73,5 +73,5 @@ networks:
 
 secrets:
   traefik-admin-auth:
-    file: ../secrets/traefik/admin.http.auth
+    file: ../configs/secrets/traefik/admin.http.auth
 
