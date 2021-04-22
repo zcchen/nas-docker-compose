@@ -114,6 +114,6 @@ volumes:
 
 secrets:
   nextcloud-db-password:
-    file: ../secrets/nextcloud/nextcloud-db-passwd.txt
+    file: ../configs/secrets/nextcloud/nextcloud-db-passwd.txt
   nextcloud-admin-password:
-    file: ../secrets/nextcloud/nextcloud-admin-passwd.txt
+    file: ../configs/secrets/nextcloud/nextcloud-admin-passwd.txt
