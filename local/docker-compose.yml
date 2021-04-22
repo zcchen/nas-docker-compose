@@ -5,8 +5,8 @@ services:
     image: traefik:latest
     restart: always
     ports:
-      - 80:80
-      - 433:433
+      - 1080:80
+      - 10433:433
     volumes:
       - ./traefik/config/:/etc/traefik/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
