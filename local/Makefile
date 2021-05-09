@@ -28,7 +28,7 @@ purge_ENV_FILE:
 	-rm $(ENV_FILE)
 
 $(ENV_FILE): $(ENV_SRC)
-	cat $^ > $@
+	eval "echo \"`cat $^`\"" > $@
 
 # sub module dirs handler
 .PHONY: prepare_FOLDERS

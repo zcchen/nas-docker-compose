@@ -3,6 +3,7 @@ TODO
 
 main
 -----------------------------
+- [ ] reset local port from `1080 + 10443` back to `80 + 443`
 - [x] nginx reversed proxy
   + [x] find a reversed proxy docker solution.
 - [x] `traefik` might be better reversed proxy
@@ -28,7 +29,7 @@ main
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
-- [ ] local DNS provider, `unbound`
+- [ ] local DNS provider, `unbound`, or `dnsmasq` + `felixonmars/dnsmasq-china-list`
 - [ ] frp
   + [ ] local
   + [ ] server

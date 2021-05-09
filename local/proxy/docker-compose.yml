@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  shadowsocks:
+    image: mritd/shadowsocks
+    restart: always
+    ports:
+      - 27070:7070
+    networks:
+      - front-end
+      - mid-layout
+    secrets:
+      - proxy-shadowsocks-config
+    environment:
+      SS_MODULE: "ss-local"
+      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s dockerhost -l 7070 -p 12345 -v"
+    extra_hosts:
+      - "dockerhost:${MYDOCKER_HOST}"
+
+secrets:
+  proxy-shadowsocks-config:
+    file: ../configs/secrets/proxy/shadowsocks-config.json
