@@ -1,6 +1,7 @@
 version: "3.5"
 
 services:
+
   shadowsocks:
     image: mritd/shadowsocks
     restart: always
@@ -13,9 +14,25 @@ services:
       - proxy-shadowsocks-config
     environment:
       SS_MODULE: "ss-local"
-      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s dockerhost -l 7070 -p 12345 -v"
-    extra_hosts:
-      - "dockerhost:${MYDOCKER_HOST}"
+      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s ${SERVER_DOMAIN_NAME} -l 7070 -p 12345 -v"
+    extra_hosts:  # TODO: Remove it for deployment
+      - "${SERVER_DOMAIN_NAME}:${MYDOCKER_HOST}"
+
+  privoxy:
+    build: proxy/privoxy/
+    image: zcchen/privoxy
+    restart: always
+    ports:
+      - 28118:8118
+    networks:
+      - front-end
+      - mid-layout
+    extra_hosts:  # TODO: Remove it for deployment
+      - "${SERVER_DOMAIN_NAME}:${MYDOCKER_HOST}"
+    environment:
+      LISTEN_ADDRESS_IPV4: 0.0.0.0
+      SOCKS_PROXY: ${MYDOCKER_HOST}:27070
+      SOCKS_METHOD: socks5
 
 secrets:
   proxy-shadowsocks-config:
