@@ -19,7 +19,6 @@ services:
       - "${SERVER_DOMAIN_NAME}:${MYDOCKER_HOST}"
 
   privoxy:
-    build: proxy/privoxy/
     image: zcchen/privoxy
     restart: always
     ports:
