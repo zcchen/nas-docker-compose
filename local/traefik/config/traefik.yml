@@ -19,8 +19,6 @@ entryPoints:
 
   https:
     address: :443
-  #mysql:
-    #address: :3306
 
 ################################################################
 # API and dashboard configuration

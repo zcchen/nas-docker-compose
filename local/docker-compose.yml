@@ -4,9 +4,12 @@ services:
   traefik:
     image: traefik:latest
     restart: always
+    command: |
+      --providers.docker.exposedByDefault=false
     ports:
-      - 1080:80
-      - 10433:433
+      - 80:80
+      - 433:433
+      - 8080:8080
     volumes:
       - ./traefik/config/:/etc/traefik/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -21,7 +24,7 @@ services:
       traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
       traefik.http.routers.traefik.rule: "Host(`traefik.${LOCAL_DOMAIN_NAME}`)"
       traefik.http.routers.traefik.service: api@internal
-      traefik.http.routers.traefik.middlewares: known-ips@file
+      #traefik.http.routers.traefik.middlewares: known-ips@file
 
   nas-whoami:
     image: containous/whoami:latest
