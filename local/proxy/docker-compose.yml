@@ -15,8 +15,6 @@ services:
     environment:
       SS_MODULE: "ss-local"
       SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s ${SERVER_DOMAIN_NAME} -l 7070 -v"
-    extra_hosts:  # TODO: Remove it for deployment
-      - "${SERVER_DOMAIN_NAME}:${MYDOCKER_HOST}"
 
   privoxy:
     image: zcchen/privoxy

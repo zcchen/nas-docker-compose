@@ -3,9 +3,9 @@ TODO
 
 main
 -----------------------------
-- [ ] reset local port from `1080 + 10443` back to `80 + 443`
-  + [ ] Bug fixing: Both traefik return 404 if both traefik are running.
-    * [ ] Update local debugging solution.
+- [x] reset local port from `1080 + 10443` back to `80 + 443`
+  + [x] Bug fixing: Both traefik return 404 if both traefik are running.
+  + [x] Update local debugging solution with vagrant
 - [x] nginx reversed proxy
   + [x] find a reversed proxy docker solution.
 - [x] `traefik` might be better reversed proxy
