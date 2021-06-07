@@ -6,7 +6,7 @@ services:
     image: mritd/shadowsocks
     restart: always
     ports:
-      - 27070:7070
+      - 7070:7070
     networks:
       - front-end
       - mid-layout
@@ -20,7 +20,7 @@ services:
     image: zcchen/privoxy
     restart: always
     ports:
-      - 28118:8118
+      - 8118:8118
     networks:
       - front-end
       - mid-layout

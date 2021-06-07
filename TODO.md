@@ -16,15 +16,15 @@ main
   + [x] basic setup
   + [x] cond service
   + [x] Redis cache
-  + [ ] nextcloud-app internet connection
-    * [ ] need proxy for nextcloud to access api.nextcloud.com
+  + [x] nextcloud-app internet connection
+    * [x] need proxy for nextcloud to access api.nextcloud.com
   + [x] nextcloud upload issue, related to `nginx` setup
     * [x] done with `traefik` solution.
   + [ ] Plugins for nextcloud
     * [ ] calenda
     * [ ] others
   + [x] set the default app to be `file`
-  + [ ] setup the tunings, like `redis` +  ...
+  + [x] setup the tunings, like `redis` +  ...
 - [ ] proxy setup
   + [ ] local proxy (ss + obfs), privoxy, trustable DNS solution
   + [ ] server proxy provider (ss + obfs)
@@ -36,6 +36,7 @@ main
   + [ ] local
   + [ ] server
 - [ ] https support (letsencrypt)
+
 - [ ] onlyoffice
 - [ ] gitlab
 - [ ] artifactory (JFrog)

@@ -8,7 +8,7 @@ services:
       #- 53:53/tcp
       - 53:53/udp
     volumes:
-      - ./config/:/etc/dnsmasq.d/:ro
+      - ./config/:/etc/dnsmasq.d/:ro  # include every *.conf here by default dnsmasq setup.
     networks:
       - front-end
 
