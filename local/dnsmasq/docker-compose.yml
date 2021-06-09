@@ -8,7 +8,31 @@ services:
       #- 53:53/tcp
       - 53:53/udp
     volumes:
-      - ./config/:/etc/dnsmasq.d/:ro  # include every *.conf here by default dnsmasq setup.
+      - dnsmasq-config:/etc/dnsmasq.d/:ro  # include every *.conf here by default dnsmasq setup.
     networks:
       - front-end
+    healthcheck:
+      test: ["CMD", "test", "-f", "/etc/dnsmasq.d/config-installed.lock"]
+      interval: 15s
+      timeout: 10ms
+      retries: 4
+    depends_on:
+      - dnsmasq-config
 
+  dnsmasq-config:
+    image: dnsmasq-config
+    restart: on-failure
+    build: ${PWD}/dnsmasq/setup
+    tty: true
+    volumes:
+      - ${PWD}/dnsmasq/config:/mnt      # config folder input 1: for local setup configs
+      - dnsmasq-config:/etc/dnsmasq.d/  # config folder output: for final configs output porting
+    network_mode: host
+
+volumes:
+  dnsmasq-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/dnsmasq/config"   # The target path is '/etc/dnsmasq.d/'
