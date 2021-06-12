@@ -2,37 +2,15 @@ version: "3.5"
 
 services:
   dnsmasq:
-    image: andyshinn/dnsmasq
-    restart: unless-stopped
-    ports:
-      #- 53:53/tcp
-      - 53:53/udp
+    image: zcchen/dnsmasq
+    restart: always
+    #ports:
+      #- 53:53
     volumes:
-      - dnsmasq-config:/etc/dnsmasq.d/:ro  # include every *.conf here by default dnsmasq setup.
-    networks:
-      - front-end
-    healthcheck:
-      test: ["CMD", "test", "-f", "/etc/dnsmasq.d/config-installed.lock"]
-      interval: 15s
-      timeout: 10ms
-      retries: 4
-    depends_on:
-      - dnsmasq-config
-
-  dnsmasq-config:
-    image: dnsmasq-config
-    restart: on-failure
-    build: ${PWD}/dnsmasq/setup
-    tty: true
-    volumes:
-      - ${PWD}/dnsmasq/config:/mnt      # config folder input 1: for local setup configs
-      - dnsmasq-config:/etc/dnsmasq.d/  # config folder output: for final configs output porting
+      - ${PWD}/dnsmasq/scripts:/scripts.d:ro
+      - ${PWD}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
     network_mode: host
+    environment:
+      - LOCAL_DOMAIN_NAME
+      - SERVER_DOMAIN_NAME
 
-volumes:
-  dnsmasq-config:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "${DATA_FOLDER}/dnsmasq/config"   # The target path is '/etc/dnsmasq.d/'

@@ -15,18 +15,23 @@ vagrant plugin install hostmanager dotenv
 vagrant up
 ```
 
-3. Use `ssh` to login the VMs
+3. Added `nas-local` to your `/etc/resolv.conf` for 1st nameserver
+```
+nameserver 192.168.100.101
+```
+
+4. Use `ssh` to login the VMs
 ```
 vagrant ssh nas-server      # login the server VM
 vagrant ssh nas-local       # login the local VM
 ```
 
-4. cd `/vagrant` folder to activate your settings
+5. cd `/vagrant` folder to activate your settings
 
-5. Do some `vagrant` actions as your need, like `reload`, `provision`, `destroy`, and so on.
+6. Do some `vagrant` actions as your need, like `reload`, `provision`, `destroy`, and so on.
 Please go to `vagrant` documents for more details
 
-6. Stop the VMs
+7. Stop the VMs
 ```
 vagrant halt
 ```

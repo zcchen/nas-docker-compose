@@ -1,12 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-local_subdomains = ["traefik", "whoami", "nextcloud"]
+#local_subdomains = ["traefik", "whoami", "nextcloud"]
 server_subdomains = ["traefik", "whoami"]
 
 require 'dotenv'
 Dotenv.load("../configs/domain.env")
-local_domain_name = ENV['LOCAL_DOMAIN_NAME']
+#local_domain_name = ENV['LOCAL_DOMAIN_NAME']
 server_domain_name = ENV['SERVER_DOMAIN_NAME']
 
 ENV["LC_ALL"] = "en_US.UTF-8"
@@ -48,13 +48,13 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "nas-local" do |nas|
-    nas.vm.hostname = local_domain_name
+    #nas.vm.hostname = local_domain_name
     nas.vm.network :private_network, ip: "192.168.100.101"
-    domains = []
-    for sub in local_subdomains do
-      domains << [sub, ".", local_domain_name].join
-    end
-    nas.hostmanager.aliases = domains
+    #domains = []
+    #for sub in local_subdomains do
+      #domains << [sub, ".", local_domain_name].join
+    #end
+    #nas.hostmanager.aliases = domains
     #nas.vm.provision "shell", inline: <<-SHELL
       #make -C /vagrant/local
     #SHELL
