@@ -12,7 +12,7 @@ services:
       - proxy-shadowsocks-config
     environment:
       SS_MODULE: "ss-server"
-      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s 0.0.0.0 -v"
+      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s 0.0.0.0"
 
 secrets:
   proxy-shadowsocks-config:

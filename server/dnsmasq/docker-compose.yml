@@ -31,7 +31,6 @@ services:
       WORK_DIR: /mnt
       SHELL_DIR: /scripts.d/
       #UPDATE_INTERVAL: 60
-      LOCAL_IP_ADDR:
       SERVER_IP_ADDR:
       LOCAL_DOMAIN_NAME:
       SERVER_DOMAIN_NAME:

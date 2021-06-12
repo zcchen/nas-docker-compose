@@ -31,7 +31,11 @@ main
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
-- [ ] local DNS provider, `unbound`, or `dnsmasq` + `felixonmars/dnsmasq-china-list`
+- [ ] DNS prodivers:
+  + [ ] local DNS provider, for LAN zone usage
+    * [ ] `unbound` + `felixonmars/dnsmasq-china-list`
+  + [ ] server DNS simulator, for Internet accessing
+    * [ ] `unbound` bind the Address with server VM
 - [ ] frp
   + [ ] local
   + [ ] server

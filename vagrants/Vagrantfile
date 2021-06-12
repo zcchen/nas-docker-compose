@@ -2,12 +2,12 @@
 # vi: set ft=ruby :
 
 #local_subdomains = ["traefik", "whoami", "nextcloud"]
-server_subdomains = ["traefik", "whoami"]
+#server_subdomains = ["traefik", "whoami"]
 
-require 'dotenv'
-Dotenv.load("../configs/domain.env")
+#require 'dotenv'
+#Dotenv.load("../configs/domain.env")
 #local_domain_name = ENV['LOCAL_DOMAIN_NAME']
-server_domain_name = ENV['SERVER_DOMAIN_NAME']
+#server_domain_name = ENV['SERVER_DOMAIN_NAME']
 
 ENV["LC_ALL"] = "en_US.UTF-8"
 
@@ -28,20 +28,20 @@ Vagrant.configure("2") do |config|
   config.vm.box = "debian/buster64"
   config.vm.synced_folder "../", "/vagrant", nfs_version: "3"
 
-  config.hostmanager.enable = false
-  config.hostmanager.manage_host = true
-  config.hostmanager.manage_guest = true
-  config.hostmanager.ignore_private_ip = false
-  config.hostmanager.include_offline = false
+  #config.hostmanager.enable = false
+  #config.hostmanager.manage_host = true
+  #config.hostmanager.manage_guest = true
+  #config.hostmanager.ignore_private_ip = false
+  #config.hostmanager.include_offline = false
 
   config.vm.define "nas-server" do |nas|
-    nas.vm.hostname = server_domain_name
+    #nas.vm.hostname = server_domain_name
     nas.vm.network :private_network, ip: "192.168.100.100"
-    domains = []
-    for sub in server_subdomains do
-      domains << [sub, ".", server_domain_name].join
-    end
-    nas.hostmanager.aliases = domains
+    #domains = []
+    #for sub in server_subdomains do
+      #domains << [sub, ".", server_domain_name].join
+    #end
+    #nas.hostmanager.aliases = domains
     #nas.vm.provision "shell", inline: <<-SHELL
       #make -C /vagrant/server
     #SHELL
@@ -69,8 +69,11 @@ Vagrant.configure("2") do |config|
     pip3 --no-cache-dir install docker-compose
     sudo usermod --append --groups docker vagrant
     export PATH="/home/vagrant/.local/bin:$PATH"
+    if [[ -z `cat /etc/resolv.conf | grep '127.0.0.1'` ]]; then
+      sed -i '1 i\ nameserver 127.0.0.1' /etc/resolv.conf
+    fi
   SHELL
 
-  config.vm.provision :hostmanager
+  #config.vm.provision :hostmanager
 
 end

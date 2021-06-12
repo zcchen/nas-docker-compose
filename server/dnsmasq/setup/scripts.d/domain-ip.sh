@@ -27,7 +27,6 @@ fi
 
 cat > /mnt/domain-ip.conf << EOF
 address=/.${SERVER_DOMAIN_NAME}/${SERVER_IP_ADDR}
-address=/.${LOCAL_DOMAIN_NAME}/${SERVER_IP_ADDR}
 
 EOF
 
