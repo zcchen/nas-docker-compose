@@ -10,7 +10,7 @@ services:
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
     env_file:
-      - ${PWD}/nextcloud/config.env
+      - ${PWD}/nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
@@ -48,7 +48,7 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: on-failure
     env_file:
-      - ${PWD}/nextcloud/config.env
+      - ${PWD}/nextcloud/nextcloud.env
     secrets:
       - nextcloud-db-password
     volumes:
@@ -71,7 +71,7 @@ services:
       - nextcloud-apps:/var/www/html/custom_apps
     entrypoint: /cron.sh
     env_file:
-      - ${PWD}/nextcloud/config.env
+      - ${PWD}/nextcloud/nextcloud.env
     environment:
       REDIS_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-redis_1
       MYSQL_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-db_1
