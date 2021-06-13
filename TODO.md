@@ -31,11 +31,12 @@ main
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
-- [ ] DNS prodivers:
-  + [ ] local DNS provider, for LAN zone usage
-    * [ ] `unbound` + `felixonmars/dnsmasq-china-list`
-  + [ ] server DNS simulator, for Internet accessing
-    * [ ] `unbound` bind the Address with server VM
+- [x] DNS prodivers:
+  + [x] local DNS provider, for LAN zone usage
+    * [ ] `dnsmasq` + `felixonmars/dnsmasq-china-list`
+  + [x] server DNS simulator, for Internet accessing
+    * [x] `dnsmasq` bind the Address with server VM
+  + [ ] Auto restart after time-updated scripts. (healthy check is useless for this.)
 - [ ] frp
   + [ ] local
   + [ ] server
