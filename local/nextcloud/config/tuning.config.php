@@ -10,8 +10,8 @@ $CONFIG = [
  *
  * Defaults to ``none``
  */
-'memcache.distributed' => '\OC\Memcache\Redis',
-'memcache.local' => '\OC\Memcache\Redis',
+'memcache.distributed' => '\\OC\\Memcache\\Redis',
+'memcache.local' => '\\OC\\Memcache\\Redis',
 'memcache.locking' => '\\OC\\Memcache\\Redis',
 'filelocking.enabled' => true,
 
