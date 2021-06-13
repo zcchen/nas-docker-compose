@@ -26,7 +26,8 @@ $CONFIG = [
  *
  * Defaults to ``en``
  */
-'default_locale' => 'cn',
+'default_locale' => 'CN',
+'default_phone_region' => 'CN',
 
 /**
  * The timezone for logfiles. You may change this; see
