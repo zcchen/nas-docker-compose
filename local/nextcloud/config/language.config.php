@@ -26,7 +26,15 @@ $CONFIG = [
  *
  * Defaults to ``en``
  */
-'default_locale' => 'zh',
+'default_locale' => 'cn',
+
+/**
+ * The timezone for logfiles. You may change this; see
+ * http://php.net/manual/en/timezones.php
+ *
+ * Defaults to ``UTC``
+ */
+'logtimezone' => 'Asia/Shanghai',
 
 /**
  * Which domains to request to determine the availability of an Internet

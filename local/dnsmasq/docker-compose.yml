@@ -2,15 +2,39 @@ version: "3.5"
 
 services:
   dnsmasq:
-    image: zcchen/dnsmasq
+    image: andyshinn/dnsmasq
     restart: always
-    #ports:
-      #- 53:53
+    depends_on:
+      - dnsmasq-config
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
     volumes:
-      - ${PWD}/dnsmasq/scripts:/scripts.d:ro
+      - ${TMP_FOLDER}/dnsmasq/config:/etc/dnsmasq.d
       - ${PWD}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
-    network_mode: host
-    environment:
-      - LOCAL_DOMAIN_NAME
-      - SERVER_DOMAIN_NAME
+    networks:
+      - front-end
+    entrypoint: sh -c "
+      test -f /etc/dnsmasq.d/ready.txt &&
+      rm -rf /etc/dnsmasq.d/updated.lock &&
+      /usr/sbin/dnsmasq -k -d
+      "
 
+  dnsmasq-config:
+    image: zcchen/toolbox
+    restart: always
+    volumes:
+      - ${TMP_FOLDER}/dnsmasq/config:/mnt
+      - ${PWD}/dnsmasq/setup/scripts.d:/scripts.d:ro
+      - ${PWD}/dnsmasq/setup/command.sh:/command.sh:ro
+    environment:
+      WORK_DIR: /mnt
+      SHELL_DIR: /scripts.d/
+      #UPDATE_INTERVAL: 60
+      LOCAL_IP_ADDR:
+      SERVER_IP_ADDR:
+      LOCAL_DOMAIN_NAME:
+      SERVER_DOMAIN_NAME:
+    network_mode: host
+    command:
+      [ "bash", "/command.sh" ]
