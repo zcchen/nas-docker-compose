@@ -7,15 +7,15 @@ include $(ENV_FILE)
 COMPOSE_BIN  = docker-compose
 COMPOSE_ARGS = --env-file $(ENV_FILE)
 
+# include the template
+include ../mk-mods/template.mk
+
 # include the module setup
 DATA_SUBFOLDERS :=
 TMP_SUBFOLDERS :=
 MODULE_FILES = $(wildcard */module.mk)
 include $(MODULE_FILES)
 MODULES      = $(foreach mf,$(MODULE_FILES),$(basename $(dir $(mf))))
-
-# include the template
-include ../mk-mods/template.mk
 
 # updates the template interfaces
 prepare: $(ENV_FILE) $(eval include $(ENV_FILE)) prepare_FOLDERS
@@ -28,7 +28,7 @@ purge_ENV_FILE:
 	-rm $(ENV_FILE)
 
 $(ENV_FILE): $(ENV_SRC)
-	cat $^ > $@
+	eval "echo \"`cat $^`\"" > $@
 
 # sub module dirs handler
 .PHONY: prepare_FOLDERS

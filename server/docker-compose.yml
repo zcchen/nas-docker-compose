@@ -4,6 +4,8 @@ services:
   traefik:
     image: traefik:latest
     restart: always
+    command: |
+      --providers.docker.exposedByDefault=false
     ports:
       - 80:80
       - 433:433

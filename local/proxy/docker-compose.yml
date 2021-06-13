@@ -1,0 +1,34 @@
+version: "3.5"
+
+services:
+
+  shadowsocks:
+    image: mritd/shadowsocks
+    restart: always
+    ports:
+      - 7070:7070
+    networks:
+      - front-end
+      - mid-layout
+    secrets:
+      - proxy-shadowsocks-config
+    environment:
+      SS_MODULE: "ss-local"
+      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s ${SERVER_DOMAIN_NAME} -l 7070"
+
+  privoxy:
+    image: zcchen/privoxy
+    restart: always
+    ports:
+      - 8118:8118
+    networks:
+      - front-end
+      - mid-layout
+    environment:
+      LISTEN_ADDRESS_IPV4: 0.0.0.0
+      SOCKS_PROXY: shadowsocks:7070
+      SOCKS_METHOD: socks5
+
+secrets:
+  proxy-shadowsocks-config:
+    file: ../configs/secrets/proxy/shadowsocks-config.json

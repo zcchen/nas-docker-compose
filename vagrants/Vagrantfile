@@ -1,0 +1,79 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#local_subdomains = ["traefik", "whoami", "nextcloud"]
+#server_subdomains = ["traefik", "whoami"]
+
+#require 'dotenv'
+#Dotenv.load("../configs/domain.env")
+#local_domain_name = ENV['LOCAL_DOMAIN_NAME']
+#server_domain_name = ENV['SERVER_DOMAIN_NAME']
+
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.cpus = 2
+    #libvirt.host = 'localhost'
+    #libvirt.driver = 'kvm'
+    #libvirt.uri = 'qemu:///system'
+    libvirt.nested = true
+    libvirt.memory = 2048
+  end
+
+  config.vm.box = "debian/buster64"
+  config.vm.synced_folder "../", "/vagrant", nfs_version: "3"
+
+  #config.hostmanager.enable = false
+  #config.hostmanager.manage_host = true
+  #config.hostmanager.manage_guest = true
+  #config.hostmanager.ignore_private_ip = false
+  #config.hostmanager.include_offline = false
+
+  config.vm.define "nas-server" do |nas|
+    #nas.vm.hostname = server_domain_name
+    nas.vm.network :private_network, ip: "192.168.100.100"
+    #domains = []
+    #for sub in server_subdomains do
+      #domains << [sub, ".", server_domain_name].join
+    #end
+    #nas.hostmanager.aliases = domains
+    #nas.vm.provision "shell", inline: <<-SHELL
+      #make -C /vagrant/server
+    #SHELL
+  end
+
+  config.vm.define "nas-local" do |nas|
+    #nas.vm.hostname = local_domain_name
+    nas.vm.network :private_network, ip: "192.168.100.101"
+    #domains = []
+    #for sub in local_subdomains do
+      #domains << [sub, ".", local_domain_name].join
+    #end
+    #nas.hostmanager.aliases = domains
+    #nas.vm.provision "shell", inline: <<-SHELL
+      #make -C /vagrant/local
+    #SHELL
+  end
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get install -y docker.io make python3-pip
+    apt clean -y
+    pip3 --no-cache-dir install docker-compose
+    sudo usermod --append --groups docker vagrant
+    export PATH="/home/vagrant/.local/bin:$PATH"
+    if [[ -z `cat /etc/resolv.conf | grep '127.0.0.1'` ]]; then
+      sed -i '1 i\ nameserver 127.0.0.1' /etc/resolv.conf
+    fi
+  SHELL
+
+  #config.vm.provision :hostmanager
+
+end
