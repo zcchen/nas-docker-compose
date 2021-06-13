@@ -3,7 +3,7 @@ version: "3.5"
 services:
   frpc:
     image: zcchen/frpc
-    restart: unless-stopped
+    restart: always
     secrets:
       - frpc-token
     network_mode: host
@@ -15,11 +15,7 @@ services:
       AUTH_TOKEN_FILE: /run/secrets/frpc-token
       SERVER_ADDR: ${SERVER_DOMAIN_NAME}
       SERVER_PORT: 7000
-      APPEND_CONFIG_FILES:
-        /configs/ssh.ini /configs/web.ini /configs/dns.ini
-      SHOW_CONFIG: "false"    # change it to true for easy debug if needed
-    dns:
-      - dnsmasq
+      APPEND_CONFIG_FILES: /configs/ssh.ini,/configs/web.ini
 
 secrets:
   frpc-token:

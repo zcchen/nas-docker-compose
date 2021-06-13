@@ -38,8 +38,8 @@ main
     * [x] `dnsmasq` bind the Address with server VM
   + [ ] Auto restart after time-updated scripts. (healthy check is useless for this.)
 - [ ] frp
-  + [ ] local
-  + [ ] server
+  + [x] local & server basic setup
+  + [ ] server port forwarding
 - [ ] https support (letsencrypt)
 
 - [ ] onlyoffice

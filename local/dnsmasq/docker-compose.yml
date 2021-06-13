@@ -35,6 +35,6 @@ services:
       SERVER_IP_ADDR:
       LOCAL_DOMAIN_NAME:
       SERVER_DOMAIN_NAME:
-    network_mode: host
+    network_mode: none
     command:
       [ "bash", "/command.sh" ]

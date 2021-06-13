@@ -73,8 +73,10 @@ services:
     env_file:
       - ${PWD}/nextcloud/nextcloud.env
     environment:
-      REDIS_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-redis_1
-      MYSQL_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-db_1
+      REDIS_HOST: nextcloud-redis
+      MYSQL_HOST: nextcloud-db
+      #REDIS_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-redis_1
+      #MYSQL_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-db_1
     secrets:
       - nextcloud-admin-password
       - nextcloud-db-password
