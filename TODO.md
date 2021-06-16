@@ -39,7 +39,9 @@ main
   + [ ] Auto restart after time-updated scripts. (healthy check is useless for this.)
 - [ ] frp
   + [x] local & server basic setup
-  + [ ] server port forwarding
+  + [ ] server port forwarding:
+    * [x] basic feature implemented
+    * [ ] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
 - [ ] https support (letsencrypt)
 
 - [ ] onlyoffice
