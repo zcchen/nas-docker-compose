@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  frpc:
+    image: zcchen/frpc
+    restart: always
+    secrets:
+      - frpc-token
+    network_mode: host
+    depends_on:
+      - dnsmasq
+    volumes:
+      - ./frpc/configs/:/configs:ro
+    environment:
+      AUTH_TOKEN_FILE: /run/secrets/frpc-token
+      SERVER_ADDR: ${SERVER_DOMAIN_NAME}
+      SERVER_PORT: 7000
+      APPEND_CONFIG_FILES: /configs/ssh.ini,/configs/web.ini
+
+secrets:
+  frpc-token:
+    file: ../configs/secrets/frp/token.txt
