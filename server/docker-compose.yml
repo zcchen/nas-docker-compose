@@ -22,6 +22,7 @@ services:
       traefik.enable: true
       traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
       traefik.http.routers.traefik.rule: "Host(`traefik.${SERVER_DOMAIN_NAME}`)"
+      traefik.http.routers.traefik.priority: 99
       traefik.http.routers.traefik.service: api@internal
       traefik.http.routers.traefik.middlewares: admin-auth@file
 
@@ -33,7 +34,9 @@ services:
     labels:
       traefik.enable: true
       traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
-      traefik.http.routers.nas-whoami.rule: "Host(`whoami.${SERVER_DOMAIN_NAME}`)"
+      traefik.http.routers.nas-whoami.rule:
+        HostRegexp(`${SERVER_DOMAIN_NAME}`, `{subhost:.+}.${SERVER_DOMAIN_NAME}`)
+      traefik.http.routers.nas-whoami.priority: 0
       traefik.http.routers.nas-whoami.service: nas-whoami
       traefik.http.services.nas-whoami.loadbalancer.server.port: 80
 

@@ -23,7 +23,8 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.frps-web.rule: |
-        HostRegexp(`${LOCAL_DOMAIN_NAME}`, `{sub:[a-zA-Z0-9]+}.${LOCAL_DOMAIN_NAME}`)
+        HostRegexp(`${LOCAL_DOMAIN_NAME}`, `{sub:.+}.${LOCAL_DOMAIN_NAME}`)
+      traefik.http.routers.frps-web.priority: 10
       traefik.http.routers.frps-web.service: frps-web
       traefik.http.services.frps-web.loadbalancer.server.port: 21080
 
