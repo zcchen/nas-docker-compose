@@ -37,11 +37,11 @@ main
   + [x] server DNS simulator, for Internet accessing
     * [x] `dnsmasq` bind the Address with server VM
   + [ ] Auto restart after time-updated scripts. (healthy check is useless for this.)
-- [ ] frp
+- [x] frp
   + [x] local & server basic setup
-  + [ ] server port forwarding:
+  + [x] server port forwarding:
     * [x] basic feature implemented
-    * [ ] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
+    * [x] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
 - [ ] https support (letsencrypt)
 
 - [ ] onlyoffice

@@ -16,6 +16,7 @@ services:
       SERVER_ADDR: ${SERVER_DOMAIN_NAME}
       SERVER_PORT: 7000
       APPEND_CONFIG_FILES: /configs/ssh.ini,/configs/web.ini
+      SHOW_CONFIG: "false"    # change it to true for easy debug if needed
 
 secrets:
   frpc-token:
