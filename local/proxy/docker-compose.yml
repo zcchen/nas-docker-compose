@@ -5,6 +5,8 @@ services:
   shadowsocks:
     image: mritd/shadowsocks
     restart: always
+    depends_on:
+      - dnsmasq
     ports:
       - 7070:7070
     networks:
@@ -19,6 +21,8 @@ services:
   privoxy:
     image: zcchen/privoxy
     restart: always
+    depends_on:
+      - shadowsocks
     ports:
       - 8118:8118
     networks:

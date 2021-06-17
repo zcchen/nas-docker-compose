@@ -1,0 +1,39 @@
+version: "3.5"
+
+services:
+  frps:
+    image: zcchen/frps
+    restart: always
+    networks:
+      - front-end
+    secrets:
+      - frps-token
+      - frps-dashboard-user
+      - frps-dashboard-passwd
+    ports:
+      - 7000:7000
+      - 7500:7500
+      - 21000-21100:21000-21100
+    environment:
+      BIND_PORT_TCP: 7000
+      DASHBOARD_PORT: 7500
+      ALLOW_PORTS: 21000-21100
+      DASHBOARD_USER_FILE: /run/secrets/frps-dashboard-user
+      DASHBOARD_PASSWORD_FILE: /run/secrets/frps-dashboard-passwd
+      AUTH_TOKEN_FILE: /run/secrets/frps-token
+      SHOW_CONFIG: "false"    # change it to true for easy debug if needed
+    labels:
+      traefik.enable: true
+      traefik.http.routers.frps-web.rule: |
+        HostRegexp(`${LOCAL_DOMAIN_NAME}`, `{sub:.+}.${LOCAL_DOMAIN_NAME}`)
+      traefik.http.routers.frps-web.priority: 10
+      traefik.http.routers.frps-web.service: frps-web
+      traefik.http.services.frps-web.loadbalancer.server.port: 21080
+
+secrets:
+  frps-token:
+    file: ../configs/secrets/frp/token.txt
+  frps-dashboard-user:
+    file: ../configs/secrets/frp/dashboard-user.txt
+  frps-dashboard-passwd:
+    file: ../configs/secrets/frp/dashboard-passwd.txt

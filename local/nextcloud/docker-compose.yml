@@ -28,6 +28,7 @@ services:
       traefik.enable: true
       traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
       traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${LOCAL_DOMAIN_NAME}`)"
+      traefik.http.routers.nas-nextcloud.priority: 99
       traefik.http.routers.nas-nextcloud.service: nas-nextcloud
       traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
 
@@ -73,8 +74,8 @@ services:
     env_file:
       - ${PWD}/nextcloud/nextcloud.env
     environment:
-      REDIS_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-redis_1
-      MYSQL_HOST: ${COMPOSE_PROJECT_NAME}_nextcloud-db_1
+      REDIS_HOST: nextcloud-redis
+      MYSQL_HOST: nextcloud-db
     secrets:
       - nextcloud-admin-password
       - nextcloud-db-password
