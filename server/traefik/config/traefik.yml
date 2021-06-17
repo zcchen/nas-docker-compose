@@ -9,7 +9,7 @@ global:
 # EntryPoints configuration
 ################################################################
 entryPoints:
-  http:
+  web:
     address: :80
     #http:    # redirect to HTTPS, not yet to enable
       #redirections:
@@ -17,7 +17,7 @@ entryPoints:
           #to: websecure
           #scheme: https
 
-  https:
+  websecure:
     address: :443
   #mysql:
     #address: :3306

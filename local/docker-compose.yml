@@ -4,11 +4,11 @@ services:
   traefik:
     image: traefik:latest
     restart: always
-    command: |
-      --providers.docker.exposedByDefault=false
+    #command: |
+      #--providers.docker.exposedByDefault=false
     ports:
       - 80:80
-      - 433:433
+      - 443:443
     volumes:
       - ./traefik/config/:/etc/traefik/:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -38,6 +38,11 @@ services:
         HostRegexp(`${LOCAL_DOMAIN_NAME}`, `{subhost:.+}.${LOCAL_DOMAIN_NAME}`)
       traefik.http.routers.nas-whoami.priority: 0
       traefik.http.routers.nas-whoami.service: nas-whoami
+      traefik.http.routers.nas-whoami.middlewares: nas-redirectregex@docker
+      traefik.http.middlewares.nas-redirectregex.redirectregex.regex:
+        "^http(s?)://(.+).${LOCAL_DOMAIN_NAME}/(.*)"
+      traefik.http.middlewares.nas-redirectregex.redirectregex.replacement:
+        "http$${1}://${LOCAL_DOMAIN_NAME}/"
       traefik.http.services.nas-whoami.loadbalancer.server.port: 80
 
 
