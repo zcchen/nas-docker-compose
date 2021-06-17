@@ -3,7 +3,7 @@ version: "3.5"
 services:
   frpc:
     image: zcchen/frpc
-    restart: always
+    restart: unless-stopped
     secrets:
       - frpc-token
     network_mode: host

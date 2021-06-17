@@ -65,7 +65,7 @@ services:
 
   nextcloud-cron:
     image: nextcloud:latest
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data

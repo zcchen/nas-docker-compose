@@ -3,7 +3,7 @@ version: "3.5"
 services:
   frps:
     image: zcchen/frps
-    restart: always
+    restart: unless-stopped
     networks:
       - front-end
     secrets:
@@ -14,6 +14,8 @@ services:
       - 7000:7000
       - 7500:7500
       - 21000-21100:21000-21100
+    volumes:
+      - ./frps/configs/:/configs:ro
     environment:
       BIND_PORT_TCP: 7000
       DASHBOARD_PORT: 7500
@@ -22,6 +24,7 @@ services:
       DASHBOARD_PASSWORD_FILE: /run/secrets/frps-dashboard-passwd
       AUTH_TOKEN_FILE: /run/secrets/frps-token
       SHOW_CONFIG: "false"    # change it to true for easy debug if needed
+      #APPEND_CONFIG_FILES: /configs/log.ini
     labels:
       traefik.enable: true
       traefik.http.routers.frps-web.rule: |
