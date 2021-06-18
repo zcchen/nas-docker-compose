@@ -14,9 +14,13 @@ services:
       - mid-layout
     secrets:
       - proxy-shadowsocks-config
-    environment:
-      SS_MODULE: "ss-local"
-      SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s ${SERVER_DOMAIN_NAME} -l 7070"
+    entrypoint: |
+      ss-local -c /run/secrets/proxy-shadowsocks-config -l 7070 \
+               -s ss.${SERVER_DOMAIN_NAME} -p 443 \
+               --plugin v2ray-plugin
+    #environment:
+      #SS_MODULE: ss-local
+      #SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s ${SERVER_DOMAIN_NAME} -l 7070"
 
   privoxy:
     image: zcchen/privoxy
