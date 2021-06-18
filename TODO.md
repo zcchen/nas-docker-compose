@@ -25,10 +25,7 @@ main
     * [ ] others
   + [x] set the default app to be `file`
   + [x] setup the tunings, like `redis` +  ...
-- [ ] proxy setup
-  + [ ] local proxy (ss + obfs), privoxy, trustable DNS solution
-  + [ ] server proxy provider (ss + obfs)
-- [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
+  + [ ] reinstallation failed if the app container is destroyed.
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
 - [x] DNS prodivers:
@@ -43,6 +40,10 @@ main
     * [x] basic feature implemented
     * [x] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
 - [ ] https support (letsencrypt)
+- [x] proxy setup
+  + [x] local proxy (ss + v2ray plugin), privoxy
+  + [x] server proxy provider (ss + v2ray plugin)
+- [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
 
 - [ ] onlyoffice
 - [ ] gitlab
