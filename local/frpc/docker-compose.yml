@@ -15,7 +15,8 @@ services:
       AUTH_TOKEN_FILE: /run/secrets/frpc-token
       SERVER_ADDR: ${SERVER_DOMAIN_NAME}
       SERVER_PORT: 7000
-      APPEND_CONFIG_FILES: /configs/ssh.ini,/configs/web.ini
+      APPEND_CONFIG_FILES:
+        /configs/ssh.ini /configs/web.ini /configs/dns.ini
       SHOW_CONFIG: "false"    # change it to true for easy debug if needed
 
 secrets:
