@@ -26,7 +26,7 @@ services:
       traefik.http.routers.traefik.service: api@internal
       traefik.http.routers.traefik.middlewares: admin-auth@file
 
-  nas-whoami:
+  web-index:
     image: containous/whoami:latest
     networks:
       - mid-layout
@@ -34,16 +34,16 @@ services:
     labels:
       traefik.enable: true
       traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
-      traefik.http.routers.nas-whoami.rule:
+      traefik.http.routers.web-index.rule:
         HostRegexp(`${LOCAL_DOMAIN_NAME}`, `{subhost:.+}.${LOCAL_DOMAIN_NAME}`)
-      traefik.http.routers.nas-whoami.priority: 0
-      traefik.http.routers.nas-whoami.service: nas-whoami
-      traefik.http.routers.nas-whoami.middlewares: nas-redirectregex@docker
-      traefik.http.middlewares.nas-redirectregex.redirectregex.regex:
+      traefik.http.routers.web-index.priority: 1
+      traefik.http.routers.web-index.service: web-index
+      traefik.http.services.web-index.loadbalancer.server.port: 80
+      traefik.http.routers.web-index.middlewares: index-redirectregex@docker
+      traefik.http.middlewares.index-redirectregex.redirectregex.regex:
         "^http(s?)://(.+).${LOCAL_DOMAIN_NAME}/(.*)"
-      traefik.http.middlewares.nas-redirectregex.redirectregex.replacement:
+      traefik.http.middlewares.index-redirectregex.redirectregex.replacement:
         "http$${1}://${LOCAL_DOMAIN_NAME}/"
-      traefik.http.services.nas-whoami.loadbalancer.server.port: 80
 
 
 networks:
