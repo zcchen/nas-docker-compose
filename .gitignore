@@ -1,3 +1,5 @@
 local/compose.env
 server/compose.env
 
+.*
+!.gitignore
