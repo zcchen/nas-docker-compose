@@ -19,18 +19,10 @@ entryPoints:
 
   websecure:
     address: :443
-  #mysql:
-    #address: :3306
 
 ################################################################
 # HTTPS & TLS
 ################################################################
-tls:
-  stores:
-    default: {}
-  options:
-    default:
-      sniStrict: true
 
 ################################################################
 # API and dashboard configuration
