@@ -24,13 +24,6 @@ services:
     networks:
       - mid-layout
       - back-end
-    labels:
-      traefik.enable: true
-      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
-      traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${LOCAL_DOMAIN_NAME}`)"
-      traefik.http.routers.nas-nextcloud.priority: 99
-      traefik.http.routers.nas-nextcloud.service: nas-nextcloud
-      traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
 
   nextcloud-config:
     image: nextcloud:latest

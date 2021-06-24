@@ -1,0 +1,31 @@
+server {
+    listen      80 default_server;
+    server_name _;
+    return      444;    # "Connection closed without response"
+}
+
+server {
+    listen       80;
+    server_name  *.${LOCAL_DOMAIN_NAME};
+    return 301 http://${LOCAL_DOMAIN_NAME};
+}
+
+server {
+    listen       80;
+    server_name  ${LOCAL_DOMAIN_NAME};
+
+    include /etc/nginx/sites/nas/*.conf;
+
+
+    # redirect server error pages
+    error_page  404              /404.html;
+    location = /404.html {
+        return 404;
+    }
+
+    # redirect server error pages to the static page /50x.html
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}

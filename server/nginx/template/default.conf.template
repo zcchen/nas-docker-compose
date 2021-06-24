@@ -34,6 +34,10 @@ server {
     listen       80;
     server_name  .${LOCAL_DOMAIN_NAME};
 
+    # set max upload size
+    client_max_body_size 512M;
+    fastcgi_buffers 64 64K;
+
     location / {
         proxy_pass   http://frps:21080/;
         proxy_redirect off;
