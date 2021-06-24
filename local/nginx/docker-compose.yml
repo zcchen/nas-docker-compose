@@ -6,16 +6,12 @@ services:
     restart: always
     depends_on:
       - acme.sh
-      - nextcloud-nginx
-      - homer
-      - whoami
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./nginx/sites/:/etc/nginx/templates:ro
+      - ./nginx/template/:/etc/nginx/templates:ro
       - ./nginx/nas/:/etc/nginx/sites/nas:ro
-      - ./nginx/docs/:/usr/share/nginx/html/docs:ro
       - acme-certificate:/etc/nginx/cert:ro
     networks:
       - front-end
@@ -32,8 +28,6 @@ services:
   acme.sh:
     image: neilpang/acme.sh
     restart: on-failure:3
-    networks:
-      - front-end
     volumes:
       - acme-certificate:/acme.sh/
       - ./nginx/acme-entry.sh:/acme-entry.sh:ro
@@ -44,23 +38,10 @@ services:
     entrypoint:
       [ "/bin/sh", "/acme-entry.sh" ]
     command:
-      #- --server letsencrypttest
-      - --server letsencrypt
-      #- --force
-
-  homer:
-    image: b4bz/homer:latest
-    restart: always
-    networks:
-      - mid-layout
-    volumes:
-      - ./nginx/homer:/www/assets
-    environment:
-      UID: 1000
-      GID: 1000
-    expose:
-      - 8080
-
+      - --server letsencrypttest
+      #- --server letsencrypt
+      - --key-file /acme.sh/cert.key
+      - --fullchain-file /acme.sh/cert.pem
 
 volumes:
   acme-certificate:
