@@ -1,33 +1,5 @@
 version: "3.5"
 
-services:
-
-  nginx:
-    image: nginx
-    restart: always
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./nginx/template/:/etc/nginx/templates:ro
-      - ./nginx/nas/:/etc/nginx/sites/nas:ro
-    networks:
-      - front-end
-      - mid-layout
-    environment:
-      SERVER_DOMAIN_NAME:
-      LOCAL_DOMAIN_NAME:
-
-  whoami:
-    image: containous/whoami:latest
-    networks:
-      - mid-layout
-      - back-end
-
-  amce.sh:
-    image: neilpang/acme.sh
-
-
 networks:
 
   front-end:
@@ -49,9 +21,4 @@ networks:
       driver: default
       config:
         - subnet: 172.16.22.0/24
-
-
-secrets:
-  traefik-admin-auth:
-    file: ../configs/secrets/traefik/admin.http.auth
 
