@@ -40,10 +40,16 @@ main
     * [x] basic feature implemented
     * [x] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
 - [ ] https support (letsencrypt)
+  + [x] Basic features and able to use
+  + [ ] change the CA from `letsencrypt test` to `letsencrypt`
+  + [ ] update the acme.sh command from `--issue` to another, in order to reduce the API limits.
 - [x] proxy setup
   + [x] local proxy (ss + v2ray plugin), privoxy
   + [x] server proxy provider (ss + v2ray plugin)
 - [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
+- [ ] docker image auto triggering.
+  + [ ] auto trigger specified docker image restart. use case: dnsmasq-config updates, let `dnsmasq` restarting
+  + [ ] auto trigger specified docker image every month. use case: rerun the `letsencrypt` once per week / month
 
 - [ ] onlyoffice
 - [ ] gitlab
