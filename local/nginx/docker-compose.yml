@@ -1,7 +1,6 @@
 version: "3.5"
 
 services:
-
   nginx:
     image: nginx
     restart: always
@@ -18,7 +17,6 @@ services:
       - front-end
       - mid-layout
     environment:
-      SERVER_DOMAIN_NAME:
       LOCAL_DOMAIN_NAME:
 
   whoami:
@@ -36,7 +34,6 @@ services:
     env_file:
       - ../configs/secrets/acme.sh/config.env
     environment:
-      SERVER_DOMAIN_NAME:
       LOCAL_DOMAIN_NAME:
     entrypoint:
       [ "/bin/sh", "/acme-entry.sh" ]
