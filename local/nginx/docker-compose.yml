@@ -10,7 +10,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./nginx/template/:/etc/nginx/templates:ro
+      - ./nginx/sites/:/etc/nginx/templates:ro
       - ./nginx/nas/:/etc/nginx/sites/nas:ro
       - acme-certificate:/etc/nginx/cert:ro
     networks:

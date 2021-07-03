@@ -10,7 +10,7 @@ SSL_DOMAINS="$(echo ${SERVER_DOMAIN_NAME} | grep -v [a-z]*.${LOCAL_DOMAIN_NAME})
 
 SSL_DOMAINS_PARAM=""
 for n in ${SSL_DOMAINS}; do
-    SSL_DOMAINS_PARAM="$SSL_DOMAINS_PARAM -d $n"
+    SSL_DOMAINS_PARAM="$SSL_DOMAINS_PARAM -d *.$n"
 done
 
 /bin/sh /usr/local/bin/acme.sh \
