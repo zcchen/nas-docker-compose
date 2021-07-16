@@ -28,6 +28,8 @@ services:
   acme.sh:
     image: neilpang/acme.sh
     restart: on-failure:3
+    networks:
+      - front-end
     volumes:
       - acme-certificate:/acme.sh/
       - ./nginx/acme-entry.sh:/acme-entry.sh:ro
@@ -42,6 +44,20 @@ services:
       #- --server letsencrypt
       - --key-file /acme.sh/cert.key
       - --fullchain-file /acme.sh/cert.pem
+
+  homer:
+    image: b4bz/homer:latest
+    restart: always
+    networks:
+      - mid-layout
+    volumes:
+      - ./nginx/homer:/www/assets
+    environment:
+      UID: 1000
+      GID: 1000
+    expose:
+      - 8080
+
 
 volumes:
   acme-certificate:
