@@ -3,33 +3,37 @@
 # See https://fontawesome.com/icons for icons options
 
 title: "NAS Navigator"
-subtitle: "Homepage"
+subtitle: "中文"
 logo: "logo.png"
 
-header: true
-footer: |
-  <p> Fork me on
-    <a href="https://github.com/zcchen/nas-docker-compose">
-      <i class="fab fa-github-alt"> </i>
-      zcchen/nas-docker-compose
-    </a>
-  </p>
-# set false if you want to hide it.
+
+# Optional message
+#message:
 
 # Optional navbar
 links:
-  - name: "home"
+  - name: "home/首页"
     icon: "fab fa-github"
     url: ""
     target: "_blank" # optional html a tag target attribute
-  - name: "中文"
+  - name: "配置方法"
     icon: "fab fa-github"
-    url: "#cn"
+    url: ""
     target: "_blank" # optional html a tag target attribute
-  - name: "English"
-    icon: "fab fa-github"
-    url: "#en"
-    target: "_blank" # optional html a tag target attribute
+
+# Services
+# First level array represent a group.
+# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+services:
+  - name: "应用程序"
+    icon: "fas fa-cloud"
+    items:
+      - name: "Nextcloud"
+        logo: "assets/tools/nextcloud.png"
+        subtitle: "NAS 网络储存"
+        tag: "app"
+        url: "../nextcloud/"
+        target: "_blank" # optional html a tag target attribute
 
 # Optional theme customization
 theme: default
