@@ -29,12 +29,12 @@ main
   + [ ] reinstallation failed if the app container is destroyed.
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
-- [x] DNS prodivers:
+- [ ] DNS prodivers:
   + [x] local DNS provider, for LAN zone usage
     * [ ] `dnsmasq` + `felixonmars/dnsmasq-china-list`
   + [x] server DNS simulator, for Internet accessing
     * [x] `dnsmasq` bind the Address with server VM
-  + [ ] Auto restart after time-updated scripts. (healthy check is useless for this.)
+  + [?] Auto restart after time-updated scripts. (healthy check is useless for this.)
 - [x] frp
   + [x] local & server basic setup
   + [x] server port forwarding:
