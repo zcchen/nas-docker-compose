@@ -20,6 +20,7 @@ main
     * [x] need proxy for nextcloud to access api.nextcloud.com
   + [x] nextcloud upload issue, related to `nginx` setup
     * [x] done with `traefik` solution.
+    * [x] port back to `nginx`.
   + [ ] Plugins for nextcloud
     * [ ] calenda
     * [ ] others
@@ -28,12 +29,12 @@ main
   + [ ] reinstallation failed if the app container is destroyed.
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
-- [x] DNS prodivers:
+- [ ] DNS prodivers:
   + [x] local DNS provider, for LAN zone usage
     * [ ] `dnsmasq` + `felixonmars/dnsmasq-china-list`
   + [x] server DNS simulator, for Internet accessing
     * [x] `dnsmasq` bind the Address with server VM
-  + [ ] Auto restart after time-updated scripts. (healthy check is useless for this.)
+  + [?] Auto restart after time-updated scripts. (healthy check is useless for this.)
 - [x] frp
   + [x] local & server basic setup
   + [x] server port forwarding:
@@ -42,11 +43,14 @@ main
 - [ ] https support (letsencrypt)
   + [x] Basic features and able to use
   + [ ] change the CA from `letsencrypt test` to `letsencrypt`
-  + [ ] update the acme.sh command from `--issue` to another, in order to reduce the API limits.
+  + [?] update the acme.sh command from `--issue` to `--issue` + `--cron`, in order to reduce the API limits.
 - [x] proxy setup
   + [x] local proxy (ss + v2ray plugin), privoxy
   + [x] server proxy provider (ss + v2ray plugin)
-- [ ] index page, e.g. `linuxserver/heimdall:latest` or self-made
+- [x] index page. recommending: use `github.com/bastienwirtz/homer`
+  + [x] serve its release file packs
+  + [x] adapt the config with my requirements.
+  + [ ] setup `readme.html`.
 - [ ] docker image auto triggering.
   + [ ] auto trigger specified docker image restart. use case: dnsmasq-config updates, let `dnsmasq` restarting
   + [ ] auto trigger specified docker image every month. use case: rerun the `letsencrypt` once per week / month

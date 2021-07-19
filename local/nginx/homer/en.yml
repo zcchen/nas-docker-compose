@@ -4,8 +4,7 @@
 
 title: "NAS Navigator"
 subtitle: "English"
-#logo: "logo.png"
-icon: "fas fa-home"
+logo: "logo.png"
 
 # Optional message
 #message:
@@ -13,12 +12,12 @@ icon: "fas fa-home"
 # Optional navbar
 links:
   - name: "home"
-    icon: "fas fa-home"
+    icon: "fab fa-github"
     url: ""
-    target: ""
+    target: "_blank" # optional html a tag target attribute
   - name: "How to Use"
-    icon: "fas fa-laptop"
-    url: "../docs/#/en/"
+    icon: "fab fa-github"
+    url: ""
     target: "_blank" # optional html a tag target attribute
 
 # Services
