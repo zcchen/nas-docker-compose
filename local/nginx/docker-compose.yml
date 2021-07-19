@@ -42,8 +42,6 @@ services:
     command:
       - --server letsencrypttest
       #- --server letsencrypt
-      - --key-file /acme.sh/cert.key
-      - --fullchain-file /acme.sh/cert.pem
 
   homer:
     image: b4bz/homer:latest
