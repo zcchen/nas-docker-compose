@@ -51,9 +51,7 @@ main
   + [x] serve its release file packs
   + [x] adapt the config with my requirements.
   + [ ] setup `readme.html`.
-- [ ] docker image auto triggering.
-  + [ ] auto trigger specified docker image restart. use case: dnsmasq-config updates, let `dnsmasq` restarting
-  + [ ] auto trigger specified docker image every month. use case: rerun the `letsencrypt` once per week / month
+- [ ] English Readme page.
 
 - [ ] onlyoffice
 - [ ] gitlab
