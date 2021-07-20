@@ -17,13 +17,13 @@ clean: down
 include ../mk-mods/version.mk    # version checking support
 
 up: version prepare $(YML_FILES)
-	$(COMPOSE_BIN) $(COMPOSE_ARGS) up
+	$(COMPOSE_BIN) $(COMPOSE_ARGS) up --remove-orphans
 
 config: version $(YML_FILES)
 	$(COMPOSE_BIN) $(COMPOSE_ARGS) config
 
 down: version $(YML_FILES)
-	-$(COMPOSE_BIN) $(COMPOSE_ARGS) down --volumes
+	-$(COMPOSE_BIN) $(COMPOSE_ARGS) down --volumes --remove-orphans
 
 purge: clean
 	-sudo rm -rvf $(DATA_FOLDER)
