@@ -98,7 +98,6 @@ services:
 
 
 volumes:
-  nextcloud-html:
   nextcloud-db-mariadb:
     driver: local
     driver_opts:
@@ -123,6 +122,7 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/apps"
+  nextcloud-html:
 
 secrets:
   nextcloud-db-password:

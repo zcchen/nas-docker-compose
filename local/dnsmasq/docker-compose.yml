@@ -12,13 +12,10 @@ services:
     volumes:
       - ${TMP_FOLDER}/dnsmasq/config:/etc/dnsmasq.d
       - ${PWD}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - ${PWD}/dnsmasq/dnsmasq-start.sh:/dnsmasq-start.sh:ro
     networks:
       - front-end
-    entrypoint: sh -c "
-      test -f /etc/dnsmasq.d/ready.txt &&
-      rm -rf /etc/dnsmasq.d/updated.lock &&
-      /usr/sbin/dnsmasq -k -d
-      "
+    entrypoint: sh /dnsmasq-start.sh
 
   dnsmasq-config:
     image: zcchen/toolbox

@@ -26,7 +26,7 @@ main
     * [ ] others
   + [x] set the default app to be `file`
   + [x] setup the tunings, like `redis` +  ...
-  + [ ] reinstallation failed if the app container is destroyed.
+  + [x] reinstallation failed if the app container is destroyed. (skip)
 - [x] separate this project into `server` & `local`
   + [x] Update the default `docker-compose` project name
 - [ ] DNS prodivers:
@@ -34,16 +34,16 @@ main
     * [ ] `dnsmasq` + `felixonmars/dnsmasq-china-list`
   + [x] server DNS simulator, for Internet accessing
     * [x] `dnsmasq` bind the Address with server VM
-  + [?] Auto restart after time-updated scripts. (healthy check is useless for this.)
+  + [x] Auto restart after time-updated scripts. (healthy check is useless for this.)
 - [x] frp
   + [x] local & server basic setup
   + [x] server port forwarding:
     * [x] basic feature implemented
     * [x] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
-- [ ] https support (letsencrypt)
+- [x] https support (letsencrypt)
   + [x] Basic features and able to use
-  + [ ] change the CA from `letsencrypt test` to `letsencrypt`
-  + [?] update the acme.sh command from `--issue` to `--issue` + `--cron`, in order to reduce the API limits.
+  + [x] change the CA from `letsencrypt test` to `letsencrypt`
+  + [x] update the acme.sh command from `--issue` to `--issue` + `--cron`, in order to reduce the API limits.
 - [x] proxy setup
   + [x] local proxy (ss + v2ray plugin), privoxy
   + [x] server proxy provider (ss + v2ray plugin)
