@@ -4,7 +4,8 @@
 
 title: "NAS Navigator"
 subtitle: "中文"
-logo: "logo.png"
+#logo: "logo.png"
+icon: "fas fa-home"
 
 
 # Optional message
@@ -13,11 +14,11 @@ logo: "logo.png"
 # Optional navbar
 links:
   - name: "home/首页"
-    icon: "fab fa-github"
+    icon: "fas fa-home"
     url: ""
     target: ""
   - name: "配置方法"
-    icon: "fab fa-github"
+    icon: "fas fa-laptop"
     url: ""
     target: "_blank" # optional html a tag target attribute
 
