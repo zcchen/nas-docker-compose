@@ -16,20 +16,22 @@ footer: |
   </p>
 # set false if you want to hide it.
 
+#connectivityCheck: true
+
 # Optional navbar
 links:
   - name: "home"
     icon: "fab fa-github"
     url: ""
-    target: "_blank" # optional html a tag target attribute
+    target: ""
   - name: "中文"
     icon: "fab fa-github"
     url: "#cn"
-    target: "_blank" # optional html a tag target attribute
+    target: ""
   - name: "English"
     icon: "fab fa-github"
     url: "#en"
-    target: "_blank" # optional html a tag target attribute
+    target: ""
 
 # Optional theme customization
 theme: default
