@@ -19,7 +19,7 @@ links:
     target: ""
   - name: "配置方法"
     icon: "fas fa-laptop"
-    url: ""
+    url: "#setup-cn"
     target: "_blank" # optional html a tag target attribute
 
 # Services

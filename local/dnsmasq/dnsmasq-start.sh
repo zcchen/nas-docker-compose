@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-CMD="ping www.baidu.com"
-CHECK_FILE=/tmp/abc.txt
+CMD="/usr/sbin/dnsmasq -k -d"
+CHECK_FILE=/etc/dnsmasq.d/ready.txt
 
 
 RUNNING=1;
@@ -22,8 +22,9 @@ main() {
     while [ ${RUNNING} -ne 0 ]; do
         is_files_ready
         files_are_ready=$?
-        if [ ${files_are_ready} -ne 0 ]; then
-            kill -0 $pid 1>/dev/null 2>/dev/null   # check if $pid is running
+        if [ ${files_are_ready} -ne 0 ]; then       # file is ready.
+            rm -rf /etc/dnsmasq.d/updated.lock
+            kill -0 $pid 1>/dev/null 2>/dev/null    # check if $pid is running
             if [ $? -eq 0 ]; then
                 echo "pid <$pid> exists, kill it."
                 kill $pid   # pid exists, kill it.

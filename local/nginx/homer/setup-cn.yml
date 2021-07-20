@@ -1,0 +1,42 @@
+---
+# Homepage configuration
+# See https://fontawesome.com/icons for icons options
+
+title: "NAS Navigator"
+subtitle: "中文"
+#logo: "logo.png"
+icon: "fas fa-home"
+
+
+# Optional message
+#message:
+
+# Optional navbar
+links:
+  - name: "home/首页"
+    icon: "fas fa-home"
+    url: ""
+    target: ""
+  - name: "配置方法"
+    icon: "fas fa-laptop"
+    url: ""
+    target: "_blank" # optional html a tag target attribute
+
+message:
+  # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
+  # mapping: # allows to map fields from the remote format to the one expected by Homer
+  #   title: 'id' # use value from field 'id' as title
+  #   content: 'value' # value from field 'value' as content
+  # refreshInterval: 10000 # Optional: time interval to refresh message
+  #
+  # Real example using chucknorris.io for showing Chuck Norris facts as messages:
+  # url: https://api.chucknorris.io/jokes/random
+  # mapping:
+  #   title: 'id'
+  #   content: 'value'
+  # refreshInterval: 10000
+  style: "is-error"
+  title: "建设中"
+  icon: "fa fa-exclamation-triangle"
+  content: |
+    建设中（内容）

@@ -18,7 +18,7 @@ links:
     target: ""
   - name: "How to Use"
     icon: "fas fa-laptop"
-    url: ""
+    url: "#setup-en"
     target: "_blank" # optional html a tag target attribute
 
 # Services
