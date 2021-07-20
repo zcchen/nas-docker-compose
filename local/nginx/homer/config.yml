@@ -4,7 +4,8 @@
 
 title: "NAS Navigator"
 subtitle: "Homepage"
-logo: "logo.png"
+#logo: "logo.png"
+icon: "fas fa-home"
 
 header: true
 footer: |
@@ -21,15 +22,15 @@ footer: |
 # Optional navbar
 links:
   - name: "home"
-    icon: "fab fa-github"
+    icon: "fas fa-home"
     url: ""
     target: ""
   - name: "中文"
-    icon: "fab fa-github"
+    #icon: "fab fa-github"
     url: "#cn"
     target: ""
   - name: "English"
-    icon: "fab fa-github"
+    #icon: "fab fa-github"
     url: "#en"
     target: ""
 
