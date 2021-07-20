@@ -1,5 +1,5 @@
 __DATA_SUBFOLDERS := mysql config data apps
-__TMP_SUBFOLDERS := ./
+__TMP_SUBFOLDERS :=
 
 
 mkfile_dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))

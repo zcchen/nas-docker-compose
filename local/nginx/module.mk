@@ -1,5 +1,5 @@
-__DATA_SUBFOLDERS :=
-__TMP_SUBFOLDERS := logs letsencrypt
+__DATA_SUBFOLDERS := acme.sh
+__TMP_SUBFOLDERS :=
 
 
 mkfile_dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))

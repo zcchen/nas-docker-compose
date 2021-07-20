@@ -1,0 +1,68 @@
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx
+    restart: always
+    depends_on:
+      - acme.sh
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/sites/:/etc/nginx/templates:ro
+      - ./nginx/nas/:/etc/nginx/sites/nas:ro
+      - acme-certificate:/etc/nginx/cert:ro
+    networks:
+      - front-end
+      - mid-layout
+    environment:
+      LOCAL_DOMAIN_NAME:
+
+  whoami:
+    image: containous/whoami:latest
+    networks:
+      - mid-layout
+      - back-end
+
+  acme.sh:
+    image: neilpang/acme.sh
+    restart: on-failure:3
+    networks:
+      - front-end
+    volumes:
+      - acme-certificate:/acme.sh/
+      - ./nginx/acme-entry.sh:/acme-entry.sh:ro
+    env_file:
+      - ../configs/secrets/acme.sh/config.env
+    environment:
+      LOCAL_DOMAIN_NAME:
+    entrypoint:
+      [ "/bin/sh", "/acme-entry.sh" ]
+    command:
+      #- --server letsencrypttest
+      - --server letsencrypt
+      #- --force
+
+  homer:
+    image: b4bz/homer:latest
+    restart: always
+    networks:
+      - mid-layout
+    volumes:
+      - ./nginx/homer:/www/assets
+    environment:
+      UID: 1000
+      GID: 1000
+    expose:
+      - 8080
+
+
+volumes:
+  acme-certificate:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nginx/acme.sh"
+

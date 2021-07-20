@@ -1,0 +1,65 @@
+---
+# Homepage configuration
+# See https://fontawesome.com/icons for icons options
+
+title: "NAS Navigator"
+subtitle: "English"
+#logo: "logo.png"
+icon: "fas fa-home"
+
+# Optional message
+#message:
+
+# Optional navbar
+links:
+  - name: "home"
+    icon: "fas fa-home"
+    url: ""
+    target: ""
+  - name: "How to Use"
+    icon: "fas fa-laptop"
+    url: "#setup-en"
+    target: "_blank" # optional html a tag target attribute
+
+# Services
+# First level array represent a group.
+# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+services:
+  - name: "Applications"
+    icon: "fas fa-cloud"
+    items:
+      - name: "Nextcloud"
+        logo: "assets/tools/nextcloud.png"
+        subtitle: "NAS"
+        tag: "app"
+        url: "../nextcloud/"
+        target: "_blank" # optional html a tag target attribute
+
+# Optional theme customization
+theme: default
+colors:
+  light:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#f5f5f5"
+    card-background: "#ffffff"
+    text: "#363636"
+    text-header: "#ffffff"
+    text-title: "#303030"
+    text-subtitle: "#424242"
+    card-shadow: rgba(0, 0, 0, 0.1)
+    link-hover: "#363636"
+  dark:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#131313"
+    card-background: "#2b2b2b"
+    text: "#eaeaea"
+    text-header: "#ffffff"
+    text-title: "#fafafa"
+    text-subtitle: "#f5f5f5"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link-hover: "#ffdd57"
+

@@ -2,19 +2,33 @@ version: "3.5"
 
 services:
 
+  nextcloud-nginx:
+    image: nginx
+    restart: always
+    depends_on:
+      - nextcloud-app
+    volumes:
+      - ./nextcloud/web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - nextcloud-html:/var/www/html/:ro
+    networks:
+      - mid-layout
+    #command: [nginx-debug, '-g', 'daemon off;']
+
   nextcloud-app:
-    image: nextcloud:latest
+    #image: nextcloud:latest
+    image: nextcloud:fpm-alpine
     restart: always
     volumes:
+      - nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
+      - ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
     env_file:
       - ${PWD}/nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
-      NEXTCLOUD_TRUSTED_DOMAINS: traefik
     secrets:
       - nextcloud-admin-password
       - nextcloud-db-password
@@ -24,22 +38,17 @@ services:
     networks:
       - mid-layout
       - back-end
-    labels:
-      traefik.enable: true
-      traefik.docker.network: ${COMPOSE_PROJECT_NAME}_mid-layout
-      traefik.http.routers.nas-nextcloud.rule: "Host(`nextcloud.${LOCAL_DOMAIN_NAME}`)"
-      traefik.http.routers.nas-nextcloud.priority: 99
-      traefik.http.routers.nas-nextcloud.service: nas-nextcloud
-      traefik.http.services.nas-nextcloud.loadbalancer.server.port: 80
 
   nextcloud-config:
-    image: nextcloud:latest
+    #image: nextcloud:latest
+    image: nextcloud:fpm-alpine
     restart: on-failure
     volumes:
+      - nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - ./nextcloud/config/:/mnt:ro
-    networks: []
-    command: bash -c "
+    networks: []    #disable the network
+    command: sh -c "
       for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
       chown -R www-data:root /var/www/html/config/
       "
@@ -64,9 +73,11 @@ services:
       - back-end
 
   nextcloud-cron:
-    image: nextcloud:latest
+    #image: nextcloud:latest
+    image: nextcloud:fpm-alpine
     restart: unless-stopped
     volumes:
+      - nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
@@ -83,7 +94,7 @@ services:
       - nextcloud-app
       - nextcloud-db
       - nextcloud-redis
-    networks: []
+    networks: []    # disable the network
 
 
 volumes:
@@ -111,6 +122,7 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/apps"
+  nextcloud-html:
 
 secrets:
   nextcloud-db-password:

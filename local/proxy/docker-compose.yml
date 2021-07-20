@@ -16,7 +16,7 @@ services:
       - proxy-shadowsocks-config
     entrypoint: |
       ss-local -c /run/secrets/proxy-shadowsocks-config -l 7070 \
-               -s ss.${SERVER_DOMAIN_NAME} -p 8080 \
+               -s ${SERVER_IP_ADDR} -p 8080 \
                --plugin v2ray-plugin
     #environment:
       #SS_MODULE: ss-local

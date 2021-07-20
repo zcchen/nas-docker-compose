@@ -18,6 +18,8 @@ services:
       APPEND_CONFIG_FILES:
         /configs/ssh.ini /configs/web.ini /configs/dns.ini
       SHOW_CONFIG: "false"    # change it to true for easy debug if needed
+    dns:
+      - dnsmasq
 
 secrets:
   frpc-token:

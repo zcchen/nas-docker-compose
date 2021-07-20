@@ -20,6 +20,7 @@ $CONFIG = [
    [
     '127.0.0.1',
     'nextcloud.{{LOCAL_DOMAIN_NAME}}',
+    '{{LOCAL_DOMAIN_NAME}}',
    ],
 
 /**
@@ -29,7 +30,7 @@ $CONFIG = [
  * it may be difficult for Nextcloud to detect this parameter, resulting in
  * invalid URLs.
  */
-'overwritewebroot' => '/',
+'overwritewebroot' => '/nextcloud',
 
 'trusted_proxies' => ['172.16.1.0/24', '172.16.10.0/24'],
 

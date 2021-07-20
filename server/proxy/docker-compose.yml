@@ -6,8 +6,6 @@ services:
     restart: on-failure
     ports:
       - 8080:8080
-    expose:
-      - 8080
     networks:
       - front-end
     secrets:
@@ -15,17 +13,10 @@ services:
     entrypoint: |
       ss-server -c /run/secrets/proxy-shadowsocks-config \
                 -p 8080 --plugin v2ray-plugin \
-                --plugin-opts 'server'
+                --plugin-opts 'server' -v
     #environment:
       #SS_MODULE: ss-server
       #SS_CONFIG:" "-c /run/secrets/proxy-shadowsocks-config -s 0.0.0.0"
-    labels:
-      traefik.enable: true
-      #traefik.tcp.routers.shadowsocks.rule: "HostSNI(`192.168.100.1`)"
-      traefik.tcp.routers.shadowsocks.rule: "HostSNI(`*`)"
-      traefik.tcp.routers.shadowsocks.priority: 65535
-      traefik.tcp.routers.shadowsocks.service: shadowsocks
-      traefik.tcp.services.shadowsocks.loadbalancer.server.port: 8080
 
 secrets:
   proxy-shadowsocks-config:
