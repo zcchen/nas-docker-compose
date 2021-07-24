@@ -12,11 +12,13 @@ if test ! -f ${CERT_KEY_PATH} || test ! -f ${CERT_PEM_PATH}; then
     $@
 fi
 
-if test -f ${CERT_KEY_PATH} && test -f ${CERT_PEM_PATH}; then
+while test -f ${CERT_KEY_PATH} && test -f ${CERT_PEM_PATH}; do
   /bin/sh /usr/local/bin/acme.sh \
     --key-file ${CERT_KEY_PATH} \
     --fullchain-file ${CERT_PEM_PATH} \
     --cron $PARAMS \
     -d $LOCAL_DOMAIN_NAME \
     $@
-fi
+  echo "Sleep 1 day then check this loop again."
+  sleep $((24 * 3600))
+done
