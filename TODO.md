@@ -50,7 +50,10 @@ main
 - [x] index page. recommending: use `github.com/bastienwirtz/homer`
   + [x] serve its release file packs
   + [x] adapt the config with my requirements.
-  + [ ] setup `readme.html`.
+- [ ] Use `docsify` to mark down the setup config.
+  + [ ] Added link at `homer/cn.yml` & `homer/en.yml`.
+  + [ ] prepare the setup pages with `docsify`.
+  + [ ] write down the config setup.
 - [ ] English Readme page.
 
 - [ ] onlyoffice
