@@ -40,9 +40,9 @@ main
   + [x] server port forwarding:
     * [x] basic feature implemented
     * [x] missing some test cases, e.g. `${SERVER_DOMAIN_NAME}`, `*.${SERVER_DOMAIN_NAME}`, `*.*.${LOCAL_DOMAIN_NAME}`
-- [x] https support (letsencrypt)
+- [ ] https support (letsencrypt)
   + [x] Basic features and able to use
-  + [x] change the CA from `letsencrypt test` to `letsencrypt`
+  + [ ] change the CA from `letsencrypt test` to `letsencrypt`
   + [x] update the acme.sh command from `--issue` to `--issue` + `--cron`, in order to reduce the API limits.
 - [x] proxy setup
   + [x] local proxy (ss + v2ray plugin), privoxy

@@ -11,25 +11,13 @@ server {
 server {
     server_name  *.${SERVER_DOMAIN_NAME};
     listen       80;
-    return 301 https://${SERVER_DOMAIN_NAME};
+    return 302 $scheme://${SERVER_DOMAIN_NAME};
 }
 
 server {
     server_name  ${SERVER_DOMAIN_NAME};
     listen       80;
-    return 301 https://${SERVER_DOMAIN_NAME}$request_uri;
-}
-
-server {
-    server_name  *.${LOCAL_DOMAIN_NAME};
-    listen       80;
-    return 301 https://${LOCAL_DOMAIN_NAME};
-}
-
-server {
-    server_name  ${LOCAL_DOMAIN_NAME};
-    listen       80;
-    return 301 https://${LOCAL_DOMAIN_NAME}$request_uri;
+    return 302 https://${SERVER_DOMAIN_NAME}$request_uri;
 }
 
 server {
@@ -60,7 +48,19 @@ server {
 }
 
 server {
-    server_name  .${LOCAL_DOMAIN_NAME};
+    server_name  *.${LOCAL_DOMAIN_NAME};
+    listen       80;
+    return 302 $scheme://${LOCAL_DOMAIN_NAME};
+}
+
+server {
+    server_name  ${LOCAL_DOMAIN_NAME};
+    listen       80;
+    return 302 https://${LOCAL_DOMAIN_NAME}$request_uri;
+}
+
+server {
+    server_name  ${LOCAL_DOMAIN_NAME};
     listen       443 ssl;
 
     ssl_certificate     /etc/nginx/cert/cert.pem;

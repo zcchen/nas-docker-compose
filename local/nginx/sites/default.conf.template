@@ -11,12 +11,17 @@ server {
 server {
     server_name  *.${LOCAL_DOMAIN_NAME};
     listen       80;
-    return 301 $scheme://${LOCAL_DOMAIN_NAME};
+    return 302 $scheme://${LOCAL_DOMAIN_NAME};
 }
 
 server {
     server_name  ${LOCAL_DOMAIN_NAME};
     listen       80;
+    return 302 https://${LOCAL_DOMAIN_NAME};
+}
+
+server {
+    server_name  ${LOCAL_DOMAIN_NAME};
     listen       443 ssl http2;
 
     ssl_certificate     /etc/nginx/cert/cert.pem;
