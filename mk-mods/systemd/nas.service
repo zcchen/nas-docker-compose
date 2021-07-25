@@ -1,18 +1,17 @@
 [Unit]
 Description=NAS docker compose Service (@MOD_NAME@)
 Documentation=https://github.com/zcchen/nas-docker-compose
-After=network-online.target
+After=docker.service
 Wants=network-online.target
 Requires=docker.service
 
 [Service]
 Type=simple
 Restart=always
-RestartSec=60
-ExecStart=make
+StartLimitInterval=60s
+ExecStart=make -C @ABSOLUTED_PATH@
 TasksMax=infinity
 User=@USER@
-WorkingDirectory=@ABSOLUTED_PATH@
 
 [Install]
 WantedBy=multi-user.target

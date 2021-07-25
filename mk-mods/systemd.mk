@@ -5,8 +5,7 @@ project_dir := $(dir $(mkfile_path))
 systemd_dir := $(abspath $(project_dir)/systemd/)
 
 service_template = $(abspath $(systemd_dir)/nas.service)
-service_name = nas-$(current_dir)
-service_filename = $(service_name).service
+service_filename = nas-$(current_dir).service
 
 
 $(service_filename):
@@ -19,7 +18,6 @@ $(service_filename):
 $(service_filename)/install: $(service_filename)
 	install -p -D -m 0644 $< /etc/systemd/system/$<
 	systemctl daemon-reload
-	systemctl enable $(service_name)
 
 .PHONY: $(service_filename)/clean
 $(service_filename)/clean:
@@ -29,4 +27,3 @@ $(service_filename)/clean:
 $(service_filename)/uninstall:
 	-rm /etc/systemd/system/$(service_filename)
 	systemctl daemon-reload
-	systemctl disable $(service_name)

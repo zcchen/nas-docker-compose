@@ -14,7 +14,7 @@ COMPOSE_VER_REQ_MAJOR = $(word 1, $(subst ., ,$(COMPOSE_VER_REQ)))
 COMPOSE_VER_REQ_MINOR = $(word 2, $(subst ., ,$(COMPOSE_VER_REQ)))
 
 .PHONY: docker-compose/up docker-compose/config docker-compose/down docker-compose/prepare
-.PHONY: docker-compose/version docker-compose/purge
+.PHONY: docker-compose/version
 
 docker-compose/up: docker-compose/version docker-compose/prepare $(YML_FILES)
 	$(COMPOSE_BIN) $(COMPOSE_ARGS) up --remove-orphans
