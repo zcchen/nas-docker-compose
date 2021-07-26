@@ -7,8 +7,24 @@ include $(ENV_FILE)
 COMPOSE_BIN  = docker-compose
 COMPOSE_ARGS = --env-file $(ENV_FILE)
 
+# prepare the interfaces
+.PHONY: all clean purge install uninstall
+all:
+clean:
+purge:
+install:
+uninstall:
+
 # include the template
-include ../mk-mods/template.mk
+include ../mk-mods/docker-compose.mk
+include ../mk-mods/systemd.mk
+
+# Fill the interfaces
+all: docker-compose/up $(current_dir).service
+clean: docker-compose/down $(current_dir).service/clean
+purge: purge_ENV_FILE
+install: $(current_dir).service/install
+uninstall: $(current_dir).service/uninstall docker-compose/down
 
 # include the module setup
 DATA_SUBFOLDERS :=
@@ -18,8 +34,7 @@ include $(MODULE_FILES)
 MODULES      = $(foreach mf,$(MODULE_FILES),$(basename $(dir $(mf))))
 
 # updates the template interfaces
-prepare: $(ENV_FILE) $(eval include $(ENV_FILE)) prepare_FOLDERS
-purge: purge_ENV_FILE
+docker-compose/prepare: $(ENV_FILE) $(eval include $(ENV_FILE)) prepare_FOLDERS
 
 
 # env file handler
@@ -42,3 +57,4 @@ $(TMP_SUBFOLDERS): $(TMP_FOLDER) $(MODULES)
 
 $(DATA_FOLDER) $(TMP_FOLDER):
 	mkdir -p $@
+
