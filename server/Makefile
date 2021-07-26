@@ -20,11 +20,11 @@ include ../mk-mods/docker-compose.mk
 include ../mk-mods/systemd.mk
 
 # Fill the interfaces
-all: docker-compose/up $(current_dir).service
-clean: docker-compose/down $(current_dir).service/clean
+all: docker-compose/up nas-$(current_dir).service
+clean: docker-compose/down nas-$(current_dir).service/clean
 purge: purge_ENV_FILE
-install: $(current_dir).service/install
-uninstall: $(current_dir).service/uninstall docker-compose/down
+install: nas-$(current_dir).service/install
+uninstall: nas-$(current_dir).service/uninstall docker-compose/down
 
 # include the module setup
 DATA_SUBFOLDERS :=
