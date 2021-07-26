@@ -40,8 +40,8 @@ services:
     entrypoint:
       [ "/bin/sh", "/acme-entry.sh" ]
     command:
-      - --server letsencrypttest
-      #- --server letsencrypt
+      #- --server letsencrypttest
+      - --server letsencrypt
       #- --force
 
   homer:
