@@ -1,0 +1,19 @@
+[Unit]
+Description=NAS docker compose Service (local-ssh)
+Documentation=https://github.com/zcchen/nas-docker-compose
+After=network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+ExecStart=make -C /home/zcchen/github/zcchen/nas-docker-compose/local-ssh
+TasksMax=infinity
+User=zcchen
+
+[Install]
+WantedBy=multi-user.target
+
+# vim: ft=systemd
