@@ -1,5 +1,7 @@
 local/compose.env
 server/compose.env
 
+*/*.service
+
 .*
 !.gitignore
