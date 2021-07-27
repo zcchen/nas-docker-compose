@@ -9,9 +9,10 @@ Requires=docker.service
 Type=simple
 Restart=always
 RestartSec=60
-ExecStart=make -C @ABSOLUTED_PATH@
+ExecStart=make
 TasksMax=infinity
 User=@USER@
+WorkingDirectory=@ABSOLUTED_PATH@
 
 [Install]
 WantedBy=multi-user.target

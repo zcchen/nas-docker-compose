@@ -25,7 +25,7 @@ services:
       - nextcloud-apps:/var/www/html/custom_apps
       - ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
     env_file:
-      - ${PWD}/nextcloud/nextcloud.env
+      - ./nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
@@ -58,7 +58,7 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: on-failure
     env_file:
-      - ${PWD}/nextcloud/nextcloud.env
+      - ./nextcloud/nextcloud.env
     secrets:
       - nextcloud-db-password
     volumes:
@@ -83,7 +83,7 @@ services:
       - nextcloud-apps:/var/www/html/custom_apps
     entrypoint: /cron.sh
     env_file:
-      - ${PWD}/nextcloud/nextcloud.env
+      - ./nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
