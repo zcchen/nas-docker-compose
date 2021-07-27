@@ -22,7 +22,7 @@ include ../mk-mods/systemd.mk
 # Fill the interfaces
 all: docker-compose/up nas-$(current_dir).service
 clean: docker-compose/down nas-$(current_dir).service/clean
-purge: purge_ENV_FILE
+purge: clean purge_ENV_FILE docker-compose/purge
 install: nas-$(current_dir).service/install
 uninstall: nas-$(current_dir).service/uninstall docker-compose/down
 

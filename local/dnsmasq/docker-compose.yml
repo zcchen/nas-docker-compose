@@ -11,8 +11,8 @@ services:
       - 53:53/udp
     volumes:
       - ${TMP_FOLDER}/dnsmasq/config:/etc/dnsmasq.d
-      - ${PWD}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
-      - ${PWD}/dnsmasq/dnsmasq-start.sh:/dnsmasq-start.sh:ro
+      - ./dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - ./dnsmasq/dnsmasq-start.sh:/dnsmasq-start.sh:ro
     networks:
       - front-end
     entrypoint: sh /dnsmasq-start.sh
@@ -22,8 +22,8 @@ services:
     restart: always
     volumes:
       - ${TMP_FOLDER}/dnsmasq/config:/mnt
-      - ${PWD}/dnsmasq/setup/scripts.d:/scripts.d:ro
-      - ${PWD}/dnsmasq/setup/command.sh:/command.sh:ro
+      - ./dnsmasq/setup/scripts.d:/scripts.d:ro
+      - ./dnsmasq/setup/command.sh:/command.sh:ro
     environment:
       WORK_DIR: /mnt
       SHELL_DIR: /scripts.d/

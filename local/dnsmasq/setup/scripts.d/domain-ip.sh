@@ -36,4 +36,8 @@ if [[ -n "${SERVER_IP_ADDR}" ]]; then
 cat >> /mnt/domain-ip.conf << EOF
 address=/.${SERVER_DOMAIN_NAME}/${SERVER_IP_ADDR}
 EOF
+else
+cat >> /mnt/domain-ip.conf << EOF
+server=/.${SERVER_DOMAIN_NAME}/8.8.8.8
+EOF
 fi
