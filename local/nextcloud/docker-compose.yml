@@ -55,7 +55,7 @@ services:
 
   nextcloud-db:
     image: mariadb
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb_read_only_compressed=OFF
     restart: on-failure
     env_file:
       - ./nextcloud/nextcloud.env
