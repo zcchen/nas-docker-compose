@@ -16,11 +16,10 @@ services:
       - proxy-shadowsocks-config
     entrypoint: |
       ss-local -c /run/secrets/proxy-shadowsocks-config -l 7070 \
-               -s ${SERVER_IP_ADDR} -p 8080 \
+               -s ${SERVER_DOMAIN_NAME} -p 8080 \
                --plugin v2ray-plugin
-    #environment:
-      #SS_MODULE: ss-local
-      #SS_CONFIG: "-c /run/secrets/proxy-shadowsocks-config -s ${SERVER_DOMAIN_NAME} -l 7070"
+    environment:
+      SERVER_DOMAIN_NAME:
 
   privoxy:
     image: zcchen/privoxy
