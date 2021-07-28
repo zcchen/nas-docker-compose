@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
+        <title>Documents of the NAS By Docker-Compose</title>
+        <meta name="description" content="Documents of the NAS By Docker-Compose">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <!--<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/pure.css">-->
+        <link rel="stylesheet" href="./static/docsify@4.12.1/themes/vue.css">
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">Loading</div>
         <script>
             window.$docsify = {
-                //...
+                maxLevel: 5,    // Max Title Level to be rendered
+                subMaxLevel: 3,
+                homepage: "README.md",
+                auto2top: true,     // jump to the top of the new page.
+                loadNavbar: true,
             }
         </script>
         <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+        <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+        <script src="//unpkg.com/docsify-plantuml/dist/docsify-plantuml.min.js"></script>
     </body>
 </html>

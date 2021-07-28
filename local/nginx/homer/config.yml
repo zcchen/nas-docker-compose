@@ -27,7 +27,7 @@ links:
     target: ""
   - name: "中文"
     #icon: "fab fa-github"
-    url: "#cn"
+    url: "#zh"
     target: ""
   - name: "English"
     #icon: "fab fa-github"

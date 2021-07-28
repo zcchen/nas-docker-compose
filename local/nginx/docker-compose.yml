@@ -12,6 +12,7 @@ services:
     volumes:
       - ./nginx/sites/:/etc/nginx/templates:ro
       - ./nginx/nas/:/etc/nginx/sites/nas:ro
+      - ./nginx/docs/:/usr/share/nginx/html/docs:ro
       - acme-certificate:/etc/nginx/cert:ro
     networks:
       - front-end
