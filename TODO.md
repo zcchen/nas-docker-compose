@@ -51,8 +51,8 @@ main
   + [x] serve its release file packs
   + [x] adapt the config with my requirements.
 - [ ] Use `docsify` to mark down the setup config.
-  + [ ] Added link at `homer/cn.yml` & `homer/en.yml`.
-  + [ ] prepare the setup pages with `docsify`.
+  + [x] Added link at `homer/cn.yml` & `homer/en.yml`.
+  + [x] prepare the setup pages with `docsify`.
   + [ ] write down the config setup.
 - [ ] English Readme page.
 
