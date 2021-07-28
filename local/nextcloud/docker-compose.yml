@@ -96,6 +96,35 @@ services:
       - nextcloud-redis
     networks: []    # disable the network
 
+  nextcloud-occ-command:
+    #image: nextcloud:latest
+    image: nextcloud:fpm-alpine
+    restart: on-failure
+    volumes:
+      - nextcloud-html:/var/www/html/
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-apps:/var/www/html/custom_apps
+      - ./nextcloud/occ-command/:/occ-command/:ro
+    env_file:
+      - ./nextcloud/nextcloud.env
+    environment:
+      REDIS_HOST: nextcloud-redis
+      MYSQL_HOST: nextcloud-db
+    secrets:
+      - nextcloud-admin-password
+      - nextcloud-db-password
+    depends_on:
+      - nextcloud-app
+      - nextcloud-db
+      - nextcloud-redis
+    networks:
+      - mid-layout
+      - back-end
+    user: www-data
+    working_dir: /occ-command/
+    command: bash -c /occ-command/occ-commands.sh
+
 
 volumes:
   nextcloud-db-mariadb:
