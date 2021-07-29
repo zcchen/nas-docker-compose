@@ -11,5 +11,5 @@ $CONFIG = [
  * Defaults to ``files``
  */
 'defaultapp' => 'files',
-
+'skeletondirectory' => '',
 ];
