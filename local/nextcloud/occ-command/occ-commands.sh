@@ -3,5 +3,22 @@
 # Please fill this script the occ commands as you want.
 # ref: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html
 
-# Example, just echo the current executing user ID to ensure the privileges.
-echo "User ID: <$(id)>"
+script_basepath=$(realpath $(dirname ./compose.env))
+
+exec_script()
+{
+    filename=$1
+    if [ ! -f "${script_basepath}/${filename}" ]; then
+        echo "File NOT found. \"${script_basepath}/${filename}\"" > /dev/stderr
+    else
+        echo "Executing script \"${script_basepath}/${filename}\"..."
+        sh "${script_basepath}/${filename}"
+    fi
+}
+
+echo "--------------------------------------------------"
+echo "+ User ID: <$(id)>"
+echo "--------------------------------------------------"
+
+exec_script ./media.sh
+
