@@ -20,5 +20,6 @@ echo "--------------------------------------------------"
 echo "+ User ID: <$(id)>"
 echo "--------------------------------------------------"
 
-exec_script ./media.sh
+exec_script ./background-jobs.sh
+exec_script ./users.sh
 

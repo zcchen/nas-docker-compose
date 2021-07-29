@@ -112,7 +112,7 @@ services:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
     secrets:
-      - nextcloud-media-password
+      - nextcloud-public-password
     depends_on:
       - nextcloud-app
       - nextcloud-db
@@ -157,5 +157,5 @@ secrets:
     file: ../configs/secrets/nextcloud/nextcloud-db-passwd.txt
   nextcloud-admin-password:
     file: ../configs/secrets/nextcloud/nextcloud-admin-passwd.txt
-  nextcloud-media-password:
-    file: ../configs/secrets/nextcloud/nextcloud-media-passwd.txt
+  nextcloud-public-password:
+    file: ../configs/secrets/nextcloud/nextcloud-public-passwd.txt
