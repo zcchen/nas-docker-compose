@@ -19,8 +19,9 @@ $CONFIG = [
 'trusted_domains' =>
    [
     '127.0.0.1',
-    'nextcloud.{{LOCAL_DOMAIN_NAME}}',
     '{{LOCAL_DOMAIN_NAME}}',
+    'nextcloud-nginx',
+    'nextcloud-apache',
    ],
 
 /**
