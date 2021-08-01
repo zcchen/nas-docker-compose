@@ -3,29 +3,27 @@
 occ_cmd="php /var/www/html/occ"
 
 public_username=public
+public_password=$(cat /run/secrets/nextcloud-public-password)
+public_homedir=/var/www/html/data/${public_username}
 
 # user: public, password: publicPassword, group public
 ${occ_cmd} group:add ${public_username}
-OC_PASS=$(cat /run/secrets/nextcloud-public-password) ${occ_cmd} user:add ${public_username} \
+OC_PASS=${public_password} ${occ_cmd} user:add ${public_username} \
         --no-interaction --password-from-env --group="${public_username}"
 ${occ_cmd} user:enable ${public_username}
 
-# wait the public user first login and activate the folder
-if [ ! -f /var/www/html/data/${public_username} ]; then
-    echo "${public_username} have NOT login to create"
+if [ ! -d "${public_homedir}" ]; then
     exit 1
 fi
 
-# FIXME: have issues here
-if [ -f /var/www/html/data/${public_username} ]; then
-    # Create the folders for public user
-    public_basedir=/var/www/html/data/${public_username}/files/
-    mkdir -p ${public_basedir}/Downloads
-    mkdir -p ${public_basedir}/Movies
-    mkdir -p ${public_basedir}/Pictures
-    mkdir -p ${public_basedir}/Softwares
-    mkdir -p ${public_basedir}/Public
-
-    # Scan the files and update it for file caches
-    ${occ_cmd} files:scan --unscanned public
-fi
+# make folders
+for k in "Public" "Downloads" "Movies" "Pictures" "Softwares"; do
+    curl -u ${public_username}:${public_password} -i -L -X MKCOL \
+        http://nextcloud-nginx/remote.php/dav/files/${public_username}/${k}
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
+    if [ ! -d "${public_homedir}/files/${k}" ]; then
+        exit 1
+    fi
+done

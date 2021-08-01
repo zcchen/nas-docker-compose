@@ -114,6 +114,7 @@ services:
     secrets:
       - nextcloud-public-password
     depends_on:
+      - nextcloud-nginx
       - nextcloud-app
       - nextcloud-db
       - nextcloud-redis

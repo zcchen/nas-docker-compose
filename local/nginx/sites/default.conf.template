@@ -17,7 +17,7 @@ server {
 server {
     server_name  ${LOCAL_DOMAIN_NAME};
     listen       80;
-    return 302 https://${LOCAL_DOMAIN_NAME};
+    return 302 https://${LOCAL_DOMAIN_NAME}$uri;
 }
 
 server {

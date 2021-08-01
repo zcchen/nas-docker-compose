@@ -6,6 +6,9 @@ services:
     restart: always
     depends_on:
       - acme.sh
+      - nextcloud-nginx
+      - homer
+      - whoami
     ports:
       - 80:80
       - 443:443
