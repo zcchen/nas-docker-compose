@@ -24,6 +24,7 @@ services:
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
       - ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
     env_file:
       - ./nextcloud/nextcloud.env
     environment:
