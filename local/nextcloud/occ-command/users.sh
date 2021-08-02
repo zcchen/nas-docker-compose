@@ -7,6 +7,7 @@ users_homedir=/var/www/html/data/
 
 create_users_and_shares()
 {
+    # parameters handler
     username=$1
     password=$2
     isUserEnable=$3
@@ -14,16 +15,15 @@ create_users_and_shares()
     share_group=$5
     shift 5
     folders="$@"
-
+    # use occ script to prepare the user
     ${occ_cmd} group:add ${groupname}
     OC_PASS=${password} ${occ_cmd} user:add ${username} \
             --no-interaction --password-from-env --group=${groupname}
     ${occ_cmd} user:enable ${username}
-
+    # exit the script first because the user folder is not ready.
     if [ ! -d "${users_homedir}/${username}" ]; then
         exit 1
     fi
-
     # make folders
     for k in ${folders}; do
         curl -u ${username}:${password} -i -L -X MKCOL \
@@ -42,11 +42,14 @@ create_users_and_shares()
                 -F "permissions=15"
         fi
     done
-
+    # disable the user if needed
     ! ${isUserEnable} && ${occ_cmd} user:disable ${username}
 }
 
-${occ_cmd} group:add users
 create_users_and_shares \
-    public $(cat /run/secrets/nextcloud-public-password) false public users \
+    share $(tr -dc A-Za-z0-9 </dev/urandom | head -c 13) false users users \
+    SharePhotos ShareDocuments
+
+create_users_and_shares \
+    public $(cat /run/secrets/nextcloud-public-password) true public users \
     Public Downloads Movies Pictures Softwares
