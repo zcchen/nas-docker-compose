@@ -26,13 +26,12 @@ create_users_and_shares()
     fi
     # make folders
     for k in ${folders}; do
-        curl -u ${username}:${password} -i -L -X MKCOL \
-            ${nextcloud_remote_api}/dav/files/${username}/${k}
-        if [ $? -ne 0 ]; then
-            exit 1
-        fi
         if [ ! -d "${users_homedir}/${username}/files/${k}" ]; then
-            exit 1
+            curl -u ${username}:${password} -i -L -X MKCOL \
+                ${nextcloud_remote_api}/dav/files/${username}/${k}
+            if [ $? -ne 0 ]; then
+                exit 1
+            fi
         else
             # Share the just created folders to the `users` group
             # API ref: https://docs.nextcloud.com/server/latest/developer_manual/client_apis/OCS/ocs-share-api.html#create-a-new-share
