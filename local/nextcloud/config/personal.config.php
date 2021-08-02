@@ -11,5 +11,6 @@ $CONFIG = [
  * Defaults to ``files``
  */
 'defaultapp' => 'files',
-'skeletondirectory' => '',
+'skeletondirectory' => '/var/www/nextcloud/skeleton',
+'templatedirectory' => '/var/www/nextcloud/skeleton/Templates',
 ];
