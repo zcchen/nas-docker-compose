@@ -56,13 +56,8 @@ main
   + [ ] write down the config setup.
 - [ ] English Readme page.
 
-- [ ] onlyoffice
 - [ ] gitlab
 - [ ] artifactory (JFrog)
-- [ ] auto download (aria2, aria2-ng)
 - [ ] server monitoring (cockpit)
 
-others
------------------------------
-- [ ] media center (commercial: emby server / opensource: jellyfin)
 
