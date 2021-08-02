@@ -2,41 +2,51 @@
 
 occ_cmd="php /var/www/html/occ"
 ocs_api_base="http://nextcloud-nginx/ocs/v1.php"
+nextcloud_remote_api="http://nextcloud-nginx/remote.php"
+users_homedir=/var/www/html/data/
 
-public_username=public
-public_password=$(cat /run/secrets/nextcloud-public-password)
-public_homedir=/var/www/html/data/${public_username}
-users_groupname=users
+create_users_and_shares()
+{
+    username=$1
+    password=$2
+    isUserEnable=$3
+    groupname=$4
+    share_group=$5
+    shift 5
+    folders="$@"
 
-# user: public, password: publicPassword, group public
-${occ_cmd} group:add ${users_groupname}
-${occ_cmd} group:add ${public_username}
-OC_PASS=${public_password} ${occ_cmd} user:add ${public_username} \
-        --no-interaction --password-from-env --group="${public_username}"
-${occ_cmd} user:enable ${public_username}
+    ${occ_cmd} group:add ${groupname}
+    OC_PASS=${password} ${occ_cmd} user:add ${username} \
+            --no-interaction --password-from-env --group=${groupname}
+    ${occ_cmd} user:enable ${username}
 
-if [ ! -d "${public_homedir}" ]; then
-    exit 1
-fi
-
-# make folders
-for k in "Public" "Downloads" "Movies" "Pictures" "Softwares"; do
-    curl -u ${public_username}:${public_password} -i -L -X MKCOL \
-        http://nextcloud-nginx/remote.php/dav/files/${public_username}/${k}
-
-    if [ $? -ne 0 ]; then
+    if [ ! -d "${users_homedir}/${username}" ]; then
         exit 1
     fi
 
-    if [ ! -d "${public_homedir}/files/${k}" ]; then
-        exit 1
-    else
-        # Share the just created folders to the `users` group
-        # API ref: https://docs.nextcloud.com/server/latest/developer_manual/client_apis/OCS/ocs-share-api.html#create-a-new-share
-        curl -u ${public_username}:${public_password} -i -L -H "OCS-APIRequest: true" \
-            -X POST ${ocs_api_base}/apps/files_sharing/api/v1/shares \
-            -F "path=/${k}" -F "shareType=1" -F "shareWith=${users_groupname}" \
-            -F "permissions=15"
-    fi
-done
+    # make folders
+    for k in ${folders}; do
+        curl -u ${username}:${password} -i -L -X MKCOL \
+            ${nextcloud_remote_api}/dav/files/${username}/${k}
+        if [ $? -ne 0 ]; then
+            exit 1
+        fi
+        if [ ! -d "${users_homedir}/${username}/files/${k}" ]; then
+            exit 1
+        else
+            # Share the just created folders to the `users` group
+            # API ref: https://docs.nextcloud.com/server/latest/developer_manual/client_apis/OCS/ocs-share-api.html#create-a-new-share
+            curl -u ${username}:${password} -i -L -H "OCS-APIRequest: true" \
+                -X POST ${ocs_api_base}/apps/files_sharing/api/v1/shares \
+                -F "path=/${k}" -F "shareType=1" -F "shareWith=${share_group}" \
+                -F "permissions=15"
+        fi
+    done
 
+    ! ${isUserEnable} && ${occ_cmd} user:disable ${username}
+}
+
+${occ_cmd} group:add users
+create_users_and_shares \
+    public $(cat /run/secrets/nextcloud-public-password) false public users \
+    Public Downloads Movies Pictures Softwares
