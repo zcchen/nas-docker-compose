@@ -22,7 +22,7 @@ main
     * [x] done with `traefik` solution.
     * [x] port back to `nginx`.
   + [ ] Plugins for nextcloud
-    * [ ] calenda
+    * [ ] calenda, and other groupware. ref: https://docs.nextcloud.com/server/latest/user_manual/en/pim/index.html
     * [ ] others
   + [x] set the default app to be `file`
   + [x] setup the tunings, like `redis` +  ...
@@ -55,9 +55,14 @@ main
   + [x] prepare the setup pages with `docsify`.
   + [ ] write down the config setup.
 - [ ] English Readme page.
+- [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
+  + [ ] auto download (aria2, aria2-ng)
+  + [ ] media center (commercial: emby server / opensource: jellyfin)
+- [ ] Only Office integrating, ref:
+  + [ ] Use its official docker image to hold this service.
+    * [https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html][https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html]
+    * [https://blog.csdn.net/Aria_Miazzy/article/details/85028182][https://blog.csdn.net/Aria_Miazzy/article/details/85028182]
 
-- [ ] gitlab
-- [ ] artifactory (JFrog)
 - [ ] server monitoring (cockpit)
 
 
