@@ -21,6 +21,6 @@ echo "+ User ID: <$(id)>"
 echo "--------------------------------------------------"
 
 exec_script ./background-jobs.sh
-exec_script ./calendar.sh
+exec_script ./plugins.sh
 exec_script ./users.sh
 

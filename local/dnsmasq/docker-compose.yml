@@ -15,6 +15,7 @@ services:
       - ./dnsmasq/dnsmasq-start.sh:/dnsmasq-start.sh:ro
     networks:
       - front-end
+      - mid-layout
     entrypoint: sh /dnsmasq-start.sh
 
   dnsmasq-config:

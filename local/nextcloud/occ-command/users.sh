@@ -16,10 +16,12 @@ create_users_and_shares()
     shift 5
     folders="$@"
     # use occ script to prepare the user
-    ${occ_cmd} group:add ${groupname}
-    OC_PASS=${password} ${occ_cmd} user:add ${username} \
-            --no-interaction --password-from-env --group=${groupname}
-    ${occ_cmd} user:enable ${username}
+    if [ -z "$(${occ_cmd} user:list | grep ${username}:)" ]; then
+      ${occ_cmd} group:add ${groupname}
+      OC_PASS=${password} ${occ_cmd} user:add ${username} \
+              --no-interaction --password-from-env --group=${groupname}
+      ${occ_cmd} user:enable ${username}
+    fi
     # exit the script first because the user folder is not ready.
     if [ ! -d "${users_homedir}/${username}" ]; then
         exit 1
@@ -49,6 +51,6 @@ create_users_and_shares \
     share $(tr -dc A-Za-z0-9 </dev/urandom | head -c 13) false users users \
     SharePhotos ShareDocuments
 
-create_users_and_shares \
-    public $(cat /run/secrets/nextcloud-public-password) true public users \
-    Public Downloads Movies Pictures Softwares
+#create_users_and_shares \
+    #public $(cat /run/secrets/nextcloud-public-password) true public users \
+    #Public Downloads Movies Pictures Softwares
