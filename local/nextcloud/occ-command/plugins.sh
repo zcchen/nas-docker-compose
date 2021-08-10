@@ -7,8 +7,7 @@ plugin_dirname=./plugins
 install_plugin()
 {
   plugin_filename=$1
-  plugin_name=$(basename ${plugin_filename} 2>/dev/null | \
-                sed -e 's/.tar.gz$//g' | awk -F '-' '{print $1}')
+  plugin_name=$(tar --no-recursion -tzf ${plugin_filename} 2>/dev/null | sed -e 's@/.*@@' | uniq)
 
   if [ -z "${plugin_name}" ]; then
       echo "<${plugin_name}> is empty, exiting..." > /dev/stderr
@@ -20,8 +19,11 @@ install_plugin()
       return 2
   fi
 
-  echo "Extracting the <${plugin_filename}> file..."
-  tar -C ${app_dirpath} -xzf ${plugin_filename}
+  if [ ! -d "${app_dirpath}/${plugin_name}" ]; then
+      echo "Extracting the <${plugin_filename}> file..."
+      tar -C ${app_dirpath} -xzf ${plugin_filename}
+  fi
+
   echo "Installing the plugin <${plugin_name}>..."
   ${occ_cmd} app:enable ${plugin_name}
   echo "The plugin <${plugin_name}> is installed."

@@ -27,10 +27,6 @@ services:
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
     env_file:
       - ./nextcloud/nextcloud.env
-    dns:
-      - dnsmasq
-    dns_search:
-      - dnsmasq
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
