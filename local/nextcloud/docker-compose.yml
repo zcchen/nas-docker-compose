@@ -149,6 +149,17 @@ services:
       - https://github.com/nextcloud-releases/calendar/releases/download/v2.3.1/calendar.tar.gz
       - https://github.com/nextcloud/deck/releases/download/v1.4.2/deck.tar.gz
 
+  nextcloud-samba:
+    image: dperson/samba
+    restart: always
+    volumes:
+      - nextcloud-samba:/mnt
+    ports:
+      - 139:139
+      - 445:445
+    command:  # ref: https://github.com/dperson/samba
+      - -p
+
 
 volumes:
   nextcloud-db-mariadb:
@@ -175,6 +186,12 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/apps"
+  nextcloud-samba:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/samba"
   nextcloud-html:
   nextcloud-plugins:
 
