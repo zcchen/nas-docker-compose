@@ -65,6 +65,6 @@ $CONFIG = [
  *
  * Defaults to empty array.
  */
-'proxyexclude' => [],
+'proxyexclude' => ['privoxy'],
 
 ];

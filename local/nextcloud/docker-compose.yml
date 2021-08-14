@@ -159,6 +159,7 @@ services:
       - 445:445
     command:  # ref: https://github.com/dperson/samba
       - -p
+      - -s "nas-public;/mnt;yes;yes;yes"    # "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
 
 
 volumes:
