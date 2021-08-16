@@ -23,6 +23,7 @@ services:
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
+      - nextcloud-samba:/mnt
       - ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
     env_file:
@@ -37,6 +38,7 @@ services:
       - nextcloud-db
       - nextcloud-redis
     networks:
+      - front-end
       - mid-layout
       - back-end
 
@@ -153,13 +155,30 @@ services:
     image: dperson/samba
     restart: always
     volumes:
-      - nextcloud-samba:/mnt
+      - nextcloud-samba:/mnt/
     ports:
       - 139:139
       - 445:445
+    secrets:
+      - nextcloud-public-password
+    environment:
+      USER: "public;$$(cat /run/secrets/nextcloud-public-password)"
+      USERID: 82
+      GROUPID: 82
     command:  # ref: https://github.com/dperson/samba
       - -p
-      - -s "nas-public;/mnt;yes;yes;yes"    # "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
+      - -n
+      - -s
+      - Public;/mnt/Public;yes;yes;yes;;none;public
+      - -s
+      - Downloads;/mnt/Downloads;yes;yes;yes;;none;public
+      - -s
+      - Movies;/mnt/Movies;yes;yes;yes;;none;public
+      - -s
+      - Pictures;/mnt/Pictures;yes;yes;yes;;none;public
+      - -s
+      - Softwares;/mnt/Softwares;yes;yes;yes;;none;public
+        # "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
 
 
 volumes:
