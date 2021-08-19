@@ -129,27 +129,27 @@ services:
     working_dir: /occ-command/
     command: sh /occ-command/occ-commands.sh
 
-  nextcloud-plugin-downloader:
-    image: mwendler/wget
-    restart: on-failure
-    volumes:
-      - nextcloud-plugins:/occ-command/plugins
-    working_dir: /occ-command/plugins
-    network_mode: host
-    ## mute the following parts if no need to use proxy
-    depends_on:
-      - privoxy
-    environment:
-      use_proxy: "yes"
-      http_proxy: "http://127.0.0.1:8118"
-      https_proxy: "http://127.0.0.1:8118"
-    ## -------- end of the proxy muting ---------------
-    command:
-      - --no-check-certificate
-      - --continue
-      - https://github.com/felixrupp/user_cas/releases/download/1.9.0/user_cas-nextcloud-with-phpcas.tar.gz
-      - https://github.com/nextcloud-releases/calendar/releases/download/v2.3.1/calendar.tar.gz
-      - https://github.com/nextcloud/deck/releases/download/v1.4.2/deck.tar.gz
+  #nextcloud-plugin-downloader:
+    #image: mwendler/wget
+    #restart: on-failure
+    #volumes:
+      #- nextcloud-plugins:/occ-command/plugins
+    #working_dir: /occ-command/plugins
+    #network_mode: host
+    ### mute the following parts if no need to use proxy
+    #depends_on:
+      #- privoxy
+    #environment:
+      #use_proxy: "yes"
+      #http_proxy: "http://127.0.0.1:8118"
+      #https_proxy: "http://127.0.0.1:8118"
+    ### -------- end of the proxy muting ---------------
+    #command:
+      #- --no-check-certificate
+      #- --continue
+      #- https://github.com/felixrupp/user_cas/releases/download/1.9.0/user_cas-nextcloud-with-phpcas.tar.gz
+      #- https://github.com/nextcloud-releases/calendar/releases/download/v2.3.1/calendar.tar.gz
+      #- https://github.com/nextcloud/deck/releases/download/v1.4.2/deck.tar.gz
 
   nextcloud-samba:
     image: dperson/samba

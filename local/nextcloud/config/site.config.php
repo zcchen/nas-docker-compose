@@ -33,6 +33,35 @@ $CONFIG = [
  */
 'overwritewebroot' => '/nextcloud',
 
+/**
+ * The automatic hostname detection of Nextcloud can fail in certain reverse
+ * proxy and CLI/cron situations. This option allows you to manually override
+ * the automatic detection; for example ``www.example.com``, or specify the port
+ * ``www.example.com:8080``.
+ */
+//'overwritehost' => '{{LOCAL_DOMAIN_NAME}}',
+'overwritehost' => '',
+
+/**
+ * When generating URLs, Nextcloud attempts to detect whether the server is
+ * accessed via ``https`` or ``http``. However, if Nextcloud is behind a proxy
+ * and the proxy handles the ``https`` calls, Nextcloud would not know that
+ * ``ssl`` is in use, which would result in incorrect URLs being generated.
+ * Valid values are ``http`` and ``https``.
+ */
+'overwriteprotocol' => 'https',
+
+/**
+ * Use this configuration parameter to specify the base URL for any URLs which
+ * are generated within Nextcloud using any kind of command line tools (cron or
+ * occ). The value should contain the full base URL:
+ * ``https://www.example.com/nextcloud``
+ *
+ * Defaults to ``''`` (empty string)
+ */
+//'overwrite.cli.url' => 'https://{{LOCAL_DOMAIN_NAME}}/nextcloud/',
+'overwrite.cli.url' => '',
+
 'trusted_proxies' => ['172.16.1.0/24', '172.16.10.0/24'],
 
 /**
