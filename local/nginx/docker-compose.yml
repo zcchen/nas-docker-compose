@@ -6,7 +6,6 @@ services:
     restart: always
     depends_on:
       - acme.sh
-      #- nextcloud-nginx
       - nextcloud-app
       - homer
       - whoami
@@ -45,8 +44,9 @@ services:
     entrypoint:
       [ "/bin/sh", "/acme-entry.sh" ]
     command:
-      #- --server letsencrypttest
-      - --server letsencrypt
+      - --server letsencrypttest
+      #- --server letsencrypt
+      - --debug
       #- --force
 
   homer:

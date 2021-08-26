@@ -2,21 +2,8 @@ version: "3.5"
 
 services:
 
-  #nextcloud-nginx:
-    #image: nginx
-    #restart: always
-    #depends_on:
-      #- nextcloud-app
-    #volumes:
-      #- ./nextcloud/web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      #- nextcloud-html:/var/www/html/:ro
-    #networks:
-      #- mid-layout
-    ##command: [nginx-debug, '-g', 'daemon off;']
-
   nextcloud-app:
     image: nextcloud:latest
-    #image: nextcloud:fpm-alpine
     restart: always
     volumes:
       - nextcloud-html:/var/www/html/
@@ -44,7 +31,6 @@ services:
 
   nextcloud-config:
     image: nextcloud:latest
-    #image: nextcloud:fpm-alpine
     restart: on-failure
     volumes:
       - nextcloud-html:/var/www/html/
@@ -77,7 +63,6 @@ services:
 
   nextcloud-cron:
     image: nextcloud:latest
-    #image: nextcloud:fpm-alpine
     restart: unless-stopped
     volumes:
       - nextcloud-html:/var/www/html/
@@ -101,7 +86,6 @@ services:
 
   nextcloud-occ-command:
     image: nextcloud:latest
-    #image: nextcloud:fpm-alpine
     restart: on-failure
     volumes:
       - nextcloud-html:/var/www/html/
