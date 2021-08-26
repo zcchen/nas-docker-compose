@@ -22,6 +22,7 @@ $CONFIG = [
     '{{LOCAL_DOMAIN_NAME}}',
     'nextcloud-nginx',
     'nextcloud-apache',
+    'nextcloud-app',
    ],
 
 /**
@@ -49,7 +50,7 @@ $CONFIG = [
  * ``ssl`` is in use, which would result in incorrect URLs being generated.
  * Valid values are ``http`` and ``https``.
  */
-'overwriteprotocol' => 'https',
+//'overwriteprotocol' => 'https',
 
 /**
  * Use this configuration parameter to specify the base URL for any URLs which

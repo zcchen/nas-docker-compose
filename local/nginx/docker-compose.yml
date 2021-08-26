@@ -6,7 +6,8 @@ services:
     restart: always
     depends_on:
       - acme.sh
-      - nextcloud-nginx
+      #- nextcloud-nginx
+      - nextcloud-app
       - homer
       - whoami
     ports:

@@ -2,21 +2,21 @@ version: "3.5"
 
 services:
 
-  nextcloud-nginx:
-    image: nginx
-    restart: always
-    depends_on:
-      - nextcloud-app
-    volumes:
-      - ./nextcloud/web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - nextcloud-html:/var/www/html/:ro
-    networks:
-      - mid-layout
-    #command: [nginx-debug, '-g', 'daemon off;']
+  #nextcloud-nginx:
+    #image: nginx
+    #restart: always
+    #depends_on:
+      #- nextcloud-app
+    #volumes:
+      #- ./nextcloud/web/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      #- nextcloud-html:/var/www/html/:ro
+    #networks:
+      #- mid-layout
+    ##command: [nginx-debug, '-g', 'daemon off;']
 
   nextcloud-app:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
+    image: nextcloud:latest
+    #image: nextcloud:fpm-alpine
     restart: always
     volumes:
       - nextcloud-html:/var/www/html/
@@ -43,8 +43,8 @@ services:
       - back-end
 
   nextcloud-config:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
+    image: nextcloud:latest
+    #image: nextcloud:fpm-alpine
     restart: on-failure
     volumes:
       - nextcloud-html:/var/www/html/
@@ -76,8 +76,8 @@ services:
       - back-end
 
   nextcloud-cron:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
+    image: nextcloud:latest
+    #image: nextcloud:fpm-alpine
     restart: unless-stopped
     volumes:
       - nextcloud-html:/var/www/html/
@@ -100,8 +100,8 @@ services:
     networks: []    # disable the network
 
   nextcloud-occ-command:
-    #image: nextcloud:latest
-    image: nextcloud:fpm-alpine
+    image: nextcloud:latest
+    #image: nextcloud:fpm-alpine
     restart: on-failure
     volumes:
       - nextcloud-html:/var/www/html/
@@ -118,7 +118,7 @@ services:
     secrets:
       - nextcloud-public-password
     depends_on:
-      - nextcloud-nginx
+      #- nextcloud-nginx
       - nextcloud-app
       - nextcloud-db
       - nextcloud-redis
