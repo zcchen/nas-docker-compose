@@ -21,8 +21,8 @@ main
   + [x] nextcloud upload issue, related to `nginx` setup
     * [x] done with `traefik` solution.
     * [x] port back to `nginx`.
-  + [ ] Plugins for nextcloud
-    * [ ] calenda, and other groupware. ref: https://docs.nextcloud.com/server/latest/user_manual/en/pim/index.html
+  + [x] Plugins for nextcloud
+    * [x] calenda, and other groupware. ref: https://docs.nextcloud.com/server/latest/user_manual/en/pim/index.html
     * [ ] others
   + [x] set the default app to be `file`
   + [x] setup the tunings, like `redis` +  ...
