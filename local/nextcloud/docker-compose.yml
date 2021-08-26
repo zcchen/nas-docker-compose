@@ -111,7 +111,7 @@ services:
       - back-end
     user: www-data
     working_dir: /occ-command/
-    command: sh /occ-command/occ-commands.sh
+    command: sh /occ-command/_occ-commands.sh
 
   #nextcloud-plugin-downloader:
     #image: mwendler/wget
@@ -147,8 +147,8 @@ services:
       - nextcloud-public-password
     environment:
       USER: "public;$$(cat /run/secrets/nextcloud-public-password)"
-      USERID: 82
-      GROUPID: 82
+      USERID: 33  # www-data user, 33 for nextcloud:apache, 82 for nextcloud:fpm-alpine
+      GROUPID: 33
     command:  # ref: https://github.com/dperson/samba
       - -p
       - -n
