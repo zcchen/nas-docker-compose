@@ -20,6 +20,8 @@ server {
     return 302 https://${LOCAL_DOMAIN_NAME}$uri;
 }
 
+proxy_cache_path /tmp/nginx_cache levels=1:2 keys_zone=nextcloud_auth:1m max_size=256m inactive=60m use_temp_path=off;
+
 server {
     server_name  ${LOCAL_DOMAIN_NAME};
     listen       443 ssl http2;

@@ -93,7 +93,6 @@ services:
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
       - ./nextcloud/occ-command/:/occ-command/:ro
-      - nextcloud-plugins:/occ-command/plugins
     env_file:
       - ./nextcloud/nextcloud.env
     environment:
@@ -176,7 +175,6 @@ volumes:
       o: bind
       device: "${DATA_FOLDER}/nextcloud/samba"
   nextcloud-html:
-  nextcloud-plugins:
 
 secrets:
   nextcloud-db-password:
