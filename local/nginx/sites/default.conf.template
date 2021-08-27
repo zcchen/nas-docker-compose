@@ -36,6 +36,7 @@ server {
 
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;" always;
 
+    root    /usr/share/nginx/html/;
     include /etc/nginx/sites/nas/*.conf;
 
     # redirect server error pages
