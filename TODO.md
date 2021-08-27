@@ -54,6 +54,10 @@ main
   + [x] prepare the setup pages with `docsify`.
   + [ ] write down the config setup.
 - [ ] English Readme page.
+- [ ] Setup Identity Provider (IdP)
+  + tips 1: https://www.nginx.com/blog/validating-oauth-2-0-access-tokens-nginx/
+  + tips 2: https://help.nextcloud.com/t/using-nextcloud-as-an-authentication-backend/32736
+  + [ ] Identification backend service, e.g. `python flask` or `nginx` mod
 - [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
   + [x] `samba` server
   + [ ] auto download (aria2, aria2-ng)
@@ -62,7 +66,14 @@ main
     * [https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html][https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html]
     * [https://blog.csdn.net/Aria_Miazzy/article/details/85028182][https://blog.csdn.net/Aria_Miazzy/article/details/85028182]
 
-- [ ] server monitoring (cockpit)
 
+Another docker-compose Project
+-----------------------------
 - [ ] media center (commercial: emby server / opensource: jellyfin)
+- [ ] backup + sync service
+
+
+System-based Service
+-----------------------------
+- [ ] server monitoring (cockpit)
 
