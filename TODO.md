@@ -23,7 +23,6 @@ main
     * [x] port back to `nginx`.
   + [x] Plugins for nextcloud
     * [x] calenda, and other groupware. ref: https://docs.nextcloud.com/server/latest/user_manual/en/pim/index.html
-    * [ ] others
   + [x] set the default app to be `file`
   + [x] setup the tunings, like `redis` +  ...
   + [x] reinstallation failed if the app container is destroyed. (skip)
@@ -56,8 +55,8 @@ main
   + [ ] write down the config setup.
 - [ ] English Readme page.
 - [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
+  + [x] `samba` server
   + [ ] auto download (aria2, aria2-ng)
-  + [ ] media center (commercial: emby server / opensource: jellyfin)
 - [ ] Only Office integrating, ref:
   + [ ] Use its official docker image to hold this service.
     * [https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html][https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html]
@@ -65,4 +64,5 @@ main
 
 - [ ] server monitoring (cockpit)
 
+- [ ] media center (commercial: emby server / opensource: jellyfin)
 
