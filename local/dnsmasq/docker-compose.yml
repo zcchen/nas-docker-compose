@@ -22,11 +22,11 @@ services:
     image: zcchen/toolbox
     restart: always
     volumes:
-      - ${TMP_FOLDER}/dnsmasq/config:/mnt
+      - ${TMP_FOLDER}/dnsmasq/config:/etc/dnsmasq.d/
       - ./dnsmasq/setup/scripts.d:/scripts.d:ro
       - ./dnsmasq/setup/command.sh:/command.sh:ro
     environment:
-      WORK_DIR: /mnt
+      WORK_DIR: /etc/dnsmasq.d/
       SHELL_DIR: /scripts.d/
       #UPDATE_INTERVAL: 60
       LOCAL_IP_ADDR:

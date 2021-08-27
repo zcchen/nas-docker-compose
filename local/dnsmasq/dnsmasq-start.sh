@@ -16,13 +16,13 @@ is_files_ready() {
 }
 
 main() {
-    # very big pid, which is small chance to duplicate
+    # very big pid, which is small chance to be duplicated
     pid=99999999999999
 
     while [ ${RUNNING} -ne 0 ]; do
         is_files_ready
-        files_are_ready=$?
-        if [ ${files_are_ready} -ne 0 ]; then       # file is ready.
+        readyfile_exists=$?
+        if [ ${readyfile_exists} -ne 0 ]; then      # ready file is missing
             rm -rf /etc/dnsmasq.d/updated.lock
             kill -0 $pid 1>/dev/null 2>/dev/null    # check if $pid is running
             if [ $? -eq 0 ]; then

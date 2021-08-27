@@ -28,16 +28,16 @@ if [[ -z "${SERVER_DOMAIN_NAME}" ]]; then
 fi
 
 
-cat > /mnt/domain-ip.conf << EOF
+cat > /etc/dnsmasq.d/domain-ip.conf << EOF
 address=/.${LOCAL_DOMAIN_NAME}/${LOCAL_IP_ADDR}
 EOF
 
 if [[ -n "${SERVER_IP_ADDR}" ]]; then
-cat >> /mnt/domain-ip.conf << EOF
+cat >> /etc/dnsmasq.d/domain-ip.conf << EOF
 address=/.${SERVER_DOMAIN_NAME}/${SERVER_IP_ADDR}
 EOF
 else
-cat >> /mnt/domain-ip.conf << EOF
+cat >> /etc/dnsmasq.d/domain-ip.conf << EOF
 server=/.${SERVER_DOMAIN_NAME}/8.8.8.8
 EOF
 fi
