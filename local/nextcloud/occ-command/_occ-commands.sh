@@ -16,6 +16,8 @@ exec_script()
     fi
 }
 
+sleep 10        # sleep 10 seconds before executing
+
 echo "--------------------------------------------------"
 echo "+ User ID: <$(id)>"
 echo "--------------------------------------------------"
