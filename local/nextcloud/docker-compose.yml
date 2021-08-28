@@ -118,6 +118,7 @@ services:
     restart: always
     volumes:
       - nextcloud-samba:/mnt/
+      - nextcloud-samba-downloads:/mnt/Downloads
     ports:
       - 139:139
       - 445:445
@@ -125,8 +126,8 @@ services:
       - nextcloud-public-password
     environment:
       USER: "public;$$(cat /run/secrets/nextcloud-public-password)"
-      USERID: 33  # www-data user, 33 for nextcloud:apache, 82 for nextcloud:fpm-alpine
-      GROUPID: 33
+      USERID:
+      GROUPID:
     command:  # ref: https://github.com/dperson/samba
       - -p
       - -n
@@ -174,6 +175,12 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/samba"
+  nextcloud-samba-downloads:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATA_FOLDER}/nextcloud/samba/Downloads"
   nextcloud-html:
 
 secrets:

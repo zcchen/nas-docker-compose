@@ -54,10 +54,10 @@ main
   + [x] prepare the setup pages with `docsify`.
   + [ ] write down the config setup.
 - [ ] English Readme page.
-- [ ] Setup Identity Provider (IdP)
+- [x] Setup Identity Provider (IdP)
   + tips 1: https://www.nginx.com/blog/validating-oauth-2-0-access-tokens-nginx/
   + tips 2: https://help.nextcloud.com/t/using-nextcloud-as-an-authentication-backend/32736
-  + [ ] Identification backend service, e.g. `python flask` or `nginx` mod
+  + [x] Identification backend service, e.g. `python flask` or `nginx` mod
 - [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
   + [x] `samba` server
   + [ ] auto download (aria2, aria2-ng)
