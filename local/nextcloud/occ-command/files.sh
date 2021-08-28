@@ -5,7 +5,7 @@ mnt_dir="/mnt"
 
 ${occ_cmd} app:enable -f files_external
 
-for d in Public Downloads Movies Pictures Softwares; do
+for d in Public Downloads Videos Pictures Softwares; do
   if [ -z "$(${occ_cmd} files_external:list | grep ${d})" ]; then
     echo ">>> seting up the mount point <$d>..."
     mount_id=$(${occ_cmd} files_external:create \

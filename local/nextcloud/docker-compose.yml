@@ -135,7 +135,7 @@ services:
       - -s
       - Downloads;/mnt/Downloads;yes;yes;yes;;none;public
       - -s
-      - Movies;/mnt/Movies;yes;yes;yes;;none;public
+      - Videos;/mnt/Videos;yes;yes;yes;;none;public
       - -s
       - Pictures;/mnt/Pictures;yes;yes;yes;;none;public
       - -s
