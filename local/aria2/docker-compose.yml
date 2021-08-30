@@ -6,11 +6,11 @@ services:
     image: johngong/aria2
     restart: unless-stopped
     ports:
-      - 8080:8080   # web
       - 6881:6881   # BT
       - 6881:6881/udp # BT DHT
     expose:
       - 6800        # RPC port
+      - 8080        # default web port
     environment:
       UID: ${USERID}
       GID: ${GROUPID}
@@ -18,8 +18,8 @@ services:
       RPC_SECRET:
       TZ: Asia/Shanghai
     volumes:
-      - aria2-pro-config:/config
-      - nextcloud-samba-downloads:/downloads
+      #- aria2-pro-config:/config:ro
+      - nextcloud-samba-downloads:/Downloads
     networks:
       - front-end
 
