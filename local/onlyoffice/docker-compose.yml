@@ -1,0 +1,8 @@
+version: "3.5"
+
+services:
+
+  # ref: https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html
+  only-office:
+    image: onlyoffice/documentserver
+    restart: always
