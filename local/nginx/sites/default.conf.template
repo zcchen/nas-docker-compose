@@ -51,3 +51,30 @@ server {
         root   /usr/share/nginx/html;
     }
 }
+
+server {
+    server_name  ${LOCAL_DOMAIN_NAME};
+    listen       6800 ssl;
+
+    ssl_certificate     /etc/nginx/cert/cert.pem;
+    ssl_certificate_key  /etc/nginx/cert/cert.key;
+
+    ssl_session_timeout  5m;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES;
+    ssl_protocols TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        # FIXME: nginx thinks the auth_request params is a file, but it should be a URI to auth.
+        #auth_request $scheme://${LOCAL_DOMAIN_NAME}/auth;
+
+        proxy_pass   http://aria2-pro:6800/;
+        proxy_redirect off;
+        proxy_set_header Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Host $server_name;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+

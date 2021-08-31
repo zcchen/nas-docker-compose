@@ -12,6 +12,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 6800:6800
     volumes:
       - ./nginx/sites/:/etc/nginx/templates:ro
       - ./nginx/nas/:/etc/nginx/sites/nas:ro

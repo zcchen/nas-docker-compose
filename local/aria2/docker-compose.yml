@@ -9,41 +9,33 @@ services:
       PUID: ${USERID}
       PGID: ${GROUPID}
       UMASK_SET: 022
-      RPC_SECRET: P3TERX
+      RPC_SECRET: ""
       RPC_PORT: 6800
       LISTEN_PORT: 6888
       DISK_CACHE: 64M
-      IPV6_MODE: false
-      UPDATE_TRACKERS: true
+      UPDATE_TRACKERS: "true"
       CUSTOM_TRACKER_URL:
       TZ: Asia/Shanghai
+    networks:
+      - front-end
+    ports:
+      #- 6800:6800
+      - 6888:6888
+      - 6888:6888/udp
+    expose:
+      - 6800
     volumes:
       #- .aria2/config:/config
       - nextcloud-samba-downloads:/downloads
-    network_mode: host
-    #network_mode: bridge
-    #ports:
-      #- 6800:6800
-      #- 6888:6888
-      #- 6888:6888/udp
-    #logging:
-      #driver: json-file
-      #options:
-        #max-size: 1m
 
   ariang:
     image: p3terx/ariang
     command: --port 8080
-    #network_mode: host
     networks:
       - mid-layout
     expose:
       - 8080
     restart: unless-stopped
-    #logging:
-      #driver: json-file
-      #options:
-        #max-size: 1m  aria2:
 
 volumes:
   aria2-pro-config:
