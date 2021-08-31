@@ -65,8 +65,8 @@ server {
     ssl_prefer_server_ciphers on;
 
     location / {
-        # FIXME: nginx thinks the auth_request params is a file, but it should be a URI to auth.
-        #auth_request $scheme://${LOCAL_DOMAIN_NAME}/auth;
+        # FIXME: not work as expected
+        auth_request /auth;
 
         proxy_pass   http://aria2-pro:6800/;
         proxy_redirect off;
@@ -76,5 +76,6 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
+    include /etc/nginx/sites/nas/auth.conf;
 }
 
