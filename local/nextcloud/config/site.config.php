@@ -95,6 +95,6 @@ $CONFIG = [
  *
  * Defaults to empty array.
  */
-'proxyexclude' => ['privoxy'],
+'proxyexclude' => ['privoxy', 'only-office'],
 
 ];
