@@ -65,7 +65,6 @@ server {
     ssl_prefer_server_ciphers on;
 
     location / {
-        # FIXME: not work as expected
         auth_request /auth;
 
         proxy_pass   http://aria2-pro:6800/;
