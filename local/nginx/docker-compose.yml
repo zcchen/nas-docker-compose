@@ -56,12 +56,30 @@ services:
     networks:
       - mid-layout
     volumes:
-      - ./nginx/homer:/www/assets
+      - homer-config:/www/assets
     environment:
       UID: 1000
       GID: 1000
+      LOCAL_DOMAIN_NAME:
     expose:
       - 8080
+
+  homer-config:
+    image: zcchen/toolbox
+    restart: on-failure
+    volumes:
+      - ./nginx/homer:/mnt/src
+      - homer-config:/mnt/dest
+    environment:
+      LOCAL_DOMAIN_NAME:
+      SERVER_DOMAIN_NAME:
+      # TODO: use `printf "<token>" | base64 -` to save the URL saved token
+    network_mode: none
+    command: bash -c "
+      cp -rf /mnt/src/* /mnt/dest/ &&
+      find /mnt/dest/ -type f -name \*.yml -print0 | xargs -0 sed -i
+        -e \"s:{{LOCAL_DOMAIN_NAME}}:${LOCAL_DOMAIN_NAME}:g\"
+      "
 
 
 volumes:
@@ -72,3 +90,9 @@ volumes:
       o: bind
       device: "${DATA_FOLDER}/nginx/acme.sh"
 
+  homer-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${TMP_FOLDER}/nginx/homer-config"

@@ -57,10 +57,13 @@ main
 - [x] Setup Identity Provider (IdP)
   + tips 1: https://www.nginx.com/blog/validating-oauth-2-0-access-tokens-nginx/
   + tips 2: https://help.nextcloud.com/t/using-nextcloud-as-an-authentication-backend/32736
-  + [x] Identification backend service, e.g. `python flask` or `nginx` mod
+  + [ ] Identification backend service, like `nginx` mod, but it returns 503 sometimes especially when opening with multiple modern browsers at the same time.
 - [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
   + [x] `samba` server
   + [ ] auto download (aria2, aria2-ng)
+    * [x] setup the common ariang web interface, behind the `nginx` auth
+    * [x] setup the aria2-pro docker, exposed to front-end, wrap the RPC port to `nginx` URI path.
+    * [ ] setup the homer page with `ariang` URL and its RPC-API command interface.
 - [ ] Only Office integrating, ref:
   + [ ] Use its official docker image to hold this service.
     * [https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html][https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html]
