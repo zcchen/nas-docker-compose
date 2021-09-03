@@ -32,7 +32,10 @@ download_and_install_plugin()
 }
 
 #download_and_install_plugin "https://github.com/felixrupp/user_cas/releases/download/1.9.0/user_cas-nextcloud-with-phpcas.tar.gz"
-download_and_install_plugin "https://github.com/nextcloud-releases/calendar/releases/download/v2.3.2/calendar.tar.gz"
-download_and_install_plugin "https://github.com/nextcloud/deck/releases/download/v1.5.0/deck.tar.gz"
+#download_and_install_plugin "https://github.com/nextcloud-releases/calendar/releases/download/v2.3.2/calendar.tar.gz"
+#download_and_install_plugin "https://github.com/nextcloud/deck/releases/download/v1.5.0/deck.tar.gz"
 
+${occ_cmd} app:install calendar
+${occ_cmd} app:install deck
+${occ_cmd} app:install onlyoffice
 ${occ_cmd} app:update --all

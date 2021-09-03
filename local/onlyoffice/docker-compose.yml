@@ -5,4 +5,8 @@ services:
   # ref: https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html
   only-office:
     image: onlyoffice/documentserver
+    expose:
+      - 80
+    networks:
+      - mid-layout
     restart: always
