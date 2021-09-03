@@ -10,13 +10,15 @@ services:
       PUID: ${USERID}
       PGID: ${GROUPID}
       UMASK_SET: 022
-      RPC_SECRET: abcde
+      #RPC_SECRET: "P3TERX" # Default token is set by this docker image,
       RPC_PORT: 6800
       LISTEN_PORT: 6888
       DISK_CACHE: 64M
       UPDATE_TRACKERS: "true"
       CUSTOM_TRACKER_URL:
       TZ: Asia/Shanghai
+    env_file:
+      - ../configs/secrets/aria2/config.env
     networks:
       - front-end
     ports:
@@ -45,4 +47,5 @@ volumes:
       type: none
       o: bind
       device: "${TMP_FOLDER}/aria2/config"
+
 

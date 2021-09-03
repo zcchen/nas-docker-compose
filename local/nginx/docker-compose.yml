@@ -68,18 +68,17 @@ services:
     image: zcchen/toolbox
     restart: on-failure
     volumes:
-      - ./nginx/homer:/mnt/src
+      - ./nginx/homer:/mnt/src:ro
+      - ./nginx/homer-config.sh:/homer-config.sh:ro
       - homer-config:/mnt/dest
     environment:
       LOCAL_DOMAIN_NAME:
       SERVER_DOMAIN_NAME:
       # TODO: use `printf "<token>" | base64 -` to save the URL saved token
+    env_file:
+      - ../configs/secrets/aria2/config.env
     network_mode: none
-    command: bash -c "
-      cp -rf /mnt/src/* /mnt/dest/ &&
-      find /mnt/dest/ -type f -name \*.yml -print0 | xargs -0 sed -i
-        -e \"s:{{LOCAL_DOMAIN_NAME}}:${LOCAL_DOMAIN_NAME}:g\"
-      "
+    command: bash /homer-config.sh /mnt/src /mnt/dest
 
 
 volumes:
