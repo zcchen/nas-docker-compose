@@ -10,3 +10,7 @@ services:
     networks:
       - mid-layout
     restart: always
+    depends_on:
+      - dnsmasq
+    dns:
+      - dnsmasq
