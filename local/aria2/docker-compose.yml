@@ -28,8 +28,22 @@ services:
     expose:
       - 6800
     volumes:
-      #- .aria2/config:/config
+      - aria2-config:/config
       - nextcloud-samba-downloads:/downloads
+
+  aria2-config:
+    image: zcchen/toolbox
+    restart: on-failure
+    volumes:
+      - ./aria2/config:/mnt/src:ro
+      - aria2-config:/mnt/dest
+    network_mode: none
+    # copy everything to dest folder, so that the source ones are read-only
+    command: bash -c '
+      rm -rf /mnt/dest/*;
+      echo "Files under </mnt/src/>:" && ls -Alh /mnt/src;
+      if [ -n "`ls -A1h /mnt/src/`" ]; then cp -rvf /mnt/src/* /mnt/dest/; fi
+      '
 
   ariang:
     image: p3terx/ariang
@@ -41,7 +55,7 @@ services:
     restart: unless-stopped
 
 volumes:
-  aria2-pro-config:
+  aria2-config:
     driver: local
     driver_opts:
       type: none

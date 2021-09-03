@@ -74,7 +74,6 @@ services:
     environment:
       LOCAL_DOMAIN_NAME:
       SERVER_DOMAIN_NAME:
-      # TODO: use `printf "<token>" | base64 -` to save the URL saved token
     env_file:
       - ../configs/secrets/aria2/config.env
     network_mode: none
