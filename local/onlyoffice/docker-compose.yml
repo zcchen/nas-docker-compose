@@ -3,12 +3,14 @@ version: "3.5"
 services:
 
   # ref: https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html
+  # NOTE: please use the following command if your cert files are not valid.
+  # sed -i /etc/onlyoffice/documentserver/default.json -e 's#"rejectUnauthorized": true#"rejectUnauthorized": false#'
   only-office:
     image: onlyoffice/documentserver
     expose:
       - 80
     networks:
-      - mid-layout
+      - front-end
     restart: always
     depends_on:
       - dnsmasq

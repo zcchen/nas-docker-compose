@@ -95,7 +95,7 @@ $CONFIG = [
  *
  * Defaults to empty array.
  */
-'proxyexclude' => ['privoxy', 'only-office'],
+'proxyexclude' => ['privoxy', '{{LOCAL_DOMAIN_NAME}}'],
 
 /**
  * Allow remote servers with local addresses e.g. in federated shares, webcal services and more

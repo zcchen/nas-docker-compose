@@ -23,6 +23,7 @@ services:
       - mid-layout
     environment:
       LOCAL_DOMAIN_NAME:
+    #domainname: ${LOCAL_DOMAIN_NAME}
 
   whoami:
     image: containous/whoami:latest
