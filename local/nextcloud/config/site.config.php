@@ -20,8 +20,8 @@ $CONFIG = [
    [
     '127.0.0.1',
     '{{LOCAL_DOMAIN_NAME}}',
-    'nextcloud-nginx',
-    'nextcloud-apache',
+    '{{LOCAL_DOMAIN_NAME}}/nextcloud',
+    //'nextcloud-nginx',
     'nextcloud-app',
    ],
 

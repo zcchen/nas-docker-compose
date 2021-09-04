@@ -12,7 +12,9 @@ services:
     networks:
       - front-end
     restart: always
-    depends_on:
-      - dnsmasq
-    dns:
-      - dnsmasq
+    #depends_on:
+      #- dnsmasq
+    #dns:
+      #- dnsmasq
+    extra_hosts:
+      - "${LOCAL_DOMAIN_NAME}: ${LOCAL_IP_ADDR}"

@@ -61,13 +61,8 @@ main
 - [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
   + [x] `samba` server
   + [ ] auto download (aria2, aria2-ng)
-    * [x] setup the common ariang web interface, behind the `nginx` auth
-    * [x] setup the aria2-pro docker, exposed to front-end, wrap the RPC port to `nginx` URI path.
-    * [ ] setup the homer page with `ariang` URL and its RPC-API command interface.
-- [ ] Only Office integrating, ref:
-  + [ ] Use its official docker image to hold this service.
-    * [https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html][https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html]
-    * [https://blog.csdn.net/Aria_Miazzy/article/details/85028182][https://blog.csdn.net/Aria_Miazzy/article/details/85028182]
+- [x] Only Office integrating, ref:
+  + [x] Use its official docker image to hold this service.
 
 
 Another docker-compose Project
