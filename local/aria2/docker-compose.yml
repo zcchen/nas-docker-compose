@@ -17,10 +17,13 @@ services:
       UPDATE_TRACKERS: "true"
       CUSTOM_TRACKER_URL:
       TZ: Asia/Shanghai
+      SPECIAL_MODE: rclone
     env_file:
       - ../configs/secrets/aria2/config.env
     networks:
       - front-end
+    extra_hosts:
+      - "${LOCAL_DOMAIN_NAME}: ${LOCAL_IP_ADDR}"
     ports:
       #- 6800:6800
       - 6888:6888
@@ -29,7 +32,7 @@ services:
       - 6800
     volumes:
       - aria2-config:/config
-      - nextcloud-samba-downloads:/downloads
+      - aria2-downloads:/downloads
 
   aria2-config:
     image: zcchen/toolbox
@@ -39,10 +42,13 @@ services:
       - aria2-config:/mnt/dest
     network_mode: none
     # copy everything to dest folder, so that the source ones are read-only
+    environment:
+      LOCAL_DOMAIN_NAME:
     command: bash -c '
       rm -rf /mnt/dest/*;
       echo "Files under </mnt/src/>:" && ls -Alh /mnt/src;
-      if [ -n "`ls -A1h /mnt/src/`" ]; then cp -rvf /mnt/src/* /mnt/dest/; fi
+      if [ -n "`ls -A1h /mnt/src/`" ]; then cp -rvf /mnt/src/* /mnt/dest/; fi;
+      sed -i /mnt/dest/*.conf -e "s/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g";
       '
 
   ariang:
@@ -61,5 +67,11 @@ volumes:
       type: none
       o: bind
       device: "${TMP_FOLDER}/aria2/config"
+  aria2-downloads:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${TMP_FOLDER}/aria2/downloads"
 
 

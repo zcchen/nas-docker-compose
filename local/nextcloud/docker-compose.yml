@@ -118,7 +118,7 @@ services:
     restart: always
     volumes:
       - nextcloud-samba:/mnt/
-      - nextcloud-samba-downloads:/mnt/Downloads
+      #- nextcloud-samba-downloads:/mnt/Downloads
     ports:
       - 139:139
       - 445:445
@@ -175,12 +175,12 @@ volumes:
       type: none
       o: bind
       device: "${DATA_FOLDER}/nextcloud/samba"
-  nextcloud-samba-downloads:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "${DATA_FOLDER}/nextcloud/samba/Downloads"
+  #nextcloud-samba-downloads:
+    #driver: local
+    #driver_opts:
+      #type: none
+      #o: bind
+      #device: "${DATA_FOLDER}/nextcloud/samba/Downloads"
   nextcloud-html:
 
 secrets:

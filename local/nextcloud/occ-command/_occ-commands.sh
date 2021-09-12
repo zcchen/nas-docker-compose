@@ -26,6 +26,7 @@ exec_script ./background-jobs.sh
 exec_script ./groups.sh
 exec_script ./files.sh
 exec_script ./plugins.sh
+exec_script ./user-public.sh
 
 #exec_script ./users.sh
 

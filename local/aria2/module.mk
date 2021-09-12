@@ -1,5 +1,5 @@
 __DATA_SUBFOLDERS :=
-__TMP_SUBFOLDERS := config
+__TMP_SUBFOLDERS := config downloads
 
 
 mkfile_dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))

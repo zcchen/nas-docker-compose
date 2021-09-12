@@ -61,6 +61,10 @@ main
 - [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
   + [x] `samba` server
   + [ ] auto download (aria2, aria2-ng)
+    * [x] setup the common ariang web interface, behind the `nginx` auth
+    * [x] setup the aria2-pro docker, exposed to front-end, wrap the RPC port to `nginx` URI path.
+    * [x] setup the homer page with `ariang` URL and its RPC-API command interface.
+    * [ ] setup the `rclone` config to push the downloads to `Downloads` folder
 - [x] Only Office integrating, ref:
   + [x] Use its official docker image to hold this service.
 
