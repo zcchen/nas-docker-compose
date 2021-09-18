@@ -11,7 +11,7 @@ services:
     volumes:
       - aria2-config:/config
       - aria2-downloads:/downloads
-      - ./aria2/entrypoint.sh:/entrypoint.sh:ro
+      - ./aria2/update-rclone-config:/etc/services.d/update-rclone-config:ro
     environment:
       #PUID: ${USERID}
       #PGID: ${GROUPID}
@@ -37,12 +37,6 @@ services:
       - 6888:6888/udp
     expose:
       - 6800    # RPC port
-    # TODO: add the following sed to init scripts.
-    entrypoint: bash -c '
-      which rclone &&
-      sed -i /config/rclone.conf -e "s/{{NEXTCLOUD_PUBLIC_PASSWORD}}/`cat /run/secrets/nextcloud-public-password | rclone obscure -`/g";
-      /init $$@
-      '
 
   aria2-config:
     image: zcchen/toolbox
@@ -51,9 +45,9 @@ services:
       - ./aria2/config:/mnt/src:ro
       - aria2-config:/mnt/dest
     network_mode: none
-    # copy everything to dest folder, so that the source ones are read-only
     environment:
       LOCAL_DOMAIN_NAME:
+    # copy everything to dest folder, so that the source ones are read-only
     command: bash -c '
       rm -rf /mnt/dest/*;
       echo "Files under </mnt/src/>:" && ls -Alh /mnt/src;
