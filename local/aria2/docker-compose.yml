@@ -6,9 +6,15 @@ services:
   aria2-pro:
     image: p3terx/aria2-pro
     restart: unless-stopped
+    secrets:
+      - nextcloud-public-password
+    volumes:
+      - aria2-config:/config
+      - aria2-downloads:/downloads
+      - ./aria2/entrypoint.sh:/entrypoint.sh:ro
     environment:
-      PUID: ${USERID}
-      PGID: ${GROUPID}
+      #PUID: ${USERID}
+      #PGID: ${GROUPID}
       UMASK_SET: 022
       #RPC_SECRET: "P3TERX" # Default token is set by this docker image,
       RPC_PORT: 6800
@@ -18,6 +24,8 @@ services:
       CUSTOM_TRACKER_URL:
       TZ: Asia/Shanghai
       SPECIAL_MODE: rclone
+      RCLONE_NO_CHECK_CERTIFICATE: "true"
+      RCLONE_WEBDAV_USER: public
     env_file:
       - ../configs/secrets/aria2/config.env
     networks:
@@ -25,14 +33,16 @@ services:
     extra_hosts:
       - "${LOCAL_DOMAIN_NAME}: ${LOCAL_IP_ADDR}"
     ports:
-      #- 6800:6800
       - 6888:6888
       - 6888:6888/udp
     expose:
-      - 6800
-    volumes:
-      - aria2-config:/config
-      - aria2-downloads:/downloads
+      - 6800    # RPC port
+    # TODO: add the following sed to init scripts.
+    entrypoint: bash -c '
+      which rclone &&
+      sed -i /config/rclone.conf -e "s/{{NEXTCLOUD_PUBLIC_PASSWORD}}/`cat /run/secrets/nextcloud-public-password | rclone obscure -`/g";
+      /init $$@
+      '
 
   aria2-config:
     image: zcchen/toolbox
