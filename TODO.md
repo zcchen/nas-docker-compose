@@ -49,24 +49,27 @@ main
 - [x] index page. recommending: use `github.com/bastienwirtz/homer`
   + [x] serve its release file packs
   + [x] adapt the config with my requirements.
+- [x] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
+  + [x] `samba` server
+  + [x] auto download (aria2, aria2-ng)
+    * [x] setup the common ariang web interface, behind the `nginx` auth
+    * [x] setup the aria2-pro docker, exposed to front-end, wrap the RPC port to `nginx` URI path.
+    * [x] setup the homer page with `ariang` URL and its RPC-API command interface.
+    * [x] setup the `rclone` config to push the downloads to `Downloads` folder
+- [x] Only Office integrating, ref:
+  + [x] Use its official docker image to hold this service.
+    * [https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html][https://im.salty.fish/index.php/archives/nextcloud-onlyoffice.html]
+    * [https://blog.csdn.net/Aria_Miazzy/article/details/85028182][https://blog.csdn.net/Aria_Miazzy/article/details/85028182]
 - [ ] Use `docsify` to mark down the setup config.
   + [x] Added link at `homer/cn.yml` & `homer/en.yml`.
   + [x] prepare the setup pages with `docsify`.
   + [ ] write down the config setup.
 - [ ] English Readme page.
-- [x] Setup Identity Provider (IdP)
+- [ ] Setup Identity Provider (IdP)
   + tips 1: https://www.nginx.com/blog/validating-oauth-2-0-access-tokens-nginx/
   + tips 2: https://help.nextcloud.com/t/using-nextcloud-as-an-authentication-backend/32736
   + [ ] Identification backend service, like `nginx` mod, but it returns 503 sometimes especially when opening with multiple modern browsers at the same time.
-- [ ] Setup a `samba` server to hold public files, like downloads, movies, softwares & so on.
-  + [x] `samba` server
-  + [ ] auto download (aria2, aria2-ng)
-    * [x] setup the common ariang web interface, behind the `nginx` auth
-    * [x] setup the aria2-pro docker, exposed to front-end, wrap the RPC port to `nginx` URI path.
-    * [x] setup the homer page with `ariang` URL and its RPC-API command interface.
-    * [ ] setup the `rclone` config to push the downloads to `Downloads` folder
-- [x] Only Office integrating, ref:
-  + [x] Use its official docker image to hold this service.
+- [ ] Setup the [`watchtower`][https://github.com/containrrr/watchtower] docker image to update images automatically
 
 
 Another docker-compose Project
