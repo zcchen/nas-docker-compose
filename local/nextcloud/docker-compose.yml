@@ -141,6 +141,8 @@ services:
       - Pictures;/mnt/Pictures;yes;yes;yes;;none;public
       - -s
       - Softwares;/mnt/Softwares;yes;yes;yes;;none;public
+      - -s
+      - Music;/mnt/Music;yes;yes;yes;;none;public
         # "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
 
 
