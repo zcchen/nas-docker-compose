@@ -23,7 +23,7 @@ footer: |
 links:
   - name: "home"
     icon: "fas fa-home"
-    url: ""
+    url: "#"
     target: ""
   - name: "中文"
     #icon: "fab fa-github"
@@ -33,6 +33,20 @@ links:
     #icon: "fab fa-github"
     url: "#en"
     target: ""
+
+# Services
+# First level array represent a group.
+# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+services:
+  - name: "语言 / Language"
+    icon: "fas fa-globe"
+    items:
+      - name: "中文"
+        url: "#zh"
+        target: ""
+      - name: "English"
+        url: "#en"
+        target: ""
 
 # Optional theme customization
 theme: default

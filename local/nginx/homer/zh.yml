@@ -15,7 +15,7 @@ icon: "fas fa-home"
 links:
   - name: "home/首页"
     icon: "fas fa-home"
-    url: ""
+    url: "#"
     target: ""
   - name: "配置方法"
     icon: "fas fa-laptop"
