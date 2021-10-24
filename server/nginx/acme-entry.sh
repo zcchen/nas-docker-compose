@@ -9,6 +9,7 @@ if test ! -f ${CERT_KEY_PATH} || test ! -f ${CERT_PEM_PATH}; then
     --fullchain-file ${CERT_PEM_PATH} \
     --issue `echo $PARAMS | sed 's/"//g'` \
     -d $LOCAL_DOMAIN_NAME \
+    -d $SERVER_DOMAIN_NAME \
     $@
 fi
 
@@ -18,6 +19,7 @@ while test -f ${CERT_KEY_PATH} && test -f ${CERT_PEM_PATH}; do
     --fullchain-file ${CERT_PEM_PATH} \
     --cron `echo $PARAMS | sed 's/"//g'` \
     -d $LOCAL_DOMAIN_NAME \
+    -d $SERVER_DOMAIN_NAME \
     $@
   echo "Sleep 1 day then check this loop again."
   sleep $((24 * 3600))
