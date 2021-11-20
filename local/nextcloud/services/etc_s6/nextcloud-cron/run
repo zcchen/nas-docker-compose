@@ -1,5 +1,4 @@
 #!/bin/bash
-source /services/helpers/run_as.sh
 
 # exec the default cron.sh from nextcloud
-run_as "/cron.sh"
+/cron.sh
