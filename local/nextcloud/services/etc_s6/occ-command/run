@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# TODO: pack the "occ-command" folder here.
+sh /occ-command/_occ-commands.sh

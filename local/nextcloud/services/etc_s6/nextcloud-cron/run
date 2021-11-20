@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# exec the default cron.sh from nextcloud
+/cron.sh

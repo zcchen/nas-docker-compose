@@ -1,0 +1,4 @@
+#! /bin/sh
+
+# No need to re-run this service if it exits normally.
+/bin/true
