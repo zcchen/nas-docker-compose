@@ -1,5 +1,5 @@
 __DATA_SUBFOLDERS := acme.sh
-__TMP_SUBFOLDERS :=
+__TMP_SUBFOLDERS := log
 
 
 mkfile_dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))

@@ -13,10 +13,14 @@ services:
     entrypoint: |
       ss-server -c /run/secrets/proxy-shadowsocks-config \
                 -p 8080 --plugin v2ray-plugin \
-                --plugin-opts 'server' -v
+                --plugin-opts 'server'
     #environment:
       #SS_MODULE: ss-server
       #SS_CONFIG:" "-c /run/secrets/proxy-shadowsocks-config -s 0.0.0.0"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
 
 secrets:
   proxy-shadowsocks-config:

@@ -13,6 +13,8 @@ services:
       - ./nginx/sites/:/etc/nginx/templates:ro
       - ./nginx/nas/:/etc/nginx/sites/nas:ro
       - acme-certificate:/etc/nginx/cert:ro
+      - nginx-cache:/var/cache/nginx/:rw
+      #- nginx-log:/var/log/nginx/:rw
     networks:
       - front-end
       - mid-layout
@@ -47,6 +49,13 @@ services:
       #- --force
 
 volumes:
+  nginx-cache:
+  nginx-log:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${TMP_FOLDER}/nginx/log"
   acme-certificate:
     driver: local
     driver_opts:

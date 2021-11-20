@@ -11,13 +11,16 @@ services:
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
       - nextcloud-samba:/mnt
-      - ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - nextcloud-tmp:/var/tmp
+      #- ./nextcloud/web/php-www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
+      - ./nextcloud/php/nextcloud-upload.ini:/usr/local/etc/php/conf.d/nextcloud-upload.ini:ro
     env_file:
       - ./nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
+      #PHP_UPLOAD_LIMIT: 8G
     secrets:
       - nextcloud-admin-password
       - nextcloud-db-password
@@ -184,6 +187,7 @@ volumes:
       #o: bind
       #device: "${DATA_FOLDER}/nextcloud/samba/Downloads"
   nextcloud-html:
+  nextcloud-tmp:
 
 secrets:
   nextcloud-db-password:

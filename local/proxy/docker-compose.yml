@@ -20,6 +20,10 @@ services:
                --plugin v2ray-plugin
     environment:
       SERVER_DOMAIN_NAME:
+    logging:
+        driver: "json-file"
+        options:
+          max-size: "1m"
 
   privoxy:
     image: zcchen/privoxy

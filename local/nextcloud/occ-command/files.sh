@@ -3,6 +3,8 @@
 occ_cmd="php /var/www/html/occ"
 mnt_dir="/mnt"
 
+#${occ_cmd} config:app:set files max_chunk_size --value 67108864   # 64M
+${occ_cmd} config:app:set files max_chunk_size --value 0
 ${occ_cmd} app:enable -f files_external
 
 for d in Public Downloads Videos Pictures Softwares Music; do

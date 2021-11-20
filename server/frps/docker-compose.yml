@@ -6,26 +6,35 @@ services:
     restart: unless-stopped
     networks:
       - front-end
+      - mid-layout
     secrets:
       - frps-token
       - frps-dashboard-user
       - frps-dashboard-passwd
     ports:
-      - 7000:7000
+      - 7000:7000/tcp
+      - 7000:7000/udp
       - 7500:7500
       - 21000-21099:21000-21099
-      - 21443:21443
+      - 21443:443
+    expose:
+      - 80
+      - 443
     volumes:
       - ./frps/configs/:/configs:ro
     environment:
       BIND_PORT_TCP: 7000
       DASHBOARD_PORT: 7500
-      ALLOW_PORTS: 21000-21099,21443
+      ALLOW_PORTS: 21000-21099,21443,80,443
       DASHBOARD_USER_FILE: /run/secrets/frps-dashboard-user
       DASHBOARD_PASSWORD_FILE: /run/secrets/frps-dashboard-passwd
       AUTH_TOKEN_FILE: /run/secrets/frps-token
       SHOW_CONFIG: "false"    # change it to true for easy debug if needed
-      #APPEND_CONFIG_FILES: /configs/log.ini
+      APPEND_CONFIG_FILES: /configs/common.ini
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
 
 secrets:
   frps-token:
