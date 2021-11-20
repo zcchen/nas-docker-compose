@@ -23,7 +23,9 @@ services:
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
+      NEXTCLOUD_TRUSTED_DOMAINS: ${LOCAL_DOMAIN_NAME}
       PHP_UPLOAD_LIMIT: 8G
+      LOCAL_DOMAIN_NAME:
     secrets:
       - nextcloud-admin-password
       - nextcloud-db-password
