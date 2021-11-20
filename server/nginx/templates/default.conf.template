@@ -1,0 +1,13 @@
+# disable the NULL domain request
+
+server {
+    server_name _;
+    listen      80 default_server;
+    listen      443 ssl default_server;
+    ssl_certificate     /etc/nginx/cert/cert.pem;
+    ssl_certificate_key  /etc/nginx/cert/cert.key;
+
+    return      444;    # "Connection closed without response"
+}
+
+include /etc/nginx/sites/*.conf;
