@@ -1,4 +1,6 @@
 #!/bin/sh
 
+source /services/helpers/run_as.sh
+
 # TODO: pack the "occ-command" folder here.
-sh /occ-command/_occ-commands.sh
+sh ./occ-command/_occ-commands.sh

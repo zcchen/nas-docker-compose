@@ -15,7 +15,7 @@ services:
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
       - ./nextcloud/config:/tmp/config/:ro
       - ./nextcloud/services/:/services:ro
-      - ./nextcloud/occ-command/:/occ-command/:ro
+      #- ./nextcloud/occ-command/:/occ-command/:ro
     command:
       ["/services/exec.sh"]
     env_file:
