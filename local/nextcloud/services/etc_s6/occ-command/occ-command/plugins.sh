@@ -39,4 +39,8 @@ ${occ_cmd} app:install calendar
 ${occ_cmd} app:install deck
 ${occ_cmd} app:install onlyoffice
 ${occ_cmd} app:install ocdownloader
+${occ_cmd} app:install checksum
+${occ_cmd} app:install extract
+#${occ_cmd} app:install guests
+${occ_cmd} app:install workflow_media_converter
 ${occ_cmd} app:update --all
