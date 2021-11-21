@@ -76,8 +76,6 @@ services:
     environment:
       LOCAL_DOMAIN_NAME:
       SERVER_DOMAIN_NAME:
-    env_file:
-      - ../configs/secrets/aria2/config.env
     network_mode: none
     command: bash /homer-config.sh /mnt/src /mnt/dest
 
