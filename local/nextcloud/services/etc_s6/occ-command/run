@@ -2,4 +2,4 @@
 
 source /services/helpers/run_as.sh
 
-run_as "./occ-command/_occ-commands.sh"
+run_as "sh ./occ-command/_occ-commands.sh"
