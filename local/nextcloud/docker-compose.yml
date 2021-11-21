@@ -79,8 +79,6 @@ services:
       - -s
       - Public;/mnt/Public;yes;yes;yes;;none;public
       - -s
-      - Downloads;/mnt/Downloads;yes;yes;yes;;none;public
-      - -s
       - Videos;/mnt/Videos;yes;yes;yes;;none;public
       - -s
       - Pictures;/mnt/Pictures;yes;yes;yes;;none;public
@@ -88,6 +86,8 @@ services:
       - Softwares;/mnt/Softwares;yes;yes;yes;;none;public
       - -s
       - Music;/mnt/Music;yes;yes;yes;;none;public
+      #- -s
+      #- Downloads;/mnt/Downloads;yes;yes;yes;;none;public
         # "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
 
 
