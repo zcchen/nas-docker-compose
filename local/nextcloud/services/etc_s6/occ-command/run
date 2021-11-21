@@ -1,6 +1,13 @@
 #!/bin/bash
 
+# run this service only once
+s6-svc -o "$(realpath $(dirname $0))"
+
 source /services/helpers/run_as.sh
 
-# TODO: pack the "occ-command" folder here.
-run_as sh ./occ-command/_occ-commands.sh
+run_as "sh ./occ-command/_occ-commands.sh"
+
+## FIXME: use long time sleep as a workaround solution
+#while [[ 1 ]]; do
+    #sleep 3600
+#done
