@@ -22,11 +22,11 @@ echo "--------------------------------------------------"
 echo "+ User ID: <$(id)>"
 echo "--------------------------------------------------"
 
-exec_script ./occ-command/background-jobs.sh
-exec_script ./occ-command/groups.sh
-exec_script ./occ-command/files.sh
-exec_script ./occ-command/plugins.sh
-exec_script ./occ-command/user-public.sh
+exec_script ./background-jobs.sh
+exec_script ./groups.sh
+exec_script ./files.sh
+exec_script ./plugins.sh
+exec_script ./user-public.sh
 
 #exec_script ./users.sh
 
