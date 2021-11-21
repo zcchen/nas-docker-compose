@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   dnsmasq:
-    image: andyshinn/dnsmasq
+    image: andyshinn/dnsmasq:2.83
     restart: always
     depends_on:
       - dnsmasq-config

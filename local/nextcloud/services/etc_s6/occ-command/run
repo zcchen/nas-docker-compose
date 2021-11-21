@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# run this service only once
-s6-svc -o "$(realpath $(dirname $0))"
-
 source /services/helpers/run_as.sh
+
+current_dir="$(realpath $(dirname $0))"
+
+# wait max 3min to wait the nextcloud-app really up first
+s6-svwait -t $((60000 * 3)) -U "${current_dir}/../nextcloud-app/"
+
+# run this service only once
+s6-svc -o ${current_dir}
 
 run_as "sh ./occ-command/_occ-commands.sh"
 
-## FIXME: use long time sleep as a workaround solution
-#while [[ 1 ]]; do
-    #sleep 3600
-#done

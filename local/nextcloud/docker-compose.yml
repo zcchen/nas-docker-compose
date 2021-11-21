@@ -6,7 +6,7 @@ services:
     build:
       context: ./nextcloud
       args:
-        IMAGE_TAG: latest   # nextcloud:${IMAGE_TAG}
+        IMAGE_TAG: 22-apache   # nextcloud:${IMAGE_TAG}
         APT_MIRROR: http://mirrors.163.com
     restart: always
     volumes:
@@ -40,8 +40,11 @@ services:
       - back-end
 
   nextcloud-db:
-    image: mariadb
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb_read_only_compressed=OFF
+    image: mariadb:10.6
+    command: |
+      --transaction-isolation=READ-COMMITTED
+      --binlog-format=ROW
+      --innodb_read_only_compressed=OFF
     restart: on-failure
     env_file:
       - ./nextcloud/nextcloud.env
@@ -53,13 +56,13 @@ services:
       - back-end
 
   nextcloud-redis:
-    image: redis:alpine
+    image: redis:6.2-alpine
     restart: always
     networks:
       - back-end
 
   nextcloud-samba:
-    image: dperson/samba
+    image: dperson/samba:latest
     restart: always
     volumes:
       - nextcloud-samba:/mnt/

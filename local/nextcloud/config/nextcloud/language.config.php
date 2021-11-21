@@ -14,7 +14,7 @@ $CONFIG = [
  * Defaults to ``en``
  */
 'default_language' => 'zh_CN',
-'force_language' => 'zh_CN',
+#'force_language' => 'zh_CN',
 
 /**
  * This sets the default locale on your Nextcloud server, using ISO_639
