@@ -1,5 +1,12 @@
 #!/bin/bash
 
+set -eu
+
 source /services/helpers/run_as.sh
 
 run_as "sh ./occ-command/_occ-commands.sh"
+
+# FIXME: use long time sleep as a workaround solution
+while [[ 1 ]]; do
+    sleep 3600
+done
