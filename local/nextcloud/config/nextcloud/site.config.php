@@ -16,13 +16,13 @@ $CONFIG = [
  * - the IP address with or without permitted port, e.g. [2001:db8::1]:8080
  *   Using TLS certificates where commonName=<IP address> is deprecated
  */
-'trusted_domains' =>
-   [
-    '127.0.0.1',
-    '{{LOCAL_DOMAIN_NAME}}',
-    '{{LOCAL_DOMAIN_NAME}}/nextcloud',
-    'nextcloud-*',
-   ],
+//'trusted_domains' =>
+   //[
+    //'127.0.0.1',
+    //'{{LOCAL_DOMAIN_NAME}}',
+    //'{{LOCAL_DOMAIN_NAME}}/nextcloud',
+    //'nextcloud-*',
+   //],
 
 /**
  * Nextcloud attempts to detect the webroot for generating URLs automatically.

@@ -6,12 +6,10 @@ services:
     build:
       context: ./nextcloud
       args:
-        IMAGE_TAG: latest
+        IMAGE_TAG: latest   # nextcloud:${IMAGE_TAG}
         APT_MIRROR: http://mirrors.163.com
-    #image: nextcloud:latest
     restart: always
     volumes:
-      #- nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
@@ -19,17 +17,12 @@ services:
       - nextcloud-samba:/mnt
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
       - ./nextcloud/config:/tmp/config/:ro
-      #- ./nextcloud/services/:/services:ro
-      #- ./nextcloud/occ-command/:/occ-command/:ro
-    ## FIXME: look no entrypoint.sh execute
-    #command:
-      #["/services/exec.sh"]
     env_file:
       - ./nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
-      NEXTCLOUD_TRUSTED_DOMAINS: ${LOCAL_DOMAIN_NAME} ${LOCAL_DOMAIN_NAME}/nextcloud
+      NEXTCLOUD_TRUSTED_DOMAINS: ${LOCAL_DOMAIN_NAME} ${LOCAL_DOMAIN_NAME}/nextcloud nextcloud-*
       PHP_UPLOAD_LIMIT: 8G
       LOCAL_DOMAIN_NAME:
     secrets:
@@ -43,19 +36,6 @@ services:
       - front-end
       - mid-layout
       - back-end
-
-  #nextcloud-config:
-    #image: nextcloud:latest
-    #restart: on-failure
-    #volumes:
-      #- nextcloud-html:/var/www/html/
-      #- nextcloud-config:/var/www/html/config
-      #- ./nextcloud/config/:/mnt:ro
-    #networks: []    #disable the network
-    #command: sh -c "
-      #for f in `ls -1 /mnt/*.config.php`; do cat $$f | sed -e 's/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g' > /var/www/html/config/`basename $$f`; done &&
-      #chown -R www-data:root /var/www/html/config/
-      #"
 
   nextcloud-db:
     image: mariadb
@@ -75,58 +55,6 @@ services:
     restart: always
     networks:
       - back-end
-
-  #nextcloud-cron:
-    #image: nextcloud:latest
-    #restart: unless-stopped
-    #volumes:
-      #- nextcloud-html:/var/www/html/
-      #- nextcloud-config:/var/www/html/config
-      #- nextcloud-data:/var/www/html/data
-      #- nextcloud-apps:/var/www/html/custom_apps
-    #entrypoint: /cron.sh
-    #env_file:
-      #- ./nextcloud/nextcloud.env
-    #environment:
-      #REDIS_HOST: nextcloud-redis
-      #MYSQL_HOST: nextcloud-db
-    #secrets:
-      #- nextcloud-admin-password
-      #- nextcloud-db-password
-    #depends_on:
-      #- nextcloud-app
-      #- nextcloud-db
-      #- nextcloud-redis
-    #networks: []    # disable the network
-
-  #nextcloud-occ-command:
-    #image: nextcloud:latest
-    #restart: on-failure
-    #volumes:
-      #- nextcloud-html:/var/www/html/
-      #- nextcloud-config:/var/www/html/config
-      #- nextcloud-data:/var/www/html/data
-      #- nextcloud-apps:/var/www/html/custom_apps
-      #- ./nextcloud/occ-command/:/occ-command/:ro
-    #env_file:
-      #- ./nextcloud/nextcloud.env
-    #environment:
-      #REDIS_HOST: nextcloud-redis
-      #MYSQL_HOST: nextcloud-db
-    #secrets:
-      #- nextcloud-public-password
-    #depends_on:
-      ##- nextcloud-nginx
-      #- nextcloud-app
-      #- nextcloud-db
-      #- nextcloud-redis
-      #- privoxy
-    #networks:
-      #- mid-layout
-      #- back-end
-    #user: www-data
-    #working_dir: /occ-command/
-    #command: sh /occ-command/_occ-commands.sh
 
   nextcloud-samba:
     image: dperson/samba
