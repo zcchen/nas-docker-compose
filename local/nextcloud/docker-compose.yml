@@ -7,6 +7,7 @@ services:
       context: ./nextcloud
       args:
         IMAGE_TAG: latest
+        APT_MIRROR: http://mirrors.163.com
     #image: nextcloud:latest
     restart: always
     volumes:
