@@ -3,10 +3,14 @@ version: "3.5"
 services:
 
   nextcloud-app:
-    image: nextcloud:latest
+    build:
+      context: ./nextcloud
+      args:
+        IMAGE_TAG: latest
+    #image: nextcloud:latest
     restart: always
     volumes:
-      - nextcloud-html:/var/www/html/
+      #- nextcloud-html:/var/www/html/
       - nextcloud-config:/var/www/html/config
       - nextcloud-data:/var/www/html/data
       - nextcloud-apps:/var/www/html/custom_apps
@@ -14,16 +18,17 @@ services:
       - nextcloud-samba:/mnt
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
       - ./nextcloud/config:/tmp/config/:ro
-      - ./nextcloud/services/:/services:ro
+      #- ./nextcloud/services/:/services:ro
       #- ./nextcloud/occ-command/:/occ-command/:ro
-    command:
-      ["/services/exec.sh"]
+    ## FIXME: look no entrypoint.sh execute
+    #command:
+      #["/services/exec.sh"]
     env_file:
       - ./nextcloud/nextcloud.env
     environment:
       REDIS_HOST: nextcloud-redis
       MYSQL_HOST: nextcloud-db
-      NEXTCLOUD_TRUSTED_DOMAINS: ${LOCAL_DOMAIN_NAME}
+      #NEXTCLOUD_TRUSTED_DOMAINS: ${LOCAL_DOMAIN_NAME}
       PHP_UPLOAD_LIMIT: 8G
       LOCAL_DOMAIN_NAME:
     secrets:
@@ -191,8 +196,8 @@ volumes:
       #type: none
       #o: bind
       #device: "${DATA_FOLDER}/nextcloud/samba/Downloads"
-  nextcloud-html:
-  nextcloud-tmp:
+  #nextcloud-html:
+  #nextcloud-tmp:
 
 secrets:
   nextcloud-db-password:
