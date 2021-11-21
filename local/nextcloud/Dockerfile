@@ -1,7 +1,9 @@
 ARG IMAGE_TAG=latest
 
 FROM nextcloud:${IMAGE_TAG}
+
 ADD services /services
+RUN ln -snf "/services/exec.sh" /usr/local/bin/apache2-exec.sh
 
 ARG APT_MIRROR
 RUN if [ -n "${APT_MIRROR}" ]; then \
@@ -14,6 +16,4 @@ RUN apt update && \
     && \
     rm -rf /var/lib/apt/lists/*
 
-# re-use the upstream entrypoint script
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/services/exec.sh"]
+CMD ["apache2-exec.sh"]

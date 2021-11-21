@@ -17,13 +17,13 @@ COMPOSE_VER_REQ_MINOR = $(word 2, $(subst ., ,$(COMPOSE_VER_REQ)))
 .PHONY: docker-compose/version docker-compose/purge
 
 docker-compose/up: docker-compose/version docker-compose/prepare $(YML_FILES)
-	$(COMPOSE_BIN) $(COMPOSE_ARGS) up --remove-orphans
+	$(COMPOSE_BIN) $(COMPOSE_ARGS) up --remove-orphans --build
 
 docker-compose/config: docker-compose/version $(YML_FILES)
 	$(COMPOSE_BIN) $(COMPOSE_ARGS) config
 
 docker-compose/down: docker-compose/version $(YML_FILES)
-	-$(COMPOSE_BIN) $(COMPOSE_ARGS) down --volumes --remove-orphans
+	-$(COMPOSE_BIN) $(COMPOSE_ARGS) down --volumes --remove-orphans --rmi local
 
 docker-compose/purge: docker-compose/down
 	-sudo rm -rvf $(DATA_FOLDER)
