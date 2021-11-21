@@ -14,4 +14,6 @@ RUN apt update && \
     && \
     rm -rf /var/lib/apt/lists/*
 
+# re-use the upstream entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/services/exec.sh"]
