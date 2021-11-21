@@ -2,9 +2,12 @@
 
 source /services/helpers/run_as.sh
 
+# only remove the only old preset configs
+rm /var/www/html/config/*.config.php
+
 # Copy the nextcloud config to nextcloud config
 for f in `ls -1 /tmp/config/nextcloud/*.php`; do
-  cat $f | sed -e 's/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g' > /var/www/html/config/`basename $f`;
+  cat $f | sed -e "s/{{LOCAL_DOMAIN_NAME}}/${LOCAL_DOMAIN_NAME}/g" > /var/www/html/config/`basename $f`;
 done
 chown -R ${RUN_AS_USER}:root /var/www/html/config/
 
