@@ -3,7 +3,7 @@
 # Please fill this script the occ commands as you want.
 # ref: https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/occ_command.html
 
-script_basepath=$(realpath $(dirname ./compose.env))
+script_basepath=$(realpath $(dirname $0))
 
 exec_script()
 {

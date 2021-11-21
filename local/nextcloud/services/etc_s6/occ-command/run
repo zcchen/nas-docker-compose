@@ -2,5 +2,4 @@
 
 source /services/helpers/run_as.sh
 
-# TODO: pack the "occ-command" folder here.
-run_as sh ./occ-command/_occ-commands.sh
+run_as "./occ-command/_occ-commands.sh"
