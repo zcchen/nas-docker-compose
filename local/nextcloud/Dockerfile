@@ -10,6 +10,8 @@ RUN if [ -n "${APT_MIRROR}" ]; then \
 RUN apt update && \
     apt install -y \
         s6 \
+        aria2 \
+        python3 python-is-python3 \
     && \
     rm -rf /var/lib/apt/lists/*
 
