@@ -35,6 +35,7 @@ services:
     secrets:
       - nextcloud-admin-password
       - nextcloud-db-password
+      - nextcloud-public-password
     depends_on:
       - nextcloud-db
       - nextcloud-redis
