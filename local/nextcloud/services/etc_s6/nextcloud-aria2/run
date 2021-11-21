@@ -21,7 +21,7 @@ run_as "aria2c --enable-rpc --rpc-allow-origin-all -c \
     --continue=true \
     --input-file=${ARIA2_SESSION} \
     --rpc-save-upload-metadata=true \
-    --force-save=true \
     --log-level=warn \
     --rpc-secret=\"$(cat /run/secrets/nextcloud-aria2-token)\"
 "
+    #--force-save=true \
