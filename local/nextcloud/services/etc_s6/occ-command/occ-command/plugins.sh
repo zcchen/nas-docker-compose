@@ -38,4 +38,5 @@ download_and_install_plugin()
 ${occ_cmd} app:install calendar
 ${occ_cmd} app:install deck
 ${occ_cmd} app:install onlyoffice
+${occ_cmd} app:install ocdownloader
 ${occ_cmd} app:update --all

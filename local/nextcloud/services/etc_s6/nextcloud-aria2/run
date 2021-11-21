@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -eu
+
+source /services/helpers/run_as.sh
+
+ARIA2_TMPFOLDER=/var/tmp/aria2c/
+ARIA2_SESSION=${ARIA2_TMPFOLDER}/aria2c.session
+
+# Prepare the folder and session file
+mkdir -p ${ARIA2_TMPFOLDER}
+chown -R ${RUN_AS_USER} ${ARIA2_TMPFOLDER}
+run_as "touch ${ARIA2_SESSION}"
+
+# Run it
+run_as "aria2c --enable-rpc --rpc-allow-origin-all -c \
+    -x 15 -s 15 \
+    --check-certificate=false \
+    --save-session=${ARIA2_SESSION} \
+    --save-session-interval=2 \
+    --continue=true \
+    --input-file=${ARIA2_SESSION} \
+    --rpc-save-upload-metadata=true \
+    --log-level=warn \
+    --rpc-secret=\"$(cat /run/secrets/nextcloud-aria2-token)\"
+"
+    #--force-save=true \

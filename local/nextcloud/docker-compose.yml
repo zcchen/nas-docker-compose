@@ -15,6 +15,7 @@ services:
       - nextcloud-apps:/var/www/html/custom_apps
       - nextcloud-config:/var/www/html/config
       - nextcloud-samba:/mnt
+      - nextcloud-tmp:/var/tmp/
       - ./nextcloud/skeleton:/var/www/nextcloud/skeleton:ro
       - ./nextcloud/config:/tmp/config/:ro
     env_file:
@@ -29,6 +30,7 @@ services:
       - nextcloud-admin-password
       - nextcloud-db-password
       - nextcloud-public-password
+      - nextcloud-aria2-token
     depends_on:
       - nextcloud-db
       - nextcloud-redis
@@ -77,8 +79,6 @@ services:
       - -s
       - Public;/mnt/Public;yes;yes;yes;;none;public
       - -s
-      - Downloads;/mnt/Downloads;yes;yes;yes;;none;public
-      - -s
       - Videos;/mnt/Videos;yes;yes;yes;;none;public
       - -s
       - Pictures;/mnt/Pictures;yes;yes;yes;;none;public
@@ -86,6 +86,8 @@ services:
       - Softwares;/mnt/Softwares;yes;yes;yes;;none;public
       - -s
       - Music;/mnt/Music;yes;yes;yes;;none;public
+      #- -s
+      #- Downloads;/mnt/Downloads;yes;yes;yes;;none;public
         # "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
 
 
@@ -127,7 +129,7 @@ volumes:
       #o: bind
       #device: "${DATA_FOLDER}/nextcloud/samba/Downloads"
   #nextcloud-html:
-  #nextcloud-tmp:
+  nextcloud-tmp:
 
 secrets:
   nextcloud-db-password:
@@ -136,3 +138,5 @@ secrets:
     file: ../configs/secrets/nextcloud/nextcloud-admin-passwd.txt
   nextcloud-public-password:
     file: ../configs/secrets/nextcloud/nextcloud-public-passwd.txt
+  nextcloud-aria2-token:
+    file: ../configs/secrets/nextcloud/nextcloud-aria2-token.txt
