@@ -35,12 +35,12 @@ services:
         tag: "app"
         url: ../nextcloud/
         target: "_blank" # optional html a tag target attribute
-      - name: "aria2"
-        logo: "assets/tools/aria2.png"
-        subtitle: "Aria2 自动下载"
-        tag: "app"
-        url: ../aria2/#!/settings/rpc/set?protocol=https&host={{LOCAL_DOMAIN_NAME}}&port=443&interface=aria2-jsonrpc&secret={{PRC_SECRET}}
-        target: "_blank" # optional html a tag target attribute
+      #- name: "aria2"
+        #logo: "assets/tools/aria2.png"
+        #subtitle: "Aria2 自动下载"
+        #tag: "app"
+        #url: ../aria2/#!/settings/rpc/set?protocol=https&host={{LOCAL_DOMAIN_NAME}}&port=443&interface=aria2-jsonrpc&secret={{PRC_SECRET}}
+        #target: "_blank" # optional html a tag target attribute
 
 # Optional theme customization
 theme: default
